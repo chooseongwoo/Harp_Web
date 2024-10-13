@@ -1,37 +1,42 @@
 import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as _ from './style';
-import { useNavigate } from 'react-router-dom';
 import { Auth_KakaoLogin } from 'lib/apis/Auth';
 
 const Callback = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const accessToken = urlParams.get('accessToken');
-      const refreshToken = urlParams.get('refreshToken');
+    const code = new URLSearchParams(location.search).get('code');
 
-      if (accessToken && refreshToken) {
+    if (code) {
+      handleLoginWithKakao(code);
+    }
+  }, [location]);
+
+  const handleLoginWithKakao = async (code: string) => {
+    try {
+      const response = await Auth_KakaoLogin(code);
+
+      if (response.accessToken && response.refreshToken) {
+        const accessToken = response.accessToken;
+        const refreshToken = response.refreshToken;
+        const isFirst = response.isFirst;
+
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
-        try {
-          const response = await Auth_KakaoLogin();
-          console.log(response);
-          if (response.data.newAccount === '1') navigate('/register/terms');
-          else navigate('/');
-        } catch (error) {
-          alert('토큰 발급에 실패했습니다.');
-          console.error('데이터 페칭 중 에러', error);
-        }
+        if (isFirst) navigate(`/register/terms`);
+        else navigate(`/`);
       } else {
-        navigate('/auth');
-        alert('로그인에 실패했습니다.');
+        console.error('로그인 실패');
       }
-    };
-
-    fetchData();
-  }, [navigate]);
+    } catch (error) {
+      console.error('에러 발생:', error);
+      alert('로그인 실패');
+      navigate(-1);
+    }
+  };
 
   return <_.Callback_Layout>Loading...</_.Callback_Layout>;
 };

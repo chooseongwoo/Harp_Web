@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -24,14 +24,17 @@ const UserInfo = () => {
 
   const handleBirthday = (e: ChangeEvent<HTMLInputElement>) => {
     const formattedBirthday = formatBirthday(e.currentTarget.value);
-    setUserInfos({ ...userInfos, birthday: formattedBirthday });
+    setUserInfos({
+      ...userInfos,
+      birthday: formattedBirthday
+    });
   };
 
   const handleGenderBox = (selectedGender: string) => {
     setUserInfos({ ...userInfos, gender: selectedGender });
     setIsSelected({
-      female: selectedGender === 'female',
-      male: selectedGender === 'male'
+      female: selectedGender === 'FEMALE',
+      male: selectedGender === 'MALE'
     });
   };
 
@@ -85,13 +88,13 @@ const UserInfo = () => {
             <_.UserInfo_Gender_Box>
               <_.UserInfo_Gender
                 isSelected={isSelected.female}
-                onClick={() => handleGenderBox('female')}
+                onClick={() => handleGenderBox('FEMALE')}
               >
                 여성
               </_.UserInfo_Gender>
               <_.UserInfo_Gender
                 isSelected={isSelected.male}
-                onClick={() => handleGenderBox('male')}
+                onClick={() => handleGenderBox('MALE')}
               >
                 남성
               </_.UserInfo_Gender>

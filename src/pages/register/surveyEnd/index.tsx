@@ -8,10 +8,10 @@ import * as _ from './style';
 import Header from 'components/Header';
 import NextButton from 'components/NextButton';
 import RocketImage from 'assets/image/Rocket.png';
-import { Auth_NewAccount, Auth_Survey } from 'lib/apis/Auth';
+import { Auth_Survey, Auth_UserInfo } from 'lib/apis/Auth';
 import {
-  selectedFoodsStringState,
-  selectedStylesStringState,
+  selectedFoodsArrayState,
+  selectedStylesArrayState,
   stringMbtiState,
   tmiState,
   userInfosState
@@ -20,29 +20,30 @@ import {
 const SurveyEnd = () => {
   const navigate = useNavigate();
   const { username, birthday, gender } = useRecoilValue(userInfosState);
-  const styles = useRecoilValue(selectedStylesStringState);
-  const foods = useRecoilValue(selectedFoodsStringState);
+  const styles = useRecoilValue(selectedStylesArrayState);
+  const foods = useRecoilValue(selectedFoodsArrayState);
   const mbti = useRecoilValue(stringMbtiState);
   const tmi = useRecoilValue(tmiState);
 
   const handleRegister = async () => {
     try {
-      await Auth_NewAccount({
+      await Auth_UserInfo({
         nickname: username,
-        birthdate: birthday,
+        birthday: birthday,
         gender: gender
       });
 
       await Auth_Survey({
-        Q1: styles,
-        Q2: foods,
-        Q3: mbti,
-        etc: tmi
+        travel: styles,
+        food: foods,
+        mbti: mbti,
+        content: tmi
       });
-      
+
       navigate('/');
     } catch (error) {
       console.log(error);
+      alert('회원가입에 실패했습니다.');
     }
   };
 

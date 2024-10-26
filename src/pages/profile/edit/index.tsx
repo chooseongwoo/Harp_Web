@@ -12,6 +12,8 @@ import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
+import { urlToFormData } from 'lib/utils/urlToFormData';
+import { Upload_Image } from 'lib/apis/Upload';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -64,6 +66,19 @@ const Edit = () => {
     handleImageEdit((selectedImage) => {
       navigate('/profile/edit/crop', { state: { imageSrc: selectedImage } });
     });
+  };
+
+  const handleUpdateProfile = async () => {
+    const formData = await urlToFormData(profileImage);
+
+    if (formData) {
+      try {
+        const response = await Upload_Image(formData);
+        console.log('서버 응답:', response.url);
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+      }
+    }
   };
 
   const isFormValid = useCallback(() => {
@@ -120,7 +135,11 @@ const Edit = () => {
           </_.Edit_Info>
         </_.Edit_Infos>
       </_.Edit_Content>
-      <NextButton text="저장하기" state={!!isFormValid() && isChanged} />
+      <NextButton
+        text="저장하기"
+        state={!!isFormValid() && isChanged}
+        onNextClick={handleUpdateProfile}
+      />
     </_.Edit_Layout>
   );
 };

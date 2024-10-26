@@ -9,6 +9,7 @@ import Header from 'components/Header';
 import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { isGenderSelectedState, userInfosState } from 'atoms/user';
+import { isValidDate } from 'lib/utils/isValidDate';
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -36,20 +37,6 @@ const UserInfo = () => {
       female: selectedGender === 'FEMALE',
       male: selectedGender === 'MALE'
     });
-  };
-
-  const isValidDate = (dateString: string): boolean => {
-    if (dateString.length !== 10) return false;
-    const [year, month, day] = dateString.split('/').map(Number);
-    const inputDate = new Date(year, month - 1, day);
-    const currentDate = new Date();
-
-    return (
-      inputDate.getFullYear() === year &&
-      inputDate.getMonth() + 1 === month &&
-      inputDate.getDate() === day &&
-      inputDate <= currentDate
-    );
   };
 
   const isFormValid = () => {

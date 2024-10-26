@@ -21,7 +21,7 @@ const All = () => {
       </_.All_Header>
       <_.All_Profile>
         <_.All_Profile_Image url={DefaultImage} />
-        <_.All_Name>
+        <_.All_Name onClick={() => navigate(`/profile/edit`)}>
           탐험가 고릴라
           <RightArrow width="20" height="20" color={theme.gray.black} />
         </_.All_Name>

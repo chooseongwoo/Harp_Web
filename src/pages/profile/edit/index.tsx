@@ -11,6 +11,7 @@ import EmailCopy from 'assets/Icon/EmialCopy';
 import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
+import { isValidDate } from 'lib/utils/isValidDate';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ const Edit = () => {
     return (
       username.length >= 2 &&
       birthday &&
+      isValidDate(birthday) &&
       (gender === '남자' || gender === '여자')
     );
   }, [infos]);

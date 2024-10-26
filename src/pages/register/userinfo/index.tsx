@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -24,20 +24,42 @@ const UserInfo = () => {
 
   const handleBirthday = (e: ChangeEvent<HTMLInputElement>) => {
     const formattedBirthday = formatBirthday(e.currentTarget.value);
-    setUserInfos({ ...userInfos, birthday: formattedBirthday });
+    setUserInfos({
+      ...userInfos,
+      birthday: formattedBirthday
+    });
   };
 
   const handleGenderBox = (selectedGender: string) => {
     setUserInfos({ ...userInfos, gender: selectedGender });
     setIsSelected({
-      female: selectedGender === 'female',
-      male: selectedGender === 'male'
+      female: selectedGender === 'FEMALE',
+      male: selectedGender === 'MALE'
     });
+  };
+
+  const isValidDate = (dateString: string): boolean => {
+    if (dateString.length !== 10) return false;
+    const [year, month, day] = dateString.split('/').map(Number);
+    const inputDate = new Date(year, month - 1, day);
+    const currentDate = new Date();
+
+    return (
+      inputDate.getFullYear() === year &&
+      inputDate.getMonth() + 1 === month &&
+      inputDate.getDate() === day &&
+      inputDate <= currentDate
+    );
   };
 
   const isFormValid = () => {
     const { username, birthday, gender } = userInfos;
-    return username.length >= 2 && birthday && gender;
+    return (
+      username.length >= 2 &&
+      birthday.length === 10 &&
+      isValidDate(birthday) &&
+      gender
+    );
   };
 
   return (
@@ -85,13 +107,13 @@ const UserInfo = () => {
             <_.UserInfo_Gender_Box>
               <_.UserInfo_Gender
                 isSelected={isSelected.female}
-                onClick={() => handleGenderBox('female')}
+                onClick={() => handleGenderBox('FEMALE')}
               >
                 여성
               </_.UserInfo_Gender>
               <_.UserInfo_Gender
                 isSelected={isSelected.male}
-                onClick={() => handleGenderBox('male')}
+                onClick={() => handleGenderBox('MALE')}
               >
                 남성
               </_.UserInfo_Gender>

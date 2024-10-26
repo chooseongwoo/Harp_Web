@@ -9,14 +9,14 @@ import Header from 'components/Header';
 import SurveyContent from 'components/SurveyContent';
 import SurveyStyleData from 'data/SurveyStyle';
 import NextButton from 'components/NextButton';
-import { selectedStylesState, selectedStylesStringState } from 'atoms/user';
+import { selectedStylesState, selectedStylesArrayState } from 'atoms/user';
 import { formatSelectedContents } from 'lib/utils/formatSelectedContents';
 
 const SurveyStyle = () => {
   const navigate = useNavigate();
   const [selectedStyles, setSelectedStyles] =
     useRecoilState(selectedStylesState);
-  const [, setSelectedStylesString] = useRecoilState(selectedStylesStringState);
+  const [, setSelectedStylesArray] = useRecoilState(selectedStylesArrayState);
 
   const handleToggle = useCallback(
     (id: number) => {
@@ -56,7 +56,7 @@ const SurveyStyle = () => {
   };
 
   useEffect(() => {
-    setSelectedStylesString(formatSelectedContents(selectedStyles.styles));
+    setSelectedStylesArray(formatSelectedContents(selectedStyles.styles));
   }, [selectedStyles]);
 
   return (

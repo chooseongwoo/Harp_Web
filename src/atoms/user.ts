@@ -53,14 +53,14 @@ export const selectedStylesState = atom({
     styles: SurveyStyleData.map((item) => ({
       id: item.id,
       state: false,
-      text: item.text
+      english: item.english
     }))
   }
 });
 
-export const selectedStylesStringState = atom({
-  key: 'selectedStylesStringState',
-  default: ''
+export const selectedStylesArrayState = atom<string[]>({
+  key: 'selectedStylesArrayState',
+  default: []
 });
 
 // 선호 음식
@@ -70,14 +70,14 @@ export const selectedFoodsState = atom({
     foods: SurveyFoodData.map((item) => ({
       id: item.id,
       state: false,
-      text: item.text
+      english: item.english
     }))
   }
 });
 
-export const selectedFoodsStringState = atom({
-  key: 'selectedFoodsStringState',
-  default: ''
+export const selectedFoodsArrayState = atom<string[]>({
+  key: 'selectedFoodsArrayState',
+  default: []
 });
 
 // mbti

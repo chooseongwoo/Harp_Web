@@ -42,6 +42,15 @@ const Community = () => {
           </_.Community_Category>
         ))}
       </_.Community_CategoryList>
+      <_.Community_NoticeList>
+        <_.Community_Notice>
+          <_.Community_Notice_Title>공지사항</_.Community_Notice_Title>
+          <_.Community_Notice_Content>
+            하프 서비스 정식 출시 안내🎉
+          </_.Community_Notice_Content>
+          <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
+        </_.Community_Notice>
+      </_.Community_NoticeList>
     </_.Community_Layout>
   );
 };

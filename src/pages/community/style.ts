@@ -3,16 +3,20 @@ import styled from 'styled-components';
 
 export const Community_Layout = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 90px);
+  overflow: auto;
 `;
 
 export const Community_Header = styled.header`
-  position: sticky;
   width: 100%;
   display: flex;
   padding: 10px 20px;
   justify-content: space-between;
   align-items: center;
+  background-color: ${theme.gray.white};
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 `;
 
 export const Community_Header_Title = styled.p`
@@ -22,13 +26,17 @@ export const Community_Header_Title = styled.p`
 `;
 
 export const Community_CategoryList = styled.div`
-  position: sticky;
   display: flex;
   gap: 10px;
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
-  padding: 0 20px 15px;
+  padding: 5px 20px;
+  position: fixed;
+  top: 48px;
+  z-index: 999;
+  background-color: ${theme.gray.white};
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -53,6 +61,7 @@ export const Community_NoticeList = styled.div`
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
+  margin-top: 100px;
   padding: 0 20px 20px;
   &::-webkit-scrollbar {
     display: none;
@@ -96,6 +105,7 @@ export const Community_PostList = styled.div`
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
+  gap: 10px;
 `;
 
 export const Community_NotUploaded = styled.div`

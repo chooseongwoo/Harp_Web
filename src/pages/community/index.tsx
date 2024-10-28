@@ -56,6 +56,16 @@ const Community = () => {
       {true ? (
         <_.Community_PostList>
           <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
+          <PreviewCard />
         </_.Community_PostList>
       ) : (
         <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>

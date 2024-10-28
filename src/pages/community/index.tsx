@@ -8,6 +8,7 @@ import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
 import PreviewCard from 'components/PreviewCard';
 import Edit from 'assets/Icon/Edit';
+import { PreviewData } from 'data/PreviewData';
 
 const Community = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -54,19 +55,17 @@ const Community = () => {
           <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
         </_.Community_Notice>
       </_.Community_NoticeList>
-      {true ? (
+      {PreviewData.length > 0 ? (
         <_.Community_PostList>
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
-          <PreviewCard />
+          {PreviewData.map((post) => (
+            <PreviewCard
+              key={post.communityId}
+              title={post.title}
+              tag={post.tag}
+              wishCount={post.wishCount}
+              commentCount={post.commentCount}
+            />
+          ))}
         </_.Community_PostList>
       ) : (
         <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>

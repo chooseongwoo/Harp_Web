@@ -51,8 +51,8 @@ export const PreviewCard_Reaction = styled.div`
 `;
 
 export const PreviewCard_Image = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 10px;
   background-color: #c4c4c4;
 `;

@@ -5,23 +5,22 @@ import React from 'react';
 import * as _ from './style';
 import Heart from 'assets/image/Heart';
 import Comment from 'assets/image/Comment';
+import { previewData } from 'types/community';
 
-const PreviewCard = () => {
+const PreviewCard = ({ title, tag, wishCount, commentCount }: previewData) => {
   return (
     <_.PreviewCard_Layout>
       <_.PreviewCard_Left>
-        <_.PreviewCard_Gray>여행후기🌱</_.PreviewCard_Gray>
-        <_.PreviewCard_Title>
-          오랜만에 다녀온 강원도 여행 후기ㅇ매냐ㅓ임너이먼이
-        </_.PreviewCard_Title>
+        <_.PreviewCard_Gray>{tag}</_.PreviewCard_Gray>
+        <_.PreviewCard_Title>{title}</_.PreviewCard_Title>
         <_.PreviewCard_ReactionList>
           <_.PreviewCard_Reaction>
             <Heart width="16" height="16" />
-            <_.PreviewCard_Gray>32</_.PreviewCard_Gray>
+            <_.PreviewCard_Gray>{wishCount}</_.PreviewCard_Gray>
           </_.PreviewCard_Reaction>
           <_.PreviewCard_Reaction>
             <Comment />
-            <_.PreviewCard_Gray>32</_.PreviewCard_Gray>
+            <_.PreviewCard_Gray>{commentCount}</_.PreviewCard_Gray>
           </_.PreviewCard_Reaction>
         </_.PreviewCard_ReactionList>
       </_.PreviewCard_Left>

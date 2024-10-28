@@ -64,6 +64,7 @@ const Community = () => {
               tag={post.tag}
               wishCount={post.wishCount}
               commentCount={post.commentCount}
+              updatedAt={post.updatedAt}
             />
           ))}
         </_.Community_PostList>

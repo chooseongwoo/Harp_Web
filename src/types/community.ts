@@ -4,7 +4,7 @@ export interface previewData {
   des?: string;
   tag: string[];
   createdAt?: string;
-  updatedAt?: string;
+  updatedAt: string;
   wishCount: number;
   commentCount: number;
 }

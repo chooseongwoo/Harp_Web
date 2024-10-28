@@ -21,6 +21,7 @@ export const Edit_Profile = styled.div`
 export const Edit_Profile_Img = styled.img`
   width: 6.25rem;
   height: 6.25rem;
+  min-height: 6.25rem;
   border-radius: 100%;
   border: 1px solid ${theme.gray[1]};
 `;

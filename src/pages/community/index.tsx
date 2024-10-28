@@ -7,6 +7,7 @@ import Search from 'assets/image/Search';
 import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
 import PreviewCard from 'components/PreviewCard';
+import Edit from 'assets/Icon/Edit';
 
 const Community = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -70,6 +71,9 @@ const Community = () => {
       ) : (
         <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>
       )}
+      <_.Community_Writing>
+        <Edit />
+      </_.Community_Writing>
       <MenuBar selectState={3} />
     </_.Community_Layout>
   );

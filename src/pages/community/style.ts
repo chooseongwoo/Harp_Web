@@ -2,6 +2,7 @@ import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 
 export const Community_Layout = styled.div`
+  position: relative;
   width: 100vw;
   height: calc(100vh - 90px);
   overflow: auto;
@@ -116,4 +117,16 @@ export const Community_NotUploaded = styled.div`
   justify-content: center;
   align-items: center;
   color: ${theme.gray['2.5']};
+`;
+
+export const Community_Writing = styled.div`
+  bottom: 97px;
+  right: 20px;
+  position: fixed;
+  background-color: ${theme.primary[7]};
+  border-radius: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

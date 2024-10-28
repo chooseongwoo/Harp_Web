@@ -2,9 +2,11 @@ import { useRoutes } from 'react-router-dom';
 
 import Splash from 'pages/splash';
 import Auth from 'pages/auth';
+import Community from 'pages/community';
 import Home from 'pages/home';
 import NotFound from 'pages/notFound';
 import Callback from 'pages/Callback';
+
 // register
 import Terms from 'pages/register/terms';
 import UserInfo from 'pages/register/userinfo';
@@ -37,6 +39,7 @@ export default function Router() {
       path: '/',
       children: [
         { index: true, element: <Home /> },
+        { path: 'community', element: <Community /> },
         { path: 'all', element: <All /> },
         { path: 'setting', element: <Setting /> },
         { path: 'splash', element: <Splash /> },

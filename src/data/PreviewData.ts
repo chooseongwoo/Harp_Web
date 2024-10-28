@@ -7,7 +7,7 @@ export const PreviewData: previewData[] = [
     des: '어쩌고 저쩌고 html',
     tag: ['어쩔'],
     createdAt: '2024. 10. 23. 오전 12:57',
-    updatedAt: '2024. 10. 03. 오후 5:57',
+    updatedAt: '2024. 08. 03. 오후 5:57',
     wishCount: 0,
     commentCount: 4
   },

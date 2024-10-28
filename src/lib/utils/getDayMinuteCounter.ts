@@ -26,11 +26,13 @@ export const getDayMinuteCounter = (date?: Date | string): number | string => {
   }
 
   if (dayDiff >= 30 && dayDiff < 365) {
-    return '한달 전';
+    const months = Math.floor(dayDiff / 30);
+    return months + '달 전';
   }
 
   if (dayDiff >= 365) {
-    return '1년 전';
+    const years = Math.floor(dayDiff / 365);
+    return years + '년 전';
   }
 
   return dayDiff + '일 전';

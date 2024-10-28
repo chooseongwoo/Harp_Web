@@ -6,6 +6,7 @@ import * as _ from './style';
 import Search from 'assets/image/Search';
 import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
+import PreviewCard from 'components/PreviewCard';
 
 const Community = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -52,6 +53,13 @@ const Community = () => {
           <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
         </_.Community_Notice>
       </_.Community_NoticeList>
+      {true ? (
+        <_.Community_PostList>
+          <PreviewCard />
+        </_.Community_PostList>
+      ) : (
+        <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>
+      )}
       <MenuBar selectState={3} />
     </_.Community_Layout>
   );

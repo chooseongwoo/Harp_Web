@@ -7,6 +7,7 @@ export const Community_Layout = styled.div`
 `;
 
 export const Community_Header = styled.header`
+  position: sticky;
   width: 100%;
   display: flex;
   padding: 10px 20px;
@@ -21,6 +22,7 @@ export const Community_Header_Title = styled.p`
 `;
 
 export const Community_CategoryList = styled.div`
+  position: sticky;
   display: flex;
   gap: 10px;
   overflow-x: auto;
@@ -51,7 +53,7 @@ export const Community_NoticeList = styled.div`
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
-  padding: 0 20px 15px;
+  padding: 0 20px 20px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -85,4 +87,23 @@ export const Community_Notice_Date = styled.p`
   color: ${theme.gray.white};
   font-size: 10px;
   font-weight: 300;
+`;
+
+export const Community_PostList = styled.div`
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+`;
+
+export const Community_NotUploaded = styled.div`
+  padding: 20px 20px 0%;
+  width: 100%;
+  height: calc(100vh - 400px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${theme.gray['2.5']};
 `;

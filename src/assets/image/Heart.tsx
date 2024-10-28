@@ -1,10 +1,15 @@
 import React from 'react';
 
-const Heart = () => {
+interface OwnProps {
+  width?: string;
+  height?: string;
+}
+
+const Heart = ({ width = '22', height = '20' }: OwnProps) => {
   return (
     <svg
-      width="22"
-      height="20"
+      width={width}
+      height={height}
       viewBox="0 0 22 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

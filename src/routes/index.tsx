@@ -34,7 +34,7 @@ import Setting from 'pages/setting';
 
 // community
 import Community from 'pages/community';
-import Detail from 'pages/community/detail';
+import Detail from 'pages/community/PostDetail';
 
 export default function Router() {
   return useRoutes([

@@ -1,39 +1,40 @@
-import React from 'react';
+import { theme } from 'lib/utils/style/theme';
+import React, { useState } from 'react';
 
 interface OwnProps {
   width?: string;
   height?: string;
+  disabled?: boolean;
 }
 
-const Heart = ({ width = '22', height = '20' }: OwnProps) => {
+const Heart = ({ width = '18', height = '19', disabled = false }: OwnProps) => {
+  const [isFilled, setIsFilled] = useState(false);
+
+  const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
+    if (disabled) return;
+    setIsFilled(!isFilled);
+  };
+
   return (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 22 20"
+      viewBox="0 0 18 19"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      onClick={handleClick}
+      style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
     >
-      <g id="Heart">
-        <path
-          id="Stroke 1"
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M1.87187 9.59832C0.798865 6.24832 2.05287 2.41932 5.56987 1.28632C7.41987 0.689322 9.46187 1.04132 10.9999 2.19832C12.4549 1.07332 14.5719 0.693322 16.4199 1.28632C19.9369 2.41932 21.1989 6.24832 20.1269 9.59832C18.4569 14.9083 10.9999 18.9983 10.9999 18.9983C10.9999 18.9983 3.59787 14.9703 1.87187 9.59832Z"
-          stroke="#7A7A7A"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          id="Stroke 3"
-          d="M15 4.69995C16.07 5.04595 16.826 6.00095 16.917 7.12195"
-          stroke="#7A7A7A"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2.1539 9.19874C1.34915 6.68624 2.28965 3.81449 4.9274 2.96474C6.3149 2.51699 7.8464 2.78099 8.9999 3.64874C10.0911 2.80499 11.6789 2.51999 13.0649 2.96474C15.7026 3.81449 16.6491 6.68624 15.8451 9.19874C14.5926 13.1812 8.9999 16.2487 8.9999 16.2487C8.9999 16.2487 3.4484 13.2277 2.1539 9.19874Z"
+        stroke="#1A1E27"
+        strokeWidth="1.125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill={isFilled ? `${theme.sub.red}` : 'none'}
+      />
     </svg>
   );
 };

@@ -6,6 +6,7 @@ import { PreviewData } from 'data/PreviewData'; // 데이터 임포트
 import * as _ from './style';
 import Header from 'components/Header';
 import KebabMenu from 'assets/Icon/KebabMenu';
+import Heart from 'assets/image/Heart';
 
 const Detail = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,6 +34,7 @@ const Detail = () => {
         <_.PostDetail_Description>
           {post.des}
         </_.PostDetail_Description>
+        <Heart width='18' height='18'/>
       </_.PostDetail_Container>
     </_.PostDetail_Layout>
   );

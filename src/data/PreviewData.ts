@@ -9,7 +9,7 @@ export const PreviewData: previewData[] = [
     tag: ['어쩔'],
     createdAt: '2024. 10. 23. 오전 12:57',
     updatedAt: '2024. 08. 03. 오후 5:57',
-    wishCount: 0,
+    wishCount: 22,
     commentCount: 4,
     image: 'https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg'
   },
@@ -23,7 +23,8 @@ export const PreviewData: previewData[] = [
     updatedAt: '2024. 10. 23. 오전 08:13',
     wishCount: 0,
     commentCount: 0,
-    image: 'https://example.com/image2.jpg'
+    image: 'https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg'
+
   },
   {
     communityId: 4,
@@ -35,6 +36,7 @@ export const PreviewData: previewData[] = [
     updatedAt: '2024. 10. 27. 오후 11:42',
     wishCount: 0,
     commentCount: 3,
-    image: 'https://example.com/image3.jpg'
+    image: 'https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg'
+
   }
 ];  

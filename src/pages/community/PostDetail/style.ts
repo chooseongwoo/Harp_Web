@@ -54,3 +54,15 @@ export const PostDetail_Image = styled.img`
   border-radius: 12px;
   border: 1px solid ${theme.gray['1']};
 `;
+
+export const PostDetail_Reaction = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  gap: 4px;
+`;
+
+export const PostDetail_LikeCount = styled.span`
+  font-size: 16px;
+  color: ${theme.gray.black};
+`;

@@ -34,7 +34,8 @@ const Detail = () => {
         <_.PostDetail_Description>
           {post.des}
         </_.PostDetail_Description>
-        <Heart width='18' height='18' disabled={true} />
+        <_.PostDetail_Image src={post.image} />
+        <Heart width='24' height='24' disabled={false} />
       </_.PostDetail_Container>
     </_.PostDetail_Layout>
   );

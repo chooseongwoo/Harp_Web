@@ -35,15 +35,22 @@ export const PostDetial_Title = styled.div`
   margin-top: 8px;
 `;
 
-
 export const PostDetail_Info = styled.div`
-  margin-top: 8px;
-  font-size: 12px;
+  margin-top: 4px;
+  font-size: 14px;
   color: ${theme.gray['3.5']};
 `;
 
-  export const PostDetail_Description = styled.div`
-    margin-top: 10px;
-    font-size: 17px;
-    color: ${theme.gray.black};
-  `;
+export const PostDetail_Description = styled.div`
+  margin-top: 10px;
+  font-size: 17px;
+  color: ${theme.gray.black};
+`;
+
+export const PostDetail_Image = styled.img`
+  width: 100%;
+  height: auto;
+  margin-top: 15px;
+  border-radius: 12px;
+  border: 1px solid ${theme.gray['1']};
+`;

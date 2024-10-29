@@ -20,7 +20,7 @@ export const AllPageMenu = [
     category: '소식',
     menus: [
       { icon: <Event />, title: '이벤트' },
-      { icon: <LoudSpeaker />, title: '공지 사항' }
+      { icon: <LoudSpeaker />, title: '공지사항' }
     ]
   },
   {

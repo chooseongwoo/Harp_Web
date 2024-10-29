@@ -22,7 +22,7 @@ const PreviewCard = ({
         <_.PreviewCard_Title>{title}</_.PreviewCard_Title>
         <_.PreviewCard_ReactionList>
           <_.PreviewCard_Reaction>
-            <Heart width="16" height="16" disabled={false}/>
+            <Heart width="16" height="16" disabled={true}/>
             <_.PreviewCard_Gray>{wishCount}</_.PreviewCard_Gray>
           </_.PreviewCard_Reaction>
           <_.PreviewCard_Reaction>

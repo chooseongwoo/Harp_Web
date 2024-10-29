@@ -12,8 +12,8 @@ export const AllPageMenu = [
   {
     category: '내 활동',
     menus: [
-      { icon: <Calendar color="gray" />, title: '지난 일정' },
-      { icon: <Heart />, title: '관심 목록' }
+      { icon: <Calendar color="gray" width='24' height='24' />, title: '지난 일정' },
+      { icon: <Heart disabled={false} width='24' height='24'/>, title: '관심 목록' }
     ]
   },
   {

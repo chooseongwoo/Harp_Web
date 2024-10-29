@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 interface OwnProps {
   width?: string;
   height?: string;
-  disabled?: boolean;
+  disabled: boolean;
 }
 
-const Heart = ({ width = '18', height = '19', disabled = false }: OwnProps) => {
+const Heart = ({ width = '22', height = '21', disabled = false }: OwnProps) => {
   const [isFilled, setIsFilled] = useState(false);
 
   const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
@@ -29,7 +29,7 @@ const Heart = ({ width = '18', height = '19', disabled = false }: OwnProps) => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M2.1539 9.19874C1.34915 6.68624 2.28965 3.81449 4.9274 2.96474C6.3149 2.51699 7.8464 2.78099 8.9999 3.64874C10.0911 2.80499 11.6789 2.51999 13.0649 2.96474C15.7026 3.81449 16.6491 6.68624 15.8451 9.19874C14.5926 13.1812 8.9999 16.2487 8.9999 16.2487C8.9999 16.2487 3.4484 13.2277 2.1539 9.19874Z"
-        stroke="#1A1E27"
+        stroke="#7A7A7A"
         strokeWidth="1.125"
         strokeLinecap="round"
         strokeLinejoin="round"

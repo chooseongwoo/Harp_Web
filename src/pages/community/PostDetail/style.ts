@@ -88,6 +88,7 @@ export const PostDetail_ProfileImage = styled.img`
   border-radius: 100%;
   background-color: pink;
   flex-shrink: 1;
+  border: 1px solid ${theme.gray[1]};
 `;
 
 export const PostDetail_TypingContainer = styled.div`
@@ -106,13 +107,13 @@ export const PostDetail_TypingBox = styled.div`
   height: auto;
   max-height: 120px;
   justify-content: space-between;
-  border-radius: 50px;
+  border-radius: 40px;
   border: 1px solid ${theme.gray[1]};
   padding: 13px 24px 13px 24px;
 `;
 
 export const PostDetail_Textarea = styled.textarea`
-  width: 100%;
+  width: 88%;
   height: auto;
   max-height: 100px;
   border: none;

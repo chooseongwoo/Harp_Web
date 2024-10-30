@@ -49,6 +49,7 @@ export const PostDetail_Description = styled.div`
 
 export const PostDetail_Image = styled.img`
   width: 100%;
+  max-width: 500px;
   height: auto;
   margin-top: 15px;
   border-radius: 12px;
@@ -65,4 +66,11 @@ export const PostDetail_Reaction = styled.div`
 export const PostDetail_LikeCount = styled.span`
   font-size: 16px;
   color: ${theme.gray.black};
+`;
+
+export const PostDetail_Line = styled.div`
+  height: 5px;
+  width: 150%;
+  background-color: ${theme.gray[0]};
+  margin: 30px -20px 0 -20px;
 `;

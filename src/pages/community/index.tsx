@@ -6,7 +6,7 @@ import * as _ from './style';
 import Search from 'assets/image/Search';
 import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
-import PreviewCard from 'components/PreviewCard';
+import PreviewCard from 'components/community/PreviewCard';
 import Edit from 'assets/Icon/Edit';
 import { PreviewData } from 'data/PreviewData';
 

@@ -8,6 +8,7 @@ import * as _ from './style';
 import Header from 'components/Header';
 import KebabMenu from 'assets/Icon/KebabMenu';
 import Heart from 'assets/image/Heart';
+import Comment from 'components/community/Comment';
 
 const Detail = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +26,7 @@ const Detail = () => {
     <_.PostDetail_Layout>
       <Header title='글 상세' />
       <_.PostDetail_Container>
+          <Comment />
         <_.PostDetail_SapceBetween>
           <_.PostDetail_TagBox>{post.tag.join(', ')}</_.PostDetail_TagBox>
           <KebabMenu onClick={() => {}} />
@@ -44,6 +46,7 @@ const Detail = () => {
             좋아요 {post.wishCount + (isLiked ? 1 : 0)}
           </_.PostDetail_LikeCount>
         </_.PostDetail_Reaction>
+        <_.PostDetail_Line />
       </_.PostDetail_Container>
     </_.PostDetail_Layout>
   );

@@ -2,7 +2,7 @@ import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 
 export const Comment_Layout = styled.div`
-  padding: 15px 0;
+  padding-bottom: 10px;
   width: 100%;
   display: flex;
 `;
@@ -49,4 +49,5 @@ margin-top: 5px;
   align-items: center;
   display: flex;
   gap: 4px;
+  margin-bottom: 12px;
 `

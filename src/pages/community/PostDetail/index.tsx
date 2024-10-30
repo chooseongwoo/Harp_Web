@@ -27,8 +27,9 @@ const Detail = () => {
       <Header title='글 상세' />
       <_.PostDetail_Container>
           <Comment />
+          <Comment />
         <_.PostDetail_SapceBetween>
-          <_.PostDetail_TagBox>{post.tag.join(', ')}</_.PostDetail_TagBox>
+          <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
           <KebabMenu onClick={() => {}} />
         </_.PostDetail_SapceBetween>
         <_.PostDetial_Title>{post.title}</_.PostDetial_Title>

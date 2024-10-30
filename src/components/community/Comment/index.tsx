@@ -6,6 +6,7 @@ import * as _ from './style';
 import KebabMenu from 'assets/Icon/KebabMenu';
 import Comment from 'assets/image/Comment';
 import { useParams } from 'react-router-dom';
+import ReplyComment from '../ReplyComent';
 
 const Comments = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +25,8 @@ const Comments = () => {
         <_.Conmment_Reply>
           <Comment width="14" height="14" /> 답글 {post?.commentCount}
         </_.Conmment_Reply>
+        <ReplyComment/>
+        <ReplyComment/>
       </_.Comment_ColContainer>
       <KebabMenu onClick={() => {}} />
     </_.Comment_Layout>

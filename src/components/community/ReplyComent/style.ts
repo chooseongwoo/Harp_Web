@@ -2,21 +2,19 @@ import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 
 export const ReplyComment_Layout = styled.div`
-  padding: 15px 0;
   width: 100%;
   display: flex;
 `;
 
 export const ReplyComment_ColContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   margin-left: 10px;
 `;
 
 export const ReplyComment_Profile = styled.div`
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   border-radius: 100%;
   border: 1px solid ${theme.gray[1]};
   background-color: pink;

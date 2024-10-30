@@ -69,8 +69,13 @@ export const PostDetail_LikeCount = styled.span`
 `;
 
 export const PostDetail_Line = styled.div`
-  height: 5px;
-  width: 150%;
-  background-color: ${theme.gray[0]};
+  border: 5px solid  ${theme.gray[0]};;
   margin: 30px -20px 0 -20px;
 `;
+
+export const PostDetail_CommentCount = styled.div`
+  font-size: 17px;
+  font-weight: 600;
+  color: ${theme.gray.black};
+  padding: 10px 0 15px 0;
+`

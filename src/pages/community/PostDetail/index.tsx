@@ -26,8 +26,6 @@ const Detail = () => {
     <_.PostDetail_Layout>
       <Header title='글 상세' />
       <_.PostDetail_Container>
-          <Comment />
-          <Comment />
         <_.PostDetail_SapceBetween>
           <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
           <KebabMenu onClick={() => {}} />
@@ -48,6 +46,10 @@ const Detail = () => {
           </_.PostDetail_LikeCount>
         </_.PostDetail_Reaction>
         <_.PostDetail_Line />
+        <_.PostDetail_CommentCount>
+          댓글 {post.commentCount}
+        </_.PostDetail_CommentCount>
+        <Comment />
       </_.PostDetail_Container>
     </_.PostDetail_Layout>
   );

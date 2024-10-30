@@ -11,7 +11,8 @@ export const PostDetail_Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 20px;
-  height: 100%;
+  height: calc(100% - 60px);
+  overflow: auto;
 `;
 
 export const PostDetail_SapceBetween = styled.div`
@@ -69,7 +70,7 @@ export const PostDetail_LikeCount = styled.span`
 `;
 
 export const PostDetail_Line = styled.div`
-  border: 5px solid  ${theme.gray[0]};;
+  border: 5px solid ${theme.gray[0]};
   margin: 30px -20px 0 -20px;
 `;
 
@@ -78,4 +79,56 @@ export const PostDetail_CommentCount = styled.div`
   font-weight: 600;
   color: ${theme.gray.black};
   padding: 10px 0 15px 0;
-`
+`;
+
+
+export const PostDetail_ProfileImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: pink;
+  flex-shrink: 1;
+`;
+
+export const PostDetail_TypingContainer = styled.div`
+  width: 100%;
+  padding: 12px 20px;
+  gap: 10px;
+  height: max-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const PostDetail_TypingBox = styled.div`
+  display: flex;
+  width: 86%;
+  height: auto;
+  max-height: 120px;
+  justify-content: space-between;
+  border-radius: 50px;
+  border: 1px solid ${theme.gray[1]};
+  padding: 13px 24px 13px 24px;
+`;
+
+export const PostDetail_Textarea = styled.textarea`
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  border: none;
+  outline: none;
+  color: ${theme.gray.black};
+  background-color: ${theme.gray.white};
+  &::placeholder {
+    color: ${theme.gray[2]};
+  }
+  font-size: 14px;
+  font-weight: 400;
+  resize: none;
+  overflow-y: auto;
+`;
+
+export const PostDetail_SendIcon = styled.div`
+  display: flex;
+  align-items: center;
+`;

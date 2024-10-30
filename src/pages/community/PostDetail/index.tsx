@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // 파일
@@ -9,8 +9,21 @@ import Header from 'components/Header';
 import KebabMenu from 'assets/Icon/KebabMenu';
 import Heart from 'assets/image/Heart';
 import Comment from 'components/community/Comment';
+import Send from 'assets/image/Send';
+import { theme } from 'lib/utils/style/theme';
 
 const Detail = () => {
+  const [message, setMessage] = useState<string>('');
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+    setMessage(e.target.value);
+  };
+
   const { id } = useParams<{ id: string }>();
   const post = PreviewData.find((item) => item.communityId === parseInt(id!));
 
@@ -51,6 +64,22 @@ const Detail = () => {
         </_.PostDetail_CommentCount>
         <Comment />
       </_.PostDetail_Container>
+      <_.PostDetail_TypingContainer>
+        <_.PostDetail_ProfileImage />
+          <_.PostDetail_TypingBox>
+            <_.PostDetail_Textarea
+              value={message}
+              placeholder="댓글을 입력하세요..."
+              rows={1}
+              maxLength={50}
+              ref={textareaRef}
+              onChange={resizeHeight}
+            />
+            <_.PostDetail_SendIcon >
+              <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
+            </_.PostDetail_SendIcon>
+          </_.PostDetail_TypingBox>
+        </_.PostDetail_TypingContainer>
     </_.PostDetail_Layout>
   );
 };

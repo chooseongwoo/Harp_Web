@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const ReplyComment_Layout = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 5px;
 `;
 
 export const ReplyComment_ColContainer = styled.div`

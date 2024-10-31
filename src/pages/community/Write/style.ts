@@ -43,7 +43,7 @@ export const Write_TitleInput = styled.input`
 export const Write_Line = styled.div`
   border: 1px solid ${theme.sub[1]};
   margin: 10px 0;
-`
+`;
 
 export const Write_DesInput = styled.textarea`
   border: none;
@@ -59,7 +59,7 @@ export const Write_DesInput = styled.textarea`
 
 export const Write_BottomContainer = styled.div`
   position: fixed;
-  bottom: 100px;
+  bottom: 0;
   left: 0;
   display: flex;
   width: 100%;
@@ -67,37 +67,36 @@ export const Write_BottomContainer = styled.div`
   background-color: white;
   gap: 12px;
   border-top: 1px solid ${theme.gray[1]};
-  `;
+`;
 
 export const Write_PhotoButton = styled.button`
-gap: 3px;
+  gap: 3px;
   display: flex;
   align-items: center;
   border: none;
   font-size: 16px;
-color: ${theme.gray[3]};
+  color: ${theme.gray[3]};
   cursor: pointer;
   background-color: #fff;
 `;
 
 export const Write_LocationButton = styled.button`
+  gap: 3px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: ${theme.gray[1]};
-  border: 1px solid ${theme.gray[2]};
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 15px;
-  margin: 10px 0;
+  border: none;
+  font-size: 16px;
+  color: ${theme.gray[3]};
   cursor: pointer;
+  background-color: #fff;
 `;
 
-export const KeyboardToggleButton = styled.button`
-  position: fixed;
-  bottom: 60px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
+export const Write_ImagePreview = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid ${theme.gray[1]};
+`
+export const Write_DeleteIcon = styled.div `
+  position: absolute;
+`

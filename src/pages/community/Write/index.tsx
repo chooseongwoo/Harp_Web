@@ -1,5 +1,5 @@
 // 라이브러리
-import React from 'react';
+import React, { useState } from 'react'; // useState 추가
 
 //파일
 import CategoryModal from 'components/community/CategoryModal';
@@ -9,8 +9,26 @@ import DownArrow from 'assets/Icon/DownArrow';
 import { theme } from 'lib/utils/style/theme';
 import Image from 'assets/image/Image';
 import Location_g from 'assets/image/Location-g';
+import { handleImageEdit } from 'lib/utils/handleImageEdit';
+import Delete from 'assets/Icon/Delete';
 
 const Write = () => {
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+
+  const handlePhotoButtonClick = () => {
+    handleImageEdit((image) => {
+      if (selectedImages.length < 20) {
+        setSelectedImages((prevImages) => [...prevImages, image]);
+      } else {
+        alert("최대 20장까지 이미지를 업로드할 수 있습니다.");
+      }
+    });
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index)); // 선택된 이미지 삭제
+  };
+
   return (
     <_.Write_Layout>
       <Header title="글 쓰기" buttonState="게시" />
@@ -30,13 +48,21 @@ const Write = () => {
 - 불필요한 비방이나 공격적인 표현은 자제하고, 모두가 즐겁게 소통할 수 있는 환경을 만들어주세요."
         ></_.Write_DesInput>
         <_.Write_BottomContainer>
-          <_.Write_PhotoButton>
+          <_.Write_PhotoButton onClick={handlePhotoButtonClick}>
             <Image /> 사진
           </_.Write_PhotoButton>
           <_.Write_LocationButton>
-            <Location_g />
+            <Location_g /> 장소
           </_.Write_LocationButton>
         </_.Write_BottomContainer>
+        <div>
+          {selectedImages.map((image, index) => (
+            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <_.Write_ImagePreview src={image} />
+              <Delete onClick={() => handleRemoveImage(index)} />
+            </div>
+          ))}
+        </div>
       </_.Write_Container>
     </_.Write_Layout>
   );

@@ -11,6 +11,7 @@ import Heart from 'assets/image/Heart';
 import Comment from 'components/community/Comment';
 import Send from 'assets/image/Send';
 import { theme } from 'lib/utils/style/theme';
+import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 
 const Detail = () => {
   const [message, setMessage] = useState<string>('');
@@ -44,7 +45,7 @@ const Detail = () => {
           <KebabMenu onClick={() => {}} />
         </_.PostDetail_SapceBetween>
         <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
-        <_.PostDetail_Info>{`${post.author} · ${post.createdAt}`}</_.PostDetail_Info>
+        <_.PostDetail_Info>{`${post.author} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>
         <_.PostDetail_Description>{post.des}</_.PostDetail_Description>
         <_.PostDetail_Image src={post.image} />
         <_.PostDetail_Reaction>
@@ -66,20 +67,20 @@ const Detail = () => {
       </_.PostDetail_Container>
       <_.PostDetail_TypingContainer>
         <_.PostDetail_ProfileImage />
-          <_.PostDetail_TypingBox>
-            <_.PostDetail_Textarea
-              value={message}
-              placeholder="댓글을 입력하세요..."
-              rows={1}
-              maxLength={50}
-              ref={textareaRef}
-              onChange={resizeHeight}
-            />
-            <_.PostDetail_SendIcon >
-              <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
-            </_.PostDetail_SendIcon>
-          </_.PostDetail_TypingBox>
-        </_.PostDetail_TypingContainer>
+        <_.PostDetail_TypingBox>
+          <_.PostDetail_Textarea
+            value={message}
+            placeholder="댓글을 입력하세요..."
+            rows={1}
+            maxLength={50}
+            ref={textareaRef}
+            onChange={resizeHeight}
+          />
+          <_.PostDetail_SendIcon>
+            <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
+          </_.PostDetail_SendIcon>
+        </_.PostDetail_TypingBox>
+      </_.PostDetail_TypingContainer>
     </_.PostDetail_Layout>
   );
 };

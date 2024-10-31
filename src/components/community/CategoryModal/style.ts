@@ -27,21 +27,22 @@ export const CategoryModal_Layout = styled.div`
 `;
 
 export const CategoryModal_Title = styled.div`
-  font-size: 17px;
+  font-size: 18px;
   color: ${theme.gray.black};
-  font-weight: 500;
+  font-weight: 600;
 `;
 export const CategoryModal_List = styled.ul`
   width: 100%;
+  margin-top: 3px;
   background-color: ${theme.gray.white};
-  `;
+`;
 
 export const CategoryModal_Item = styled.button`
-border: none;
+  border: none;
   cursor: pointer;
   background-color: ${theme.gray.white};
   color: ${theme.gray.black};
-  font-size: 15px;
+  font-size: 16px;
   display: flex;
   padding: 16px;
   width: 100%;

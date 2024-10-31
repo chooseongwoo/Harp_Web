@@ -7,7 +7,7 @@ interface CategoryModalProps {
   onSelectCategory: (category: string) => void;
 }
 
-const categories = ["일상/수다", "여행후기", "맛집공유"];
+const categories = ["💬 일상/수다", "✈️ 여행", "🥨 맛집", "🍯 꿀팁공유", "💡 고민상담"];
 
 const CategoryModal = ({ isOpen, onClose, onSelectCategory }: CategoryModalProps) => {
   if (!isOpen) return null;

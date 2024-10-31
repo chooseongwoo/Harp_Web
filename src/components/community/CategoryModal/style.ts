@@ -7,42 +7,45 @@ export const CategoryModal_Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const CategoryModal_Layout = styled.div`
+  position: absolute;
+  bottom: 0;
   background-color: ${theme.gray.white};
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  border-radius: 20px 20px 0px 0px;
+  width: 100%;
   text-align: center;
+  display: inline-flex;
+  padding: 25px 20px 200px 20px;
+  flex-direction: column;
+  align-items: center;
 `;
 
+export const CategoryModal_Title = styled.div`
+  font-size: 17px;
+  color: ${theme.gray.black};
+  font-weight: 500;
+`;
 export const CategoryModal_List = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
+  width: 100%;
+  background-color: ${theme.gray.white};
+  `;
 
-export const CategoryModal_Item = styled.li`
+export const CategoryModal_Item = styled.button`
+border: none;
   cursor: pointer;
-  padding: 10px 0;
-  border-bottom: 1px solid ${theme.gray[2]};
-  &:hover {
-    background-color: ${theme.gray[1]};
-  }
-`;
-
-export const CategoryModal_CloseButton = styled.button`
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: ${theme.primary[7]};
-  color: ${theme.gray.white};
-  border: none;
-  border-radius: 4px;
-  &:hover {
-    background-color: ${theme.gray[4]};
-  }
+  background-color: ${theme.gray.white};
+  color: ${theme.gray.black};
+  font-size: 15px;
+  display: flex;
+  padding: 16px;
+  width: 100%;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid ${theme.sub[1]};
 `;

@@ -93,7 +93,7 @@ export default function Router() {
       path: 'community',
       children: [
         { path: '', element: <Community /> },
-        { path: 'detail/:id', element: <Detail /> }
+        { path: 'detail/:id', element: <Detail /> },
       ]
     },
     { path: '*', element: <NotFound /> }

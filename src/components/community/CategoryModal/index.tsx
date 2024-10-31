@@ -7,7 +7,9 @@ interface CategoryModalProps {
   onSelectCategory: (category: string) => void;
 }
 
-const CategoryModal = ({ isOpen, onClose, onSelectCategory }:CategoryModalProps) => {
+const categories = ["일상/수다", "여행후기", "맛집공유"];
+
+const CategoryModal = ({ isOpen, onClose, onSelectCategory }: CategoryModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -15,9 +17,11 @@ const CategoryModal = ({ isOpen, onClose, onSelectCategory }:CategoryModalProps)
       <_.CategoryModal_Layout>
         <_.CategoryModal_Title>카테고리를 선택해주세요</_.CategoryModal_Title>
         <_.CategoryModal_List>
-          <_.CategoryModal_Item onClick={() => onSelectCategory("일상/수다")}>일상/수다</_.CategoryModal_Item>
-          <_.CategoryModal_Item onClick={() => onSelectCategory("여행후기")}>여행후기</_.CategoryModal_Item>
-          <_.CategoryModal_Item onClick={() => onSelectCategory("맛집공유")}>맛집공유</_.CategoryModal_Item>
+          {categories.map((category) => (
+            <_.CategoryModal_Item key={category} onClick={() => onSelectCategory(category)}>
+              {category}
+            </_.CategoryModal_Item>
+          ))}
         </_.CategoryModal_List>
       </_.CategoryModal_Layout>
     </_.CategoryModal_Overlay>

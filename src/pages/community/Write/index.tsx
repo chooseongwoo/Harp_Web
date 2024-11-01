@@ -57,9 +57,9 @@ const Write = () => {
         </_.Write_BottomContainer>
         <div>
           {selectedImages.map((image, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+            <div key={index}>
               <_.Write_ImagePreview src={image} />
-              <Delete onClick={() => handleRemoveImage(index)} />
+              <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)} />
             </div>
           ))}
         </div>

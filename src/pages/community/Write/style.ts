@@ -1,3 +1,4 @@
+import Delete from 'assets/Icon/Delete';
 import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 
@@ -67,6 +68,7 @@ export const Write_BottomContainer = styled.div`
   background-color: white;
   gap: 12px;
   border-top: 1px solid ${theme.gray[1]};
+  z-index: 1;
 `;
 
 export const Write_PhotoButton = styled.button`
@@ -96,7 +98,11 @@ export const Write_ImagePreview = styled.img`
   height: auto;
   border-radius: 8px;
   border: 1px solid ${theme.gray[1]};
+  margin-bottom: 50px;
 `
-export const Write_DeleteIcon = styled.div `
+export const Write_DeleteIcon = styled(Delete)`
   position: absolute;
-`
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+`;

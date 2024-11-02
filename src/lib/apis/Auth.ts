@@ -34,3 +34,13 @@ export const Auth_Survey = async (params: SuveryParams) => {
   });
   return data;
 };
+
+export const Auth_ReadInfo = async () => {
+  const { data } = await AuthInstance.get(`/user`);
+  return data;
+};
+
+export const Auth_Image = async (url: string) => {
+  const { data } = await AuthInstance.put(`/user/profile`, { imgUrl: url });
+  return data;
+};

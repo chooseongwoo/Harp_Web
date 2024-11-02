@@ -23,6 +23,7 @@ export const All_Name = styled.p`
   font-weight: 600;
   display: flex;
   align-items: center;
+  gap: 2px;
 `;
 
 export const All_Profile = styled.div`
@@ -34,7 +35,7 @@ export const All_Profile = styled.div`
   gap: 15px;
 `;
 
-export const All_Profile_Image = styled.div<{ url: string }>`
+export const All_Profile_Image = styled.img<{ url: string }>`
   width: 54px;
   height: 54px;
   border-radius: 50px;

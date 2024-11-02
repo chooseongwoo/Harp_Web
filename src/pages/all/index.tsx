@@ -1,5 +1,5 @@
 // 라이브러리
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 파일
@@ -10,9 +10,37 @@ import DefaultImage from 'assets/image/DefaultProfile.png';
 import RightArrow from 'assets/Icon/RightArrow';
 import { theme } from 'lib/utils/style/theme';
 import { AllPageMenu } from 'data/AllPageMenu';
+import { Auth_ReadInfo } from 'lib/apis/Auth';
+import { user } from 'types/user';
 
 const All = () => {
   const navigate = useNavigate();
+  const [infos, setInfos] = useState<user>({
+    profileImage: '',
+    username: ''
+  });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const data = await Auth_ReadInfo();
+        const { imgUrl, nickname } = data;
+        let { gender } = data;
+        gender = gender === 'MALE' ? '남자' : '여자';
+
+        const fetchedInfos = {
+          profileImage: imgUrl,
+          username: nickname
+        };
+
+        setInfos(fetchedInfos);
+      } catch (error) {
+        console.error('유저 정보를 불러오는 데 실패했습니다:', error);
+      }
+    };
+    getUserInfo();
+  }, []);
+
   return (
     <_.All_Layout>
       <_.All_Header>
@@ -20,10 +48,10 @@ const All = () => {
         <SettingIcon onClick={() => navigate(`/setting`)} />
       </_.All_Header>
       <_.All_Profile>
-        <_.All_Profile_Image url={DefaultImage} />
+        <_.All_Profile_Image url={infos.profileImage} />
         <_.All_Name onClick={() => navigate(`/profile/edit`)}>
-          탐험가 고릴라
-          <RightArrow width="20" height="20" color={theme.gray.black} />
+          {infos.username}
+          <RightArrow width="14" height="14" color={theme.gray.black} />
         </_.All_Name>
       </_.All_Profile>
       <_.All_CategoryList>

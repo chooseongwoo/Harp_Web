@@ -70,7 +70,7 @@ const Edit = () => {
 
   const handleEmailCopy = useCallback(() => {
     navigator.clipboard
-      .writeText(infos.email)
+      .writeText(infos.email ?? '')
       .then(() => {
         alert('이메일이 복사되었습니다.');
       })
@@ -101,7 +101,7 @@ const Edit = () => {
       await Auth_Image(location.state?.imageUrl);
       await Auth_UserInfo({
         nickname: infos.username,
-        birthday: infos.birthday,
+        birthday: infos.birthday ?? '',
         gender: infos.gender === '남자' ? 'MALE' : 'FEMALE'
       });
       alert('프로필 수정 성공!');

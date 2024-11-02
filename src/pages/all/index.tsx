@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import * as _ from './style';
 import MenuBar from 'components/MenuBar';
 import SettingIcon from 'assets/Icon/SettingIcon';
-import DefaultImage from 'assets/image/DefaultProfile.png';
 import RightArrow from 'assets/Icon/RightArrow';
 import { theme } from 'lib/utils/style/theme';
 import { AllPageMenu } from 'data/AllPageMenu';

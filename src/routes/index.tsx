@@ -5,6 +5,7 @@ import Auth from 'pages/auth';
 import Home from 'pages/home';
 import NotFound from 'pages/notFound';
 import Callback from 'pages/Callback';
+
 // register
 import Terms from 'pages/register/terms';
 import UserInfo from 'pages/register/userinfo';
@@ -30,6 +31,10 @@ import Edit from 'pages/profile/edit';
 import CropPage from 'pages/profile/crop';
 import All from 'pages/all';
 import Setting from 'pages/setting';
+
+// community
+import Community from 'pages/community';
+import Detail from 'pages/community/PostDetail';
 
 export default function Router() {
   return useRoutes([
@@ -82,6 +87,13 @@ export default function Router() {
       children: [
         { path: 'edit', element: <Edit /> },
         { path: 'edit/crop', element: <CropPage /> }
+      ]
+    },
+    {
+      path: 'community',
+      children: [
+        { path: '', element: <Community /> },
+        { path: 'detail/:id', element: <Detail /> },
       ]
     },
     { path: '*', element: <NotFound /> }

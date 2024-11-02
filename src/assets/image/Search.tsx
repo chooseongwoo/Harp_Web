@@ -1,33 +1,40 @@
-const Search = () => {
+import React from 'react';
+
+interface SearchProps {
+  width?: string;
+  height?: string;
+  stroke?: string;
+}
+
+const Search = ({
+  width = '24px',
+  height = '24px',
+  stroke = '#D9D9D9'
+}: SearchProps) => {
   return (
     <svg
-      width="24"
-      height="25"
-      viewBox="0 0 16 17"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="Search">
-        <circle
-          id="Ellipse_739"
-          cx="7.83294"
-          cy="7.83343"
-          r="6.43499"
-          stroke="#D9D9D9"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          id="Line_181"
-          d="M12.3086 12.6436L14.8315 15.1599"
-          stroke="#D9D9D9"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
+      <path
+        d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 21L16.65 16.65"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };
+
 export default Search;

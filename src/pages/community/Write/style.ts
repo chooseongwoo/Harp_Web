@@ -33,7 +33,7 @@ export const Write_TitleInput = styled.input`
   color: ${theme.gray.black};
   font-size: 20px;
   font-weight: 600;
-  margin: 10px 10px 0 10px;
+  padding: 10px 10px 0 10px;
   &::placeholder {
     color: ${theme.gray[2.5]};
   }
@@ -51,6 +51,7 @@ export const Write_DesInput = styled.textarea`
   font-size: 16px;
   resize: none;
   min-height: 300px;
+  padding: 0 10px;
   &::placeholder {
     color: ${theme.gray[2.5]};
   }
@@ -90,7 +91,6 @@ export const Write_LocationButton = styled.button`
   cursor: pointer;
   background-color: #fff;
 `;
-
 
 export const Write_ImageContainer = styled.div<{ backgroundImage: string }>`
   position: relative;

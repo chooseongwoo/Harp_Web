@@ -11,6 +11,7 @@ export const CategoryModal_Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 `;
 
 export const CategoryModal_Layout = styled.div`

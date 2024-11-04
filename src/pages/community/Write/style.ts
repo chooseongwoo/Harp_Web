@@ -10,7 +10,7 @@ export const Write_Layout = styled.div`
 export const Write_Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
+  padding: 0 20px 200px 20px;
   height: 100vh;
 `;
 
@@ -93,16 +93,24 @@ export const Write_LocationButton = styled.button`
   background-color: #fff;
 `;
 
-export const Write_ImagePreview = styled.img`
+
+export const Write_ImageContainer = styled.div<{ backgroundImage: string }>`
+  position: relative;
   width: 100%;
-  height: auto;
+  padding-bottom: 100%;
   border-radius: 8px;
   border: 1px solid ${theme.gray[1]};
-  margin-bottom: 50px;
-`
-export const Write_DeleteIcon = styled(Delete)`
+  margin-bottom: 30px;
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+export const Write_DeleteIcon = styled.div`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
+  z-index: 2;
 `;

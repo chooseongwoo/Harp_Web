@@ -20,7 +20,7 @@ const Write = () => {
       if (selectedImages.length < 20) {
         setSelectedImages((prevImages) => [...prevImages, image]);
       } else {
-        alert("최대 20장까지 이미지를 업로드할 수 있습니다.");
+        alert('최대 20장까지 이미지를 업로드할 수 있습니다.');
       }
     });
   };
@@ -55,14 +55,13 @@ const Write = () => {
             <Location_g /> 장소
           </_.Write_LocationButton>
         </_.Write_BottomContainer>
-        <div>
-          {selectedImages.map((image, index) => (
-            <div key={index}>
-              <_.Write_ImagePreview src={image} />
-              <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)} />
-            </div>
-          ))}
-        </div>
+        {selectedImages.map((image, index) => (
+          <_.Write_ImageContainer key={index} backgroundImage={image}>
+            <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)}>
+              <Delete/>
+            </_.Write_DeleteIcon>
+          </_.Write_ImageContainer>
+        ))}
       </_.Write_Container>
     </_.Write_Layout>
   );

@@ -1,5 +1,6 @@
 // 라이브러리
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // 파일
 import * as _ from './style';
@@ -11,6 +12,7 @@ import Edit from 'assets/Icon/Edit';
 import { PreviewData } from 'data/PreviewData';
 
 const Community = () => {
+  const navigate = useNavigate();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     '전체'
   ]);
@@ -73,7 +75,7 @@ const Community = () => {
       ) : (
         <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>
       )}
-      <_.Community_Writing>
+      <_.Community_Writing onClick={() => navigate('/community/write')}>
         <Edit />
       </_.Community_Writing>
       <MenuBar selectState={3} />

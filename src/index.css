@@ -35,3 +35,10 @@
   src: url('./assets/font/Pretendard-Regular.woff') format('woff');
   font-weight: 400;
 }
+
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/font/Pretendard-Regular.woff') format('woff');
+  font-weight: 300;
+}

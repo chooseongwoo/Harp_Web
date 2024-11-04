@@ -10,8 +10,7 @@ export const Write_Layout = styled.div`
 export const Write_Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 20px 200px 20px;
-  height: 100vh;
+  padding: 0 20px 70px 20px;
 `;
 
 export const Write_ModalButton = styled.button`
@@ -33,9 +32,8 @@ export const Write_TitleInput = styled.input`
   outline: none;
   color: ${theme.gray.black};
   font-size: 20px;
-  font-style: normal;
   font-weight: 600;
-  margin-top: 10px;
+  margin: 0 10px;
   &::placeholder {
     color: ${theme.gray[2.5]};
   }
@@ -52,7 +50,7 @@ export const Write_DesInput = styled.textarea`
   color: ${theme.gray.black};
   font-size: 16px;
   resize: none;
-  min-height: 400px;
+  min-height: 300px;
   &::placeholder {
     color: ${theme.gray[2.5]};
   }
@@ -97,10 +95,11 @@ export const Write_LocationButton = styled.button`
 export const Write_ImageContainer = styled.div<{ backgroundImage: string }>`
   position: relative;
   width: 100%;
+  height: auto;
   padding-bottom: 100%;
   border-radius: 8px;
   border: 1px solid ${theme.gray[1]};
-  margin-bottom: 30px;
+  margin-top: 20px;
   background-image: url(${(props) => props.backgroundImage});
   background-size: cover;
   background-position: center;

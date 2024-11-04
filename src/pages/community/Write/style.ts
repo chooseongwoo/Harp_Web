@@ -10,7 +10,7 @@ export const Write_Layout = styled.div`
 export const Write_Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 20px 70px 20px;
+  padding: 10px 20px 70px 20px;
 `;
 
 export const Write_ModalButton = styled.button`
@@ -24,7 +24,7 @@ export const Write_ModalButton = styled.button`
   color: ${theme.gray.black};
   border-radius: 8px;
   font-size: 15px;
-  margin: 10px 0 5px 0;
+  margin: 10px ₩0 5px 0;
 `;
 
 export const Write_TitleInput = styled.input`
@@ -33,7 +33,7 @@ export const Write_TitleInput = styled.input`
   color: ${theme.gray.black};
   font-size: 20px;
   font-weight: 600;
-  margin: 0 10px;
+  margin: 10px 10px 0 10px;
   &::placeholder {
     color: ${theme.gray[2.5]};
   }

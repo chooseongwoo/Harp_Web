@@ -52,11 +52,9 @@ export const PostDetail_Description = styled.div`
 
 export const PostDetail_Image = styled.div<{ backgroundImage: string }>`
   max-width: 500px;
-  height: auto;
   margin-top: 15px;
   position: relative;
   width: 100%;
-  height: auto;
   padding-bottom: 100%;
   background-size: cover;
   background-position: center;

@@ -15,9 +15,9 @@ export const ImageDetail_Overlay = styled.div`
 `;
 
 
-
 export const ImageDetail_Image = styled.img`
   width: 100%;
+  max-width: 500px;
   height: auto;
 `;
 

@@ -1,12 +1,12 @@
 export interface previewData {
   communityId?: number;
   title: string;
-  author?:string;
+  author?: string;
   des?: string;
   tag: string[];
   createdAt?: string;
   updatedAt: string;
   wishCount: number;
   commentCount: number;
-  image?: string;
+  images?: string[];
 }

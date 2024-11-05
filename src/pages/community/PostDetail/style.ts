@@ -1,5 +1,7 @@
 import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export const PostDetail_Layout = styled.div`
   position: fixed;
@@ -48,13 +50,16 @@ export const PostDetail_Description = styled.div`
   color: ${theme.gray.black};
 `;
 
-export const PostDetail_Image = styled.img`
-  width: 100%;
+export const PostDetail_Image = styled.div<{ backgroundImage: string }>`
   max-width: 500px;
-  height: auto;
   margin-top: 15px;
-  border-radius: 12px;
-  border: 1px solid ${theme.gray['1']};
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${(props) => props.backgroundImage});
 `;
 
 export const PostDetail_Reaction = styled.div`
@@ -80,7 +85,6 @@ export const PostDetail_CommentCount = styled.div`
   color: ${theme.gray.black};
   padding: 10px 0 15px 0;
 `;
-
 
 export const PostDetail_ProfileImage = styled.img`
   width: 40px;
@@ -132,4 +136,18 @@ export const PostDetail_Textarea = styled.textarea`
 export const PostDetail_SendIcon = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const PostDetail_ImageIndex = styled.div`
+  text-align: center;
+  font-size: 12px;
+  color: ${theme.gray.white};
+  display: flex;
+  padding: 4px 8px;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
+  position: absolute;
+  border-radius: 16px;
+  background: rgba(102, 102, 102, 0.3);
 `;

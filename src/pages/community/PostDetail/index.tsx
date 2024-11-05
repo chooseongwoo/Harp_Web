@@ -1,6 +1,7 @@
 // 라이브러리
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Slider from 'react-slick';
 
 // 파일
 import { PreviewData } from 'data/PreviewData';
@@ -12,8 +13,10 @@ import Comment from 'components/community/Comment';
 import Send from 'assets/image/Send';
 import { theme } from 'lib/utils/style/theme';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
+import { slider } from 'config/slider';
+import ImageDetail from 'components/community/ImageDetail';
 
-const Detail = () => {
+const PostDetail = () => {
   const [message, setMessage] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -29,8 +32,20 @@ const Detail = () => {
   const post = PreviewData.find((item) => item.communityId === parseInt(id!));
 
   const [isLiked, setIsLiked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleLikeClick = () => setIsLiked(!isLiked);
+
+  const openModal = (image: string) => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
 
   if (!post || !id) {
     return <div>글이 삭제됐거나 이전되었습니다.</div>;
@@ -38,7 +53,7 @@ const Detail = () => {
 
   return (
     <_.PostDetail_Layout>
-      <Header title='글 상세' />
+      <Header title="글 상세" />
       <_.PostDetail_Container>
         <_.PostDetail_SapceBetween>
           <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
@@ -47,11 +62,23 @@ const Detail = () => {
         <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
         <_.PostDetail_Info>{`${post.author} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>
         <_.PostDetail_Description>{post.des}</_.PostDetail_Description>
-        <_.PostDetail_Image src={post.image} />
+        <Slider {...slider}>
+          {post.images?.map((image, index) => (
+            <_.PostDetail_Image
+              backgroundImage={image}
+              key={index}
+              onClick={() => openModal(image)}
+            >
+              <_.PostDetail_ImageIndex>
+                {index + 1} / {post.images?.length}
+              </_.PostDetail_ImageIndex>
+            </_.PostDetail_Image>
+          ))}
+        </Slider>
         <_.PostDetail_Reaction>
           <Heart
-            width='20'
-            height='20'
+            width="20"
+            height="20"
             isFilled={isLiked}
             onClick={handleLikeClick}
           />
@@ -81,8 +108,13 @@ const Detail = () => {
           </_.PostDetail_SendIcon>
         </_.PostDetail_TypingBox>
       </_.PostDetail_TypingContainer>
+      <ImageDetail
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        selectedImage={selectedImage}
+      />
     </_.PostDetail_Layout>
   );
 };
 
-export default Detail;
+export default PostDetail;

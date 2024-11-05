@@ -33,8 +33,9 @@ import All from 'pages/all';
 import Setting from 'pages/setting';
 
 // community
-import Community from 'pages/community';
+import Community from 'pages/community/Home';
 import Detail from 'pages/community/PostDetail';
+import Write from 'pages/community/Write';
 
 export default function Router() {
   return useRoutes([
@@ -94,6 +95,7 @@ export default function Router() {
       children: [
         { path: '', element: <Community /> },
         { path: 'detail/:id', element: <Detail /> },
+        { path: 'write', element: <Write /> },
       ]
     },
     { path: '*', element: <NotFound /> }

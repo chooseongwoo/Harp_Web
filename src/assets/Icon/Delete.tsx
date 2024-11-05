@@ -1,22 +1,22 @@
 import React from 'react';
 
-interface DownArrowProps {
+interface DeleteProps {
   color?: string;
 }
 
-const DownArrow = ({ color = '#B9BBB9' }: DownArrowProps) => {
+const Delete = ({ color = '#A5A5A5' }: DeleteProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="19"
-      height="18"
-      viewBox="0 0 19 18"
+      width="24"
+      height="24"
+      viewBox="0 0 18 18"
       fill="none"
     >
       <path
-        d="M13.7319 7.5L9.96921 11.25L6.20654 7.5"
+        d="M13.5 13.5L4.5 4.5M4.5 13.5L13.5 4.5"
         stroke={color}
-        strokeWidth="1.2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -24,4 +24,4 @@ const DownArrow = ({ color = '#B9BBB9' }: DownArrowProps) => {
   );
 };
 
-export default DownArrow;
+export default Delete;

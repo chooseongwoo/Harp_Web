@@ -11,7 +11,8 @@ export const PreviewData: previewData[] = [
     updatedAt: '2024. 08. 03. 오후 5:57',
     wishCount: 22,
     commentCount: 4,
-    image: 'https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg'
+    image: 'https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg',
+    images: ['https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg','https://i.pinimg.com/564x/26/3c/62/263c62bb7d1d67d8695a40f7e0263b3f.jpg']
   },
   {
     communityId: 3,

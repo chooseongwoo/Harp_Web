@@ -1,6 +1,7 @@
 // 라이브러리
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Slider from 'react-slick';
 
 // 파일
 import { PreviewData } from 'data/PreviewData';
@@ -36,9 +37,17 @@ const Detail = () => {
     return <div>글이 삭제됐거나 이전되었습니다.</div>;
   }
 
+  const settings = {
+    infinite: false,
+    speed: 350,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false
+  };
+
   return (
     <_.PostDetail_Layout>
-      <Header title='글 상세' />
+      <Header title="글 상세" />
       <_.PostDetail_Container>
         <_.PostDetail_SapceBetween>
           <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
@@ -47,11 +56,19 @@ const Detail = () => {
         <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
         <_.PostDetail_Info>{`${post.author} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>
         <_.PostDetail_Description>{post.des}</_.PostDetail_Description>
-        <_.PostDetail_Image src={post.image} />
+        <Slider {...settings}>
+          {post.images?.map((image, index) => (
+            <_.PostDetail_Image backgroundImage={image} key={index}>
+              <_.PostDetail_ImageIndex>
+                {index + 1} / {post.images?.length}
+              </_.PostDetail_ImageIndex>
+            </_.PostDetail_Image>
+          ))}
+        </Slider>
         <_.PostDetail_Reaction>
           <Heart
-            width='20'
-            height='20'
+            width="20"
+            height="20"
             isFilled={isLiked}
             onClick={handleLikeClick}
           />

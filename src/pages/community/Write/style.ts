@@ -23,7 +23,7 @@ export const Write_ModalButton = styled.button`
   color: ${theme.gray.black};
   border-radius: 8px;
   font-size: 15px;
-  margin: 10px ₩0 5px 0;
+  margin: 10px 0 5px 0;
 `;
 
 export const Write_TitleInput = styled.input`
@@ -66,7 +66,7 @@ export const Write_BottomContainer = styled.div`
   background-color: white;
   gap: 12px;
   border-top: 1px solid ${theme.gray[1]};
-  z-index: 1;
+  z-index: 99;
 `;
 
 export const Write_PhotoButton = styled.button`
@@ -110,5 +110,4 @@ export const Write_DeleteIcon = styled.div`
   top: 10px;
   right: 10px;
   cursor: pointer;
-  z-index: 2;
 `;

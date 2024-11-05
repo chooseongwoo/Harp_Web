@@ -8,6 +8,5 @@ export interface previewData {
   updatedAt: string;
   wishCount: number;
   commentCount: number;
-  image?: string;
   images?: string[];
 }

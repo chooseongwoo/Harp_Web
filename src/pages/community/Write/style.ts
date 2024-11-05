@@ -1,4 +1,3 @@
-import Delete from 'assets/Icon/Delete';
 import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 

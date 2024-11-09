@@ -48,7 +48,7 @@ AuthInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.accessToken = `${accessToken}`;
     }
     return config;
   },
@@ -68,7 +68,7 @@ AuthInstance.interceptors.response.use(
           localStorage.setItem('accessToken', newToken.accessToken);
 
           if (error.config.headers) {
-            error.config.headers.Authorization = `Bearer ${newToken.accessToken}`;
+            error.config.headers.accessToken = `${newToken.accessToken}`;
           }
 
           return axios.request(error.config);

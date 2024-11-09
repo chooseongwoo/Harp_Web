@@ -9,13 +9,13 @@ import Header from 'components/Header';
 import SurveyFoodData from 'data/SurveyFood';
 import SurveyContent from 'components/SurveyContent';
 import NextButton from 'components/NextButton';
-import { selectedFoodsState, selectedFoodsArrayState } from 'atoms/user';
+import { selectedFoodsState, selectedFoodsStringState } from 'atoms/user';
 import { formatSelectedContents } from 'lib/utils/formatSelectedContents';
 
 const SurveyFood = () => {
   const navigate = useNavigate();
   const [selectedFoods, setSelectedFoods] = useRecoilState(selectedFoodsState);
-  const [, setSelectedFoodsArray] = useRecoilState(selectedFoodsArrayState);
+  const [, setSelectedFoodsString] = useRecoilState(selectedFoodsStringState);
 
   const handleToggle = useCallback(
     (id: number) => {
@@ -55,7 +55,7 @@ const SurveyFood = () => {
   };
 
   useEffect(() => {
-    setSelectedFoodsArray(formatSelectedContents(selectedFoods.foods));
+    setSelectedFoodsString(formatSelectedContents(selectedFoods.foods));
   }, [selectedFoods]);
 
   return (

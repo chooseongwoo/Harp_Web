@@ -12,7 +12,7 @@ const Auth = () => {
   const title = 'How are\nyou\nPlanning?';
 
   const handleKakaoLogin = async () => {
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://localhost:3000/auth/kakao/callback&response_type=code`;
+    window.location.href = `${process.env.REACT_APP_API}/auth/kakao`;
   };
 
   return (

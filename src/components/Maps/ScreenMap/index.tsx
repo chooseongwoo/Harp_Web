@@ -148,13 +148,13 @@ const ScreenMap = ({ planInfos }: OwnProps) => {
         <_.ScreenMap_DaysSelectList>
           {Object.keys(planInfos.data)
             .filter((key) => key !== 'tips')
-            .map((day) => (
+            .map((day, index) => (
               <_.ScreenMap_DaySelect
                 key={day}
                 isSelected={selectedDay === day}
                 onClick={() => setSelectedDay(day)}
               >
-                {day}
+                {index + 1}일차
               </_.ScreenMap_DaySelect>
             ))}
         </_.ScreenMap_DaysSelectList>

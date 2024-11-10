@@ -39,7 +39,7 @@ const PlanResult = ({ id, img, title, startDate, member }: OwnProps) => {
     <_.PlanResult_Layout>
       <_.PlanResult_Container
         onClick={() => {
-          navigate(`/plan/info/${id}`);
+          navigate(`/plan/info/${id}`, { replace: true });
         }}
         imgUrl={img}
       >

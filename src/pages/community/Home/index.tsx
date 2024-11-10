@@ -9,10 +9,20 @@ import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
 import PreviewCard from 'components/community/PreviewCard';
 import Edit from 'assets/Icon/Edit';
-import { PreviewData } from 'data/PreviewData';
+import { community } from 'types/community';
+import { useQuery } from 'react-query';
+import { Community_AllPost } from 'lib/apis/Community';
 
 const Community = () => {
   const navigate = useNavigate();
+  const [posts, setPosts] = useState<community[] | null>(null);
+
+  const { isLoading } = useQuery(['getAllPost'], Community_AllPost, {
+    onSuccess: (response) => {
+      setPosts(response.data.Formatting);
+    }
+  });
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     '전체'
   ]);
@@ -57,26 +67,29 @@ const Community = () => {
           <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
         </_.Community_Notice>
       </_.Community_NoticeList>
-      {PreviewData.length > 0 ? (
-        <_.Community_PostList>
-          {PreviewData.map((post) => (
-            <_.Community_Link
-              to={`/community/detail/${post.communityId}`}
-              key={post.communityId}
-            >
-              <PreviewCard
+      {!isLoading ? (
+        posts && posts.length > 0 ? (
+          <_.Community_PostList>
+            {posts.map((post) => (
+              <_.Community_Link
+                to={`/community/detail/${post.communityId}`}
                 key={post.communityId}
-                title={post.title}
-                tag={post.tag}
-                wishCount={post.wishCount}
-                commentCount={post.commentCount}
-                updatedAt={post.updatedAt}
-              />
-            </_.Community_Link>
-          ))}
-        </_.Community_PostList>
+              >
+                <PreviewCard
+                  title={post.title}
+                  tag={post.tag}
+                  wishCount={post.wishCount}
+                  commentCount={post.commentCount}
+                  updatedAt={post.updatedAt}
+                />
+              </_.Community_Link>
+            ))}
+          </_.Community_PostList>
+        ) : (
+          <_.Community_Not>등록된 글이 없습니다.</_.Community_Not>
+        )
       ) : (
-        <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>
+        <_.Community_Not>글 불러오는 중</_.Community_Not>
       )}
       <_.Community_Writing onClick={() => navigate('/community/write')}>
         <Edit />

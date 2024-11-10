@@ -110,7 +110,7 @@ export const Community_PostList = styled.div`
   gap: 10px;
 `;
 
-export const Community_NotUploaded = styled.div`
+export const Community_Not = styled.div`
   padding: 20px 20px 0%;
   width: 100%;
   height: calc(100vh - 400px);

@@ -13,7 +13,8 @@ const PreviewCard = ({
   tag,
   wishCount,
   commentCount,
-  updatedAt
+  updatedAt,
+  images
 }: community) => {
   return (
     <_.PreviewCard_Layout>
@@ -35,7 +36,7 @@ const PreviewCard = ({
         <_.PreviewCard_Gray>
           {getDayMinuteCounter(updatedAt)}
         </_.PreviewCard_Gray>
-        <_.PreviewCard_Image />
+        <_.PreviewCard_Image url={images![0]} />
       </_.PreviewCard_Right>
     </_.PreviewCard_Layout>
   );

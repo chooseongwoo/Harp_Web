@@ -50,9 +50,12 @@ export const PreviewCard_Reaction = styled.div`
   align-items: center;
 `;
 
-export const PreviewCard_Image = styled.div`
+export const PreviewCard_Image = styled.div<{ url: string }>`
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background-color: #c4c4c4;
+  background-color: ${({ url }) => (url ? 'none' : '#c4c4c4')};
+  background-image: ${({ url }) => (url ? `url(${url})` : 'none')};
+  background-size: cover;
+  background-position: center;
 `;

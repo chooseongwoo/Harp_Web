@@ -20,7 +20,9 @@ const Community = () => {
   const { isLoading } = useQuery(['getAllPost'], Community_AllPost, {
     onSuccess: (response) => {
       setPosts(response.data.Formatting);
-    }
+    },
+    staleTime: 10000,
+    cacheTime: 600000
   });
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -81,6 +83,7 @@ const Community = () => {
                   wishCount={post.wishCount}
                   commentCount={post.commentCount}
                   updatedAt={post.updatedAt}
+                  images={post.images}
                 />
               </_.Community_Link>
             ))}
@@ -89,7 +92,7 @@ const Community = () => {
           <_.Community_Not>등록된 글이 없습니다.</_.Community_Not>
         )
       ) : (
-        <_.Community_Not>글 불러오는 중</_.Community_Not>
+        <_.Community_Not>글 불러오는 중...</_.Community_Not>
       )}
       <_.Community_Writing onClick={() => navigate('/community/write')}>
         <Edit />

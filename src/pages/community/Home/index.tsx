@@ -37,7 +37,14 @@ const Community = () => {
     });
   };
 
-  const categories = ['전체', '여행후기🌱', '#맛집⭐️', '질문', '정보공유'];
+  const categories = [
+    '전체',
+    '💬 일상/수다',
+    '✈️ 여행',
+    '🥨 맛집',
+    '🍯 꿀팁 공유',
+    '💡 고민 상담'
+  ];
 
   return (
     <_.Community_Layout>

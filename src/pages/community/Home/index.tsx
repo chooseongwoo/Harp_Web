@@ -21,20 +21,10 @@ const Community = () => {
     cacheTime: 600000
   });
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    '전체'
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState('전체');
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategories((selectedCategory) => {
-      if (category === '전체') {
-        return ['전체'];
-      }
-      const newCategories = selectedCategory.includes(category)
-        ? selectedCategory.filter((c) => c !== category)
-        : [...selectedCategory.filter((c) => c !== '전체'), category];
-      return newCategories.length === 0 ? ['전체'] : newCategories;
-    });
+    setSelectedCategories(category);
   };
 
   const categories = [

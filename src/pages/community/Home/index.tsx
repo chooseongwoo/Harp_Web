@@ -15,12 +15,8 @@ import { Community_AllPost } from 'lib/apis/Community';
 
 const Community = () => {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState<community[] | null>(null);
 
-  const { isLoading } = useQuery(['getAllPost'], Community_AllPost, {
-    onSuccess: (response) => {
-      setPosts(response.data.Formatting);
-    },
+  const { data, isLoading } = useQuery(['getAllPost'], Community_AllPost, {
     staleTime: 10000,
     cacheTime: 600000
   });
@@ -70,9 +66,9 @@ const Community = () => {
         </_.Community_Notice>
       </_.Community_NoticeList>
       {!isLoading ? (
-        posts && posts.length > 0 ? (
+        data?.data?.Formatting && data.data.Formatting.length > 0 ? (
           <_.Community_PostList>
-            {posts.map((post) => (
+            {data.data.Formatting.map((post: community) => (
               <_.Community_Link
                 to={`/community/detail/${post.communityId}`}
                 key={post.communityId}

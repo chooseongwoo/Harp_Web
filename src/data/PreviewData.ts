@@ -1,6 +1,6 @@
-import { previewData } from 'types/community';
+import { community } from 'types/community';
 
-export const PreviewData: previewData[] = [
+export const PreviewData: community[] = [
   {
     communityId: 2,
     title: '서울로 떠나는 여행',

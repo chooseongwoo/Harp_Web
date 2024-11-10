@@ -1,4 +1,4 @@
-export interface previewData {
+export interface community {
   communityId?: number;
   title: string;
   author?: string;

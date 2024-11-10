@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 파일
@@ -21,10 +21,13 @@ const Community = () => {
     cacheTime: 600000
   });
 
-  const [selectedCategories, setSelectedCategories] = useState('전체');
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [filteredPosts, setFilteredPosts] = useState<community[]>([]);
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategories(category);
+    if (category !== selectedCategory) {
+      setSelectedCategory(category);
+    }
   };
 
   const categories = [
@@ -35,6 +38,15 @@ const Community = () => {
     '🍯 꿀팁 공유',
     '💡 고민 상담'
   ];
+
+  useEffect(() => {
+    const posts = data?.data?.Formatting || [];
+    const filtered =
+      selectedCategory !== '전체'
+        ? posts.filter((post: community) => post.tag === selectedCategory)
+        : posts;
+    setFilteredPosts(filtered);
+  }, [selectedCategory, data]);
 
   return (
     <_.Community_Layout>
@@ -47,7 +59,7 @@ const Community = () => {
           <_.Community_Category
             key={category}
             onClick={() => handleCategoryClick(category)}
-            isSelected={selectedCategories.includes(category)}
+            isSelected={selectedCategory.includes(category)}
           >
             {category}
           </_.Community_Category>
@@ -63,9 +75,9 @@ const Community = () => {
         </_.Community_Notice>
       </_.Community_NoticeList>
       {!isLoading ? (
-        data?.data?.Formatting && data.data.Formatting.length > 0 ? (
+        filteredPosts.length > 0 ? (
           <_.Community_PostList>
-            {data.data.Formatting.map((post: community) => (
+            {filteredPosts.map((post: community) => (
               <_.Community_Link
                 to={`/community/detail/${post.communityId}`}
                 key={post.communityId}

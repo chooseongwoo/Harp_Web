@@ -1,8 +1,8 @@
 // 라이브러리
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import { useQuery } from 'react-query';
+import { useMutation, useQueries } from 'react-query';
 
 // 파일
 import * as _ from './style';
@@ -15,7 +15,11 @@ import { theme } from 'lib/utils/style/theme';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 import { slider } from 'config/slider';
 import ImageDetail from 'components/community/ImageDetail';
-import { Community_OnePost } from 'lib/apis/Community';
+import {
+  Community_IsLike,
+  Community_OnePost,
+  Community_PostWish
+} from 'lib/apis/Community';
 import { detailPost } from 'types/community';
 
 const PostDetail = () => {
@@ -32,22 +36,44 @@ const PostDetail = () => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { isLoading, data: postData } = useQuery(
-    ['getOnePost', id],
-    () => Community_OnePost(id ?? ''),
+  const [{ isLoading, data: postData }, { data: isLike }] = useQueries([
     {
+      queryKey: ['getOnePost', id],
+      queryFn: () => Community_OnePost(id ?? ''),
       staleTime: 10000,
       cacheTime: 600000
+    },
+    {
+      queryKey: ['getIsLiked', id],
+      queryFn: () => Community_IsLike(id ?? ''),
+      onSuccess: (response: any) => {
+        setIsLiked(response?.data?.status);
+      },
+      staleTime: 10000,
+      cacheTime: 600000
+    }
+  ]);
+
+  const { mutate: postWishMutation } = useMutation(
+    () => Community_PostWish(id!),
+    {
+      onError: (error) => {
+        console.error('찜 실패', error);
+      }
     }
   );
 
   const post: detailPost = postData?.data?.post;
 
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(isLike?.data?.status);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const handleLikeClick = () => setIsLiked(!isLiked);
+  const handleLikeClick = () => {
+    setIsLiked(!isLiked);
+    postWishMutation();
+    isLiked ? (post.wishCount -= 1) : (post.wishCount += 1);
+  };
 
   const openModal = (image: string) => {
     setSelectedImage(image);
@@ -103,7 +129,7 @@ const PostDetail = () => {
             onClick={handleLikeClick}
           />
           <_.PostDetail_LikeCount>
-            좋아요 {post.wishCount + (isLiked ? 1 : 0)}
+            좋아요 {post.wishCount}
           </_.PostDetail_LikeCount>
         </_.PostDetail_Reaction>
         <_.PostDetail_Line />

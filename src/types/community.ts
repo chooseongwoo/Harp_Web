@@ -10,3 +10,15 @@ export interface community {
   commentCount: number;
   images?: string[];
 }
+
+export interface detailPost {
+  communityId: number;
+  title: string;
+  des: string;
+  tag: string;
+  images: string[];
+  createdAt: string;
+  updatedAt: string;
+  wishCount: number;
+  comments: string[];
+}

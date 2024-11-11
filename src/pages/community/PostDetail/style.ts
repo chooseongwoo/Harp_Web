@@ -151,3 +151,13 @@ export const PostDetail_ImageIndex = styled.div`
   border-radius: 16px;
   background: rgba(102, 102, 102, 0.3);
 `;
+
+export const PostDetail_Message = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: ${theme.gray['2.5']};
+`;

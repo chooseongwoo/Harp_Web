@@ -19,7 +19,6 @@ import { Community_OnePost } from 'lib/apis/Community';
 import { detailPost } from 'types/community';
 
 const PostDetail = () => {
-  const [post, setPost] = useState<detailPost | null>(null);
   const [message, setMessage] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,17 +32,16 @@ const PostDetail = () => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { isLoading } = useQuery(
-    ['getOnePost'],
+  const { isLoading, data: postData } = useQuery(
+    ['getOnePost', id],
     () => Community_OnePost(id ?? ''),
     {
-      onSuccess: (response) => {
-        setPost(response.data.post);
-      },
       staleTime: 10000,
       cacheTime: 600000
     }
   );
+
+  const post: detailPost = postData?.data?.post;
 
   const [isLiked, setIsLiked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,10 +59,17 @@ const PostDetail = () => {
     setSelectedImage(null);
   };
 
-  if (!post || !id) {
-    return <div>글이 삭제됐거나 이전되었습니다.</div>;
+  if (isLoading) {
+    return <_.PostDetail_Message>불러오는 중...</_.PostDetail_Message>;
   }
-  console.log(post, id);
+
+  if (!post || !id) {
+    return (
+      <_.PostDetail_Message>
+        글이 삭제됐거나 이전되었습니다.
+      </_.PostDetail_Message>
+    );
+  }
 
   return (
     <_.PostDetail_Layout>

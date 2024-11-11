@@ -79,8 +79,8 @@ const Community = () => {
           <_.Community_PostList>
             {filteredPosts.map((post: community) => (
               <_.Community_Link
-                to={`/community/detail/${post.communityId}`}
                 key={post.communityId}
+                to={`/community/detail/${post.communityId}`}
               >
                 <PreviewCard
                   title={post.title}

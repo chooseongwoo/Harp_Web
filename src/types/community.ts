@@ -20,5 +20,8 @@ export interface detailPost {
   createdAt: string;
   updatedAt: string;
   wishCount: number;
+  'creator.userId': number;
+  'creator.nickname': string;
+  'creator.profileImg': string;
   comments: string[];
 }

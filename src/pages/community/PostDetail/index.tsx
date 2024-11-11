@@ -2,9 +2,9 @@
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
+import { useQuery } from 'react-query';
 
 // 파일
-import { PreviewData } from 'data/PreviewData';
 import * as _ from './style';
 import Header from 'components/Header';
 import KebabMenu from 'assets/Icon/KebabMenu';
@@ -15,8 +15,11 @@ import { theme } from 'lib/utils/style/theme';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 import { slider } from 'config/slider';
 import ImageDetail from 'components/community/ImageDetail';
+import { Community_OnePost } from 'lib/apis/Community';
+import { detailPost } from 'types/community';
 
 const PostDetail = () => {
+  const [post, setPost] = useState<detailPost | null>(null);
   const [message, setMessage] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -29,7 +32,18 @@ const PostDetail = () => {
   };
 
   const { id } = useParams<{ id: string }>();
-  const post = PreviewData.find((item) => item.communityId === parseInt(id!));
+
+  const { isLoading } = useQuery(
+    ['getOnePost'],
+    () => Community_OnePost(id ?? ''),
+    {
+      onSuccess: (response) => {
+        setPost(response.data.post);
+      },
+      staleTime: 10000,
+      cacheTime: 600000
+    }
+  );
 
   const [isLiked, setIsLiked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +64,7 @@ const PostDetail = () => {
   if (!post || !id) {
     return <div>글이 삭제됐거나 이전되었습니다.</div>;
   }
+  console.log(post, id);
 
   return (
     <_.PostDetail_Layout>
@@ -60,10 +75,10 @@ const PostDetail = () => {
           <KebabMenu onClick={() => {}} />
         </_.PostDetail_SapceBetween>
         <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
-        <_.PostDetail_Info>{`${post.author} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>
+        <_.PostDetail_Info>{` ${post['creator.nickname']} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>
         <_.PostDetail_Description>{post.des}</_.PostDetail_Description>
         <Slider {...slider}>
-          {post.images?.map((image, index) => (
+          {post.images?.map((image: string, index: number) => (
             <_.PostDetail_Image
               backgroundImage={image}
               key={index}
@@ -88,7 +103,7 @@ const PostDetail = () => {
         </_.PostDetail_Reaction>
         <_.PostDetail_Line />
         <_.PostDetail_CommentCount>
-          댓글 {post.commentCount}
+          댓글 {post.comments.length}
         </_.PostDetail_CommentCount>
         <Comment />
       </_.PostDetail_Container>

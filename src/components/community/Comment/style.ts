@@ -43,10 +43,20 @@ export const Comment_Description = styled.div`
 export const Comment_Reply = styled.div`
   margin: 5px 0 12px;
   font-size: 12px;
-  color: ${theme.gray[3.5]};
   align-items: center;
   display: flex;
-  gap: 4px;
+  color: ${theme.gray[3.5]};
+  gap: 10px;
+`;
+
+export const Comment_Upload = styled.p`
+  color: ${theme.gray[3.5]};
+`;
+
+export const Comment_Length = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
 `;
 
 export const Comment_ReplyComments = styled.div`

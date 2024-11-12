@@ -19,3 +19,15 @@ export const Community_IsLike = async (id: string) => {
   const { data } = await AuthInstance.get(`/community/wish/islike/${id}`);
   return data;
 };
+
+interface CommentParams {
+  des: string;
+  isCommentForComment: boolean;
+  parentComment?: number;
+  communityId: number;
+}
+
+export const Community_AddComment = async (params: CommentParams) => {
+  const { data } = await AuthInstance.post(`/community/comment`, params);
+  return data;
+};

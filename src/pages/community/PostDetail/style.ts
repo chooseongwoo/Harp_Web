@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-export const PostDetail_Layout = styled.div`
+export const PostDetail_Layout = styled.div<{ isRepliedComment: boolean }>`
   position: fixed;
   width: 100%;
-  height: calc(100vh - 40px);
+  height: 100vh;
+  padding-bottom: ${(props) => (props.isRepliedComment ? '90px' : '60px')};
 `;
 
 export const PostDetail_Container = styled.div`
@@ -99,6 +100,25 @@ export const PostDetail_ProfileImage = styled.img`
   background-color: pink;
   flex-shrink: 1;
   border: 1px solid ${theme.gray[1]};
+`;
+
+export const PostDetail_Bottom = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  background-color: ${theme.gray.white};
+`;
+
+export const PostDetail_Replying = styled.div`
+  width: 100%;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${theme.gray[0]};
+  color: ${theme.gray['3.5']};
 `;
 
 export const PostDetail_TypingContainer = styled.div`

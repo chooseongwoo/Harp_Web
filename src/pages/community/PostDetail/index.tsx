@@ -16,27 +16,30 @@ import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 import { slider } from 'config/slider';
 import ImageDetail from 'components/community/ImageDetail';
 import {
+  Community_AddComment,
   Community_IsLike,
   Community_OnePost,
   Community_PostWish
 } from 'lib/apis/Community';
 import { detailPost } from 'types/community';
+import X from 'assets/Icon/X';
 
 const PostDetail = () => {
   const [message, setMessage] = useState<string>('');
+  const [isRepliedComment, setIsRepliedComment] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [replyingTo, setReplyingTo] = useState<{
+    nickname: string;
+    commentsId: number;
+  } | null>(null);
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-    setMessage(e.target.value);
-  };
 
   const { id } = useParams<{ id: string }>();
 
-  const [{ isLoading, data: postData }, { data: isLike }] = useQueries([
+  const [{ isLoading, data: postData }] = useQueries([
     {
       queryKey: ['getOnePost', id],
       queryFn: () => Community_OnePost(id ?? ''),
@@ -63,11 +66,37 @@ const PostDetail = () => {
     }
   );
 
-  const post: detailPost = postData?.data?.post;
+  const { mutate: addCommentMutation } = useMutation(
+    () =>
+      Community_AddComment({
+        des: message,
+        isCommentForComment: isRepliedComment,
+        parentComment: replyingTo?.commentsId,
+        communityId: parseInt(id || '', 10)
+      }),
+    {
+      onError: (error) => {
+        alert(`댓글 작성 실패: ${error}`);
+      }
+    }
+  );
 
-  const [isLiked, setIsLiked] = useState(isLike?.data?.status);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const resizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+    setMessage(e.target.value);
+  };
+
+  const submitComment = () => {
+    addCommentMutation();
+    if (message !== '') {
+      console.log(message, parseInt(id || '', 10));
+      setMessage('');
+    }
+  };
 
   const handleLikeClick = () => {
     setIsLiked(!isLiked);
@@ -85,9 +114,21 @@ const PostDetail = () => {
     setSelectedImage(null);
   };
 
+  const handleReplyClick = (nickname: string, commentsId: number) => {
+    setIsRepliedComment(true);
+    setReplyingTo({ nickname, commentsId });
+  };
+
+  const closeReply = () => {
+    setIsRepliedComment(false);
+    setReplyingTo(null);
+  };
+
   if (isLoading) {
     return <_.PostDetail_Message>불러오는 중...</_.PostDetail_Message>;
   }
+
+  const post: detailPost = postData?.data?.post;
 
   if (!post || !id) {
     return (
@@ -98,7 +139,7 @@ const PostDetail = () => {
   }
 
   return (
-    <_.PostDetail_Layout>
+    <_.PostDetail_Layout isRepliedComment={isRepliedComment}>
       <Header title="글 상세" />
       <_.PostDetail_Container>
         <_.PostDetail_SapceBetween>
@@ -138,25 +179,41 @@ const PostDetail = () => {
         </_.PostDetail_CommentCount>
         <_.PostDetail_Comments>
           {post?.comments.map((comment) => {
-            return <Comment key={comment.commnetsId} comment={comment} />;
+            return (
+              <Comment
+                key={comment.commnetsId}
+                comment={comment}
+                onReplyClick={() =>
+                  handleReplyClick(comment.author.nickname, comment.commnetsId)
+                }
+              />
+            );
           })}
         </_.PostDetail_Comments>
       </_.PostDetail_Container>
-      <_.PostDetail_TypingContainer>
-        <_.PostDetail_ProfileImage />
-        <_.PostDetail_TypingBox>
-          <_.PostDetail_Textarea
-            value={message}
-            placeholder="댓글을 입력하세요..."
-            rows={1}
-            ref={textareaRef}
-            onChange={resizeHeight}
-          />
-          <_.PostDetail_SendIcon>
-            <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
-          </_.PostDetail_SendIcon>
-        </_.PostDetail_TypingBox>
-      </_.PostDetail_TypingContainer>
+      <_.PostDetail_Bottom>
+        {isRepliedComment && replyingTo && (
+          <_.PostDetail_Replying>
+            {replyingTo.nickname}님에게 답글을 남기는 중...
+            <X onClick={closeReply} />
+          </_.PostDetail_Replying>
+        )}
+        <_.PostDetail_TypingContainer>
+          <_.PostDetail_ProfileImage />
+          <_.PostDetail_TypingBox>
+            <_.PostDetail_Textarea
+              value={message}
+              placeholder="댓글을 입력하세요..."
+              rows={1}
+              ref={textareaRef}
+              onChange={resizeHeight}
+            />
+            <_.PostDetail_SendIcon onClick={submitComment}>
+              <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
+            </_.PostDetail_SendIcon>
+          </_.PostDetail_TypingBox>
+        </_.PostDetail_TypingContainer>
+      </_.PostDetail_Bottom>
       <ImageDetail
         isOpen={isModalOpen}
         onRequestClose={closeModal}

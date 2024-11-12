@@ -17,7 +17,7 @@ export const getDayMinuteCounter = (date?: Date | string): number | string => {
 
   if (dayDiff === 0 && hourDiff === 0) {
     const minutes = Math.ceil(minutesDiff);
-    return minutes == 0 ? 1 : minutes + '분 전';
+    return minutes == 0 ? '방금 전' : minutes + '분 전';
   }
 
   if (dayDiff === 0 && hourDiff <= 24) {

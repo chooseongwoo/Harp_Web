@@ -1,6 +1,6 @@
-import { DefaultInstance } from './Axios';
+import { AuthInstance } from './Axios';
 
 export const Upload_Image = async (formData: FormData) => {
-  const { data } = await DefaultInstance.post(`/upload/image`, formData);
+  const { data } = await AuthInstance.post(`/upload/image`, formData);
   return data;
 };

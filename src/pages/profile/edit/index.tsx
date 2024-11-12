@@ -90,7 +90,7 @@ const Edit = () => {
       navigate('/profile/edit/crop', {
         state: { imageSrc: selectedImage }
       });
-      setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
+      // setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
       setIsImageChanged(true);
     });
   };

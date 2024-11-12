@@ -31,3 +31,15 @@ export const Community_AddComment = async (params: CommentParams) => {
   const { data } = await AuthInstance.post(`/community/comment`, params);
   return data;
 };
+
+interface PostParams {
+  title: string;
+  des: string;
+  tag: string;
+  images: string[];
+}
+
+export const Community_CreatePost = async (params: PostParams) => {
+  const { data } = await AuthInstance.post(`/community`, params);
+  return data;
+};

@@ -86,6 +86,12 @@ export const PostDetail_CommentCount = styled.div`
   padding: 10px 0 15px 0;
 `;
 
+export const PostDetail_Comments = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const PostDetail_ProfileImage = styled.img`
   width: 40px;
   height: 40px;

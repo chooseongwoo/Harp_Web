@@ -5,6 +5,11 @@ export const ReplyComment_Layout = styled.div`
   width: 100%;
   display: flex;
   margin-top: 5px;
+  justify-content: space-between;
+`;
+
+export const ReplyComment_Left = styled.div`
+  display: flex;
 `;
 
 export const ReplyComment_ColContainer = styled.div`

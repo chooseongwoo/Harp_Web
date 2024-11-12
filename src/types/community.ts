@@ -24,6 +24,7 @@ export interface detailPost {
   'creator.nickname': string;
   'creator.profileImg': string;
   comments: comment[];
+  CommentsCount: number;
 }
 
 interface Author {

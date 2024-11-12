@@ -21,9 +21,11 @@ const Comments = ({ comment }: { comment: comment }) => {
         <_.Comment_Reply>
           <Comment width="14" height="14" /> 답글 {comment.replies.length}
         </_.Comment_Reply>
-        {comment.replies.map((reply) => (
-          <ReplyComment key={reply.commnetsId} replyComment={reply} />
-        ))}
+        <_.Comment_ReplyComments>
+          {comment.replies.map((reply) => (
+            <ReplyComment key={reply.commnetsId} replyComment={reply} />
+          ))}
+        </_.Comment_ReplyComments>
       </_.Comment_ColContainer>
       <KebabMenu onClick={() => {}} />
     </_.Comment_Layout>

@@ -2,7 +2,6 @@ import { theme } from 'lib/utils/style/theme';
 import styled from 'styled-components';
 
 export const Comment_Layout = styled.div`
-  padding-bottom: 50px;
   width: 100%;
   display: flex;
 `;
@@ -42,11 +41,16 @@ export const Comment_Description = styled.div`
 `;
 
 export const Comment_Reply = styled.div`
-  margin-top: 5px;
+  margin: 5px 0 12px;
   font-size: 12px;
   color: ${theme.gray[3.5]};
   align-items: center;
   display: flex;
   gap: 4px;
-  margin-bottom: 12px;
+`;
+
+export const Comment_ReplyComments = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;

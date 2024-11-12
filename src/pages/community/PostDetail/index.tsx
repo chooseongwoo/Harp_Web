@@ -134,11 +134,13 @@ const PostDetail = () => {
         </_.PostDetail_Reaction>
         <_.PostDetail_Line />
         <_.PostDetail_CommentCount>
-          댓글 {post.comments.length}
+          댓글 {post.CommentsCount}
         </_.PostDetail_CommentCount>
-        {post?.comments.map((comment) => {
-          return <Comment key={comment.commnetsId} comment={comment} />;
-        })}
+        <_.PostDetail_Comments>
+          {post?.comments.map((comment) => {
+            return <Comment key={comment.commnetsId} comment={comment} />;
+          })}
+        </_.PostDetail_Comments>
       </_.PostDetail_Container>
       <_.PostDetail_TypingContainer>
         <_.PostDetail_ProfileImage />

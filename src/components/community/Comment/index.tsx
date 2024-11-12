@@ -11,17 +11,16 @@ import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 interface OwnProps {
   comment: comment;
   onReplyClick: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpened: boolean;
+  toggleReplyVisibility: () => void;
 }
 
-const Comments = ({ comment, onReplyClick }: OwnProps) => {
-  const [isOpened, setIsOpened] = useState(false);
-
-  const toggleReplyVisibility = () => {
-    if (comment.replies.length > 0) {
-      setIsOpened(!isOpened);
-    }
-  };
-
+const Comments = ({
+  comment,
+  onReplyClick,
+  isOpened,
+  toggleReplyVisibility
+}: OwnProps) => {
   return (
     <_.Comment_Layout>
       <_.Comment_Profile src={comment.author.profileImg} />

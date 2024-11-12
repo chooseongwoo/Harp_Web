@@ -6,8 +6,9 @@ import 'slick-carousel/slick/slick-theme.css';
 export const PostDetail_Layout = styled.div<{ isRepliedComment: boolean }>`
   position: fixed;
   width: 100%;
-  height: 100vh;
-  padding-bottom: ${(props) => (props.isRepliedComment ? '90px' : '60px')};
+  height: calc(
+    100vh - ${(props) => (props.isRepliedComment ? '90px' : '60px')}
+  );
 `;
 
 export const PostDetail_Container = styled.div`
@@ -106,7 +107,7 @@ export const PostDetail_Bottom = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background-color: ${theme.gray.white};
 `;

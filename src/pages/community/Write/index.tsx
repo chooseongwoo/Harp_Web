@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CategoryModal from 'components/community/CategoryModal';
@@ -24,6 +24,8 @@ const Write = () => {
     title: '',
     des: ''
   });
+
+  const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { mutate: createPostMutation } = useMutation(
     () =>
@@ -91,6 +93,12 @@ const Write = () => {
     }));
   };
 
+  useEffect(() => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedImages]);
+
   return (
     <_.Write_Layout>
       <Header
@@ -134,6 +142,7 @@ const Write = () => {
             </_.Write_DeleteIcon>
           </_.Write_ImageContainer>
         ))}
+        <div ref={imageContainerRef} />
       </_.Write_Container>
     </_.Write_Layout>
   );

@@ -137,7 +137,6 @@ const PostDetail = () => {
           댓글 {post.comments.length}
         </_.PostDetail_CommentCount>
         {post?.comments.map((comment) => {
-          console.log(comment);
           return <Comment key={comment.commnetsId} comment={comment} />;
         })}
       </_.PostDetail_Container>

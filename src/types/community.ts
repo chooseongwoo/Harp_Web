@@ -45,7 +45,7 @@ export interface comment {
   replies: replyComment[];
 }
 
-interface replyComment {
+export interface replyComment {
   commnetsId: number;
   des: string;
   isCommentForComment: number;

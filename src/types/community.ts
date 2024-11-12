@@ -23,5 +23,35 @@ export interface detailPost {
   'creator.userId': number;
   'creator.nickname': string;
   'creator.profileImg': string;
-  comments: string[];
+  comments: comments[];
+}
+
+interface Author {
+  userId: number;
+  nickname: string;
+  profileImg: string;
+}
+
+export interface comments {
+  commnetsId: number;
+  des: string;
+  isCommentForComment: 0;
+  parentComment: number | null;
+  createdAt: string;
+  updatedAt: string;
+  likes: number;
+  author: Author;
+  repliesCount: number;
+  replies: replyComment[];
+}
+
+interface replyComment {
+  commnetsId: number;
+  des: string;
+  isCommentForComment: number;
+  parentComment: number;
+  createdAt: string;
+  updatedAt: string;
+  likes: number;
+  author: Author;
 }

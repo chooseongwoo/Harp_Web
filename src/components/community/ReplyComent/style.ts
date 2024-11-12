@@ -13,12 +13,11 @@ export const ReplyComment_ColContainer = styled.div`
   margin-left: 10px;
 `;
 
-export const ReplyComment_Profile = styled.div`
+export const ReplyComment_Profile = styled.img`
   width: 24px;
   height: 24px;
   border-radius: 100%;
   border: 1px solid ${theme.gray[1]};
-  background-color: pink;
   flex-shrink: 0;
 `;
 

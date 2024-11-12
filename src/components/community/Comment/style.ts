@@ -14,12 +14,11 @@ export const Comment_ColContainer = styled.div`
   margin-left: 10px;
 `;
 
-export const Comment_Profile = styled.div`
+export const Comment_Profile = styled.img`
   width: 34px;
   height: 34px;
   border-radius: 100%;
   border: 1px solid ${theme.gray[1]};
-  background-color: pink;
   flex-shrink: 0;
 `;
 

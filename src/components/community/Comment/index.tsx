@@ -11,7 +11,7 @@ import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 const Comments = ({ comment }: { comment: comment }) => {
   return (
     <_.Comment_Layout>
-      <_.Comment_Profile />
+      <_.Comment_Profile src={comment.author.profileImg} />
       <_.Comment_ColContainer>
         <_.Comment_Nickname>{comment.author.nickname}</_.Comment_Nickname>
         <_.Comment_Time>

@@ -10,7 +10,7 @@ import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 const ReplyComment = ({ replyComment }: { replyComment: replyComment }) => {
   return (
     <_.ReplyComment_Layout>
-      <_.ReplyComment_Profile />
+      <_.ReplyComment_Profile src={replyComment.author.profileImg} />
       <_.ReplyComment_ColContainer>
         <_.ReplyComment_Nickname>
           {replyComment.author.nickname}

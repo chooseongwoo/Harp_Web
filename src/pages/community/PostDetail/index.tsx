@@ -136,7 +136,10 @@ const PostDetail = () => {
         <_.PostDetail_CommentCount>
           댓글 {post.comments.length}
         </_.PostDetail_CommentCount>
-        <Comment />
+        {post?.comments.map((comment) => {
+          console.log(comment);
+          return <Comment key={comment.commnetsId} comment={comment} />;
+        })}
       </_.PostDetail_Container>
       <_.PostDetail_TypingContainer>
         <_.PostDetail_ProfileImage />
@@ -145,7 +148,6 @@ const PostDetail = () => {
             value={message}
             placeholder="댓글을 입력하세요..."
             rows={1}
-            maxLength={50}
             ref={textareaRef}
             onChange={resizeHeight}
           />

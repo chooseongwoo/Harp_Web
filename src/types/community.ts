@@ -23,7 +23,7 @@ export interface detailPost {
   'creator.userId': number;
   'creator.nickname': string;
   'creator.profileImg': string;
-  comments: comments[];
+  comments: comment[];
 }
 
 interface Author {
@@ -32,7 +32,7 @@ interface Author {
   profileImg: string;
 }
 
-export interface comments {
+export interface comment {
   commnetsId: number;
   des: string;
   isCommentForComment: 0;

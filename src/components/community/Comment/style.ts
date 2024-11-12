@@ -23,31 +23,31 @@ export const Comment_Profile = styled.div`
   flex-shrink: 0;
 `;
 
-export const Conmment_Nickname = styled.div`
+export const Comment_Nickname = styled.div`
   color: ${theme.gray.black};
   font-size: 15px;
   font-weight: 500;
 `;
 
-export const Conmment_Time = styled.div`
+export const Comment_Time = styled.div`
   color: ${theme.gray[3.5]};
   font-size: 12px;
   font-weight: 400;
 `;
 
-export const Conmment_Description = styled.div`
+export const Comment_Description = styled.div`
   color: ${theme.gray.black};
   font-size: 14px;
   font-weight: 400;
   margin-top: 5px;
 `;
 
-export const Conmment_Reply = styled.div`
-margin-top: 5px;
+export const Comment_Reply = styled.div`
+  margin-top: 5px;
   font-size: 12px;
   color: ${theme.gray[3.5]};
   align-items: center;
   display: flex;
   gap: 4px;
   margin-bottom: 12px;
-`
+`;

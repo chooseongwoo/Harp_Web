@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import { useMutation, useQueries } from 'react-query';
+import { useMutation, useQueries, useQueryClient } from 'react-query';
 
 // 파일
 import * as _ from './style';
@@ -38,6 +38,8 @@ const PostDetail = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { id } = useParams<{ id: string }>();
+
+  const queryClient = useQueryClient();
 
   const [{ isLoading, data: postData }] = useQueries([
     {
@@ -75,6 +77,13 @@ const PostDetail = () => {
         communityId: parseInt(id || '', 10)
       }),
     {
+      onSuccess: () => {
+        queryClient.refetchQueries(['getOnePost', id]);
+        setMessage('');
+        if (isRepliedComment) {
+          setIsRepliedComment(false);
+        }
+      },
       onError: (error) => {
         alert(`댓글 작성 실패: ${error}`);
       }
@@ -91,10 +100,8 @@ const PostDetail = () => {
   };
 
   const submitComment = () => {
-    addCommentMutation();
     if (message !== '') {
-      console.log(message, parseInt(id || '', 10));
-      setMessage('');
+      addCommentMutation();
     }
   };
 
@@ -117,6 +124,7 @@ const PostDetail = () => {
   const handleReplyClick = (nickname: string, commentsId: number) => {
     setIsRepliedComment(true);
     setReplyingTo({ nickname, commentsId });
+    textareaRef.current?.focus();
   };
 
   const closeReply = () => {

@@ -1,6 +1,7 @@
 // 라이브러리
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 // 파일
 import * as _ from './style';
@@ -10,7 +11,6 @@ import MenuBar from 'components/MenuBar';
 import PreviewCard from 'components/community/PreviewCard';
 import Edit from 'assets/Icon/Edit';
 import { community } from 'types/community';
-import { useQuery } from 'react-query';
 import { Community_AllPost } from 'lib/apis/Community';
 
 const Community = () => {

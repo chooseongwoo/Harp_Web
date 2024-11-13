@@ -5,7 +5,7 @@ import React from 'react';
 import * as _ from './style';
 import Heart from 'assets/image/Heart';
 import Comment from 'assets/image/Comment';
-import { previewData } from 'types/community';
+import { community } from 'types/community';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 
 const PreviewCard = ({
@@ -13,8 +13,9 @@ const PreviewCard = ({
   tag,
   wishCount,
   commentCount,
-  updatedAt
-}: previewData) => {
+  updatedAt,
+  images
+}: community) => {
   return (
     <_.PreviewCard_Layout>
       <_.PreviewCard_Left>
@@ -35,7 +36,7 @@ const PreviewCard = ({
         <_.PreviewCard_Gray>
           {getDayMinuteCounter(updatedAt)}
         </_.PreviewCard_Gray>
-        <_.PreviewCard_Image />
+        <_.PreviewCard_Image url={images![0]} />
       </_.PreviewCard_Right>
     </_.PreviewCard_Layout>
   );

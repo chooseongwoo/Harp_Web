@@ -1,46 +1,37 @@
-import { AuthInstance, DefaultInstance } from './Axios';
+import { AuthInstance } from './Axios';
 
-export const Auth_KakaoLogin = async (code: string) => {
-  const { data } = await DefaultInstance.post(
-    `/api/auth/login/kakao?code=${code}`
-  );
+export const Auth_KakaoLogin = async () => {
+  const { data } = await AuthInstance.get(`/auth/kakao/authstate`);
   return data;
 };
 
 interface UserInfoParams {
   nickname: string;
-  birthday: string;
+  birthdate: string;
   gender: string;
 }
 
 export const Auth_UserInfo = async (params: UserInfoParams) => {
-  const { data } = await AuthInstance.put(`/user`, params);
+  const { data } = await AuthInstance.put(`/auth/newaccount`, params);
   return data;
 };
 
 interface SuveryParams {
-  food: string[];
-  mbti: string;
-  travel: string[];
-  content: string;
+  Q1: string;
+  Q2: string;
+  Q3: string;
+  etc: string;
 }
 
 export const Auth_Survey = async (params: SuveryParams) => {
-  const { data } = await AuthInstance.post(`/survey`, {
-    food: params.food,
-    mbti: params.mbti,
-    travel: params.travel,
-    conent: params.content
+  const { data } = await AuthInstance.post(`/auth/survey`, {
+    headers: {
+      Q1: params.Q1,
+      Q2: params.Q2,
+      Q3: params.Q3,
+      Qetc: params.etc
+    }
   });
   return data;
 };
 
-export const Auth_ReadInfo = async () => {
-  const { data } = await AuthInstance.get(`/user`);
-  return data;
-};
-
-export const Auth_Image = async (url: string) => {
-  const { data } = await AuthInstance.put(`/user/profile`, { imgUrl: url });
-  return data;
-};

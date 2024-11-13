@@ -10,8 +10,8 @@ import NextButton from 'components/NextButton';
 import RocketImage from 'assets/image/Rocket.png';
 import { Auth_Survey, Auth_UserInfo } from 'lib/apis/Auth';
 import {
-  selectedFoodsArrayState,
-  selectedStylesArrayState,
+  selectedFoodsStringState,
+  selectedStylesStringState,
   stringMbtiState,
   tmiState,
   userInfosState
@@ -20,8 +20,8 @@ import {
 const SurveyEnd = () => {
   const navigate = useNavigate();
   const { username, birthday, gender } = useRecoilValue(userInfosState);
-  const styles = useRecoilValue(selectedStylesArrayState);
-  const foods = useRecoilValue(selectedFoodsArrayState);
+  const styles = useRecoilValue(selectedStylesStringState);
+  const foods = useRecoilValue(selectedFoodsStringState);
   const mbti = useRecoilValue(stringMbtiState);
   const tmi = useRecoilValue(tmiState);
 
@@ -29,15 +29,15 @@ const SurveyEnd = () => {
     try {
       await Auth_UserInfo({
         nickname: username,
-        birthday: birthday,
+        birthdate: birthday,
         gender: gender
       });
 
       await Auth_Survey({
-        travel: styles,
-        food: foods,
-        mbti: mbti,
-        content: tmi
+        Q1: styles,
+        Q2: foods,
+        Q3: mbti,
+        etc: tmi
       });
 
       navigate('/');

@@ -5,6 +5,11 @@ export const ReplyComment_Layout = styled.div`
   width: 100%;
   display: flex;
   margin-top: 5px;
+  justify-content: space-between;
+`;
+
+export const ReplyComment_Left = styled.div`
+  display: flex;
 `;
 
 export const ReplyComment_ColContainer = styled.div`
@@ -13,12 +18,11 @@ export const ReplyComment_ColContainer = styled.div`
   margin-left: 10px;
 `;
 
-export const ReplyComment_Profile = styled.div`
+export const ReplyComment_Profile = styled.img`
   width: 24px;
   height: 24px;
   border-radius: 100%;
   border: 1px solid ${theme.gray[1]};
-  background-color: pink;
   flex-shrink: 0;
 `;
 

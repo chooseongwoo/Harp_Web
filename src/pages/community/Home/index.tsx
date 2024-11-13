@@ -1,6 +1,7 @@
 // 라이브러리
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 // 파일
 import * as _ from './style';
@@ -9,27 +10,43 @@ import { theme } from 'lib/utils/style/theme';
 import MenuBar from 'components/MenuBar';
 import PreviewCard from 'components/community/PreviewCard';
 import Edit from 'assets/Icon/Edit';
-import { PreviewData } from 'data/PreviewData';
+import { community } from 'types/community';
+import { Community_AllPost } from 'lib/apis/Community';
 
 const Community = () => {
   const navigate = useNavigate();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    '전체'
-  ]);
+
+  const { data, isLoading } = useQuery(['getAllPost'], Community_AllPost, {
+    staleTime: 10000,
+    cacheTime: 600000
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [filteredPosts, setFilteredPosts] = useState<community[]>([]);
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategories((selectedCategory) => {
-      if (category === '전체') {
-        return ['전체'];
-      }
-      const newCategories = selectedCategory.includes(category)
-        ? selectedCategory.filter((c) => c !== category)
-        : [...selectedCategory.filter((c) => c !== '전체'), category];
-      return newCategories.length === 0 ? ['전체'] : newCategories;
-    });
+    if (category !== selectedCategory) {
+      setSelectedCategory(category);
+    }
   };
 
-  const categories = ['전체', '여행후기🌱', '#맛집⭐️', '질문', '정보공유'];
+  const categories = [
+    '전체',
+    '💬 일상/수다',
+    '✈️ 여행',
+    '🥨 맛집',
+    '🍯 꿀팁 공유',
+    '💡 고민 상담'
+  ];
+
+  useEffect(() => {
+    const posts = data?.data?.Formatting || [];
+    const filtered =
+      selectedCategory !== '전체'
+        ? posts.filter((post: community) => post.tag === selectedCategory)
+        : posts;
+    setFilteredPosts(filtered);
+  }, [selectedCategory, data]);
 
   return (
     <_.Community_Layout>
@@ -42,7 +59,7 @@ const Community = () => {
           <_.Community_Category
             key={category}
             onClick={() => handleCategoryClick(category)}
-            isSelected={selectedCategories.includes(category)}
+            isSelected={selectedCategory.includes(category)}
           >
             {category}
           </_.Community_Category>
@@ -57,23 +74,30 @@ const Community = () => {
           <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
         </_.Community_Notice>
       </_.Community_NoticeList>
-      {PreviewData.length > 0 ? (
-        <_.Community_PostList>
-          {PreviewData.map((post) => (
-            <_.Community_Link to={`/community/detail/${post.communityId}`} key={post.communityId}>
-            <PreviewCard
-              key={post.communityId}
-              title={post.title}
-              tag={post.tag}
-              wishCount={post.wishCount}
-              commentCount={post.commentCount}
-              updatedAt={post.updatedAt}
-            />
-            </_.Community_Link>
-          ))}
-        </_.Community_PostList>
+      {!isLoading ? (
+        filteredPosts.length > 0 ? (
+          <_.Community_PostList>
+            {filteredPosts.map((post: community) => (
+              <_.Community_Link
+                key={post.communityId}
+                to={`/community/detail/${post.communityId}`}
+              >
+                <PreviewCard
+                  title={post.title}
+                  tag={post.tag}
+                  wishCount={post.wishCount}
+                  commentCount={post.commentCount}
+                  updatedAt={post.updatedAt}
+                  images={post.images}
+                />
+              </_.Community_Link>
+            ))}
+          </_.Community_PostList>
+        ) : (
+          <_.Community_Not>등록된 글이 없습니다.</_.Community_Not>
+        )
       ) : (
-        <_.Community_NotUploaded>등록된 글이 없습니다.</_.Community_NotUploaded>
+        <_.Community_Not>글 불러오는 중...</_.Community_Not>
       )}
       <_.Community_Writing onClick={() => navigate('/community/write')}>
         <Edit />

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import CategoryModal from 'components/community/CategoryModal';
 import * as _ from './style';
 import Header from 'components/Header';
@@ -8,16 +10,63 @@ import Image from 'assets/image/Image';
 import Location_g from 'assets/image/Location-g';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import Delete from 'assets/Icon/Delete';
+import { useMutation } from 'react-query';
+import { Community_CreatePost } from 'lib/apis/Community';
+import { Upload_Image } from 'lib/apis/Upload';
 
 const Write = () => {
+  const navigate = useNavigate();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [isCategoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('게시글 카테고리 선택하기');
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>('게시글 카테고리 선택하기');
+  const [inputs, setInputs] = useState({
+    title: '',
+    des: ''
+  });
+
+  const imageContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const { mutate: createPostMutation } = useMutation(
+    () =>
+      Community_CreatePost({
+        ...inputs,
+        tag: selectedCategory,
+        images: selectedImages
+      }),
+    {
+      onSuccess: (response) => {
+        alert(response.message);
+        navigate(`/community`);
+      },
+      onError: (error) => {
+        console.error('글 작성 실패', error);
+      }
+    }
+  );
+
+  const { mutate: uploadImageMutation } = useMutation(
+    (formData: FormData) => Upload_Image(formData),
+    {
+      onSuccess: (response) => {
+        setSelectedImages((prevImages) => [
+          ...prevImages,
+          response.data.url || ''
+        ]);
+      },
+      onError: (error) => {
+        console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드 중 오류가 발생했습니다.');
+      }
+    }
+  );
 
   const handlePhotoButtonClick = () => {
-    handleImageEdit((image) => {
+    handleImageEdit(async (image) => {
       if (selectedImages.length < 20) {
-        setSelectedImages((prevImages) => [...prevImages, image]);
+        const formData = new FormData();
+        formData.append('img', image);
+        uploadImageMutation(formData);
       } else {
         alert('최대 20장까지 이미지를 업로드할 수 있습니다.');
       }
@@ -37,9 +86,26 @@ const Write = () => {
     setCategoryModalOpen(false);
   };
 
+  const handleInputChange = (field: keyof typeof inputs, value: string) => {
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [field]: value
+    }));
+  };
+
+  useEffect(() => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedImages]);
+
   return (
     <_.Write_Layout>
-      <Header title="글 쓰기" buttonState="게시" />
+      <Header
+        title="글 쓰기"
+        buttonState="게시"
+        onClickMethod={createPostMutation}
+      />
       <_.Write_Container>
         <CategoryModal
           onClose={() => setCategoryModalOpen(false)}
@@ -49,12 +115,16 @@ const Write = () => {
         <_.Write_ModalButton onClick={handleOpenCategoryModal}>
           {selectedCategory} <DownArrow color={theme.gray['3.5']} />
         </_.Write_ModalButton>
-        <_.Write_TitleInput placeholder="제목을 입력하세요..." />
+        <_.Write_TitleInput
+          placeholder="제목을 입력하세요..."
+          onChange={(e) => handleInputChange('title', e.target.value)}
+        />
         <_.Write_Line />
         <_.Write_DesInput
           placeholder="- 커뮤니티 가이드라인을 준수하며, 서로를 배려하고 존중하는 글을 작성해주세요.
 - 불필요한 비방이나 공격적인 표현은 자제하고, 모두가 즐겁게 소통할 수 있는 환경을 만들어주세요."
-        ></_.Write_DesInput>
+          onChange={(e) => handleInputChange('des', e.target.value)}
+        />
         {!isCategoryModalOpen && (
           <_.Write_BottomContainer>
             <_.Write_PhotoButton onClick={handlePhotoButtonClick}>
@@ -68,10 +138,11 @@ const Write = () => {
         {selectedImages.map((image, index) => (
           <_.Write_ImageContainer key={index} backgroundImage={image}>
             <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)}>
-              <Delete/>
+              <Delete />
             </_.Write_DeleteIcon>
           </_.Write_ImageContainer>
         ))}
+        <div ref={imageContainerRef} />
       </_.Write_Container>
     </_.Write_Layout>
   );

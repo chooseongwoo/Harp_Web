@@ -11,8 +11,9 @@ import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
-import { Auth_Image, Auth_ReadInfo, Auth_UserInfo } from 'lib/apis/Auth';
+import { Auth_KakaoLogin, Auth_UserInfo } from 'lib/apis/Auth';
 import { user } from 'types/user';
+import { Upload_Image } from 'lib/apis/Upload';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -33,13 +34,11 @@ const Edit = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const data = await Auth_ReadInfo();
-        const { imgUrl, email, nickname, birthday } = data;
-        let { gender } = data;
-        gender = gender === 'MALE' ? '남자' : '여자';
+        const data = await Auth_KakaoLogin();
+        const { profileImg, email, nickname, birthday, gender } = data;
 
         const fetchedInfos = {
-          profileImage: location.state?.imageUrl || imgUrl,
+          profileImage: location.state?.imageUrl || profileImg,
           email,
           username: nickname,
           birthday,
@@ -91,18 +90,18 @@ const Edit = () => {
       navigate('/profile/edit/crop', {
         state: { imageSrc: selectedImage }
       });
-      setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
+      // setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
       setIsImageChanged(true);
     });
   };
 
   const handleUpdateProfile = async () => {
     try {
-      await Auth_Image(location.state?.imageUrl);
+      await Upload_Image(location.state?.imageUrl);
       await Auth_UserInfo({
         nickname: infos.username,
-        birthday: infos.birthday ?? '',
-        gender: infos.gender === '남자' ? 'MALE' : 'FEMALE'
+        birthdate: infos.birthday ?? '',
+        gender: infos.gender ?? ''
       });
       alert('프로필 수정 성공!');
       navigate(`/all`);

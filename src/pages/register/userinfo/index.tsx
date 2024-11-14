@@ -34,8 +34,8 @@ const UserInfo = () => {
   const handleGenderBox = (selectedGender: string) => {
     setUserInfos({ ...userInfos, gender: selectedGender });
     setIsSelected({
-      female: selectedGender === 'FEMALE',
-      male: selectedGender === 'MALE'
+      female: selectedGender === '여성',
+      male: selectedGender === '남성'
     });
   };
 
@@ -94,13 +94,13 @@ const UserInfo = () => {
             <_.UserInfo_Gender_Box>
               <_.UserInfo_Gender
                 isSelected={isSelected.female}
-                onClick={() => handleGenderBox('FEMALE')}
+                onClick={() => handleGenderBox('여성')}
               >
                 여성
               </_.UserInfo_Gender>
               <_.UserInfo_Gender
                 isSelected={isSelected.male}
-                onClick={() => handleGenderBox('MALE')}
+                onClick={() => handleGenderBox('남성')}
               >
                 남성
               </_.UserInfo_Gender>

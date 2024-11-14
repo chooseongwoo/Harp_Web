@@ -11,7 +11,7 @@ import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
-import { Auth_KakaoLogin, Auth_UserInfo } from 'lib/apis/Auth';
+import { Auth_AllInfo, Auth_UserInfo } from 'lib/apis/Auth';
 import { user } from 'types/user';
 import { Upload_Image } from 'lib/apis/Upload';
 
@@ -25,7 +25,7 @@ const Edit = () => {
     profileImg: '',
     email: '',
     nickname: '',
-    birthday: '',
+    birthdate: '',
     gender: ''
   });
 
@@ -34,14 +34,14 @@ const Edit = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const data = await Auth_KakaoLogin();
-        const { profileImg, email, nickname, birthday, gender } = data;
+        const { data } = await Auth_AllInfo();
+        const { profileImg, email, nickname, birthdate, gender } = data;
 
         const fetchedInfos = {
           profileImg: location.state?.imageUrl || profileImg,
           email,
           nickname: nickname,
-          birthday,
+          birthdate,
           gender
         };
 
@@ -90,17 +90,16 @@ const Edit = () => {
       navigate('/profile/edit/crop', {
         state: { imageSrc: selectedImage }
       });
-      // setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
       setIsImageChanged(true);
     });
   };
 
   const handleUpdateProfile = async () => {
     try {
-      await Upload_Image(location.state?.imageUrl);
+      // await Upload_Image(location.state?.imageUrl);
       await Auth_UserInfo({
         nickname: infos.nickname,
-        birthdate: infos.birthday ?? '',
+        birthdate: infos.birthdate ?? '',
         gender: infos.gender ?? ''
       });
       alert('프로필 수정 성공!');
@@ -111,18 +110,18 @@ const Edit = () => {
   };
 
   const isFormValid = useCallback(() => {
-    const { nickname, birthday, gender } = infos;
+    const { nickname, birthdate, gender } = infos;
 
     const isInfoChanged =
       nickname !== initialInfos?.nickname ||
-      birthday !== initialInfos?.birthday ||
+      birthdate !== initialInfos?.birthdate ||
       gender !== initialInfos?.gender ||
       isImageChanged;
 
     return (
       nickname.length >= 2 &&
-      birthday &&
-      isValidDate(birthday) &&
+      birthdate &&
+      isValidDate(birthdate) &&
       (gender === '남자' || gender === '여자') &&
       isInfoChanged
     );
@@ -158,7 +157,7 @@ const Edit = () => {
             <_.Edit_Info_Label>생년월일</_.Edit_Info_Label>
             <_.Edit_Info_Input
               name="birthday"
-              value={infos.birthday}
+              value={infos.birthdate}
               onChange={handleInfos}
             />
           </_.Edit_Info>

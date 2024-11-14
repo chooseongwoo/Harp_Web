@@ -15,21 +15,21 @@ import { user } from 'types/user';
 const All = () => {
   const navigate = useNavigate();
   const [infos, setInfos] = useState<user>({
-    profileImage: '',
-    username: ''
+    profileImg: '',
+    nickname: ''
   });
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const data = await Auth_KakaoLogin();
+        const { data } = await Auth_KakaoLogin();
         const { profileImg, nickname } = data;
         let { gender } = data;
         gender = gender === 'MALE' ? '남자' : '여자';
 
         const fetchedInfos = {
-          profileImage: profileImg,
-          username: nickname
+          profileImg: profileImg,
+          nickname: nickname
         };
 
         setInfos(fetchedInfos);
@@ -47,9 +47,9 @@ const All = () => {
         <SettingIcon onClick={() => navigate(`/setting`)} />
       </_.All_Header>
       <_.All_Profile>
-        <_.All_Profile_Image url={infos.profileImage} />
+        <_.All_Profile_Image url={infos.profileImg} />
         <_.All_Name onClick={() => navigate(`/profile/edit`)}>
-          {infos.username}
+          {infos.nickname}
           <RightArrow width="14" height="14" color={theme.gray.black} />
         </_.All_Name>
       </_.All_Profile>

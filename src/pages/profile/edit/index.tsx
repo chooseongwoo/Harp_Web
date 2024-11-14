@@ -22,9 +22,9 @@ const Edit = () => {
   const [initialInfos, setInitialInfos] = useState<user | null>(null);
 
   const [infos, setInfos] = useState<user>({
-    profileImage: '',
+    profileImg: '',
     email: '',
-    username: '',
+    nickname: '',
     birthday: '',
     gender: ''
   });
@@ -38,9 +38,9 @@ const Edit = () => {
         const { profileImg, email, nickname, birthday, gender } = data;
 
         const fetchedInfos = {
-          profileImage: location.state?.imageUrl || profileImg,
+          profileImg: location.state?.imageUrl || profileImg,
           email,
-          username: nickname,
+          nickname: nickname,
           birthday,
           gender
         };
@@ -99,7 +99,7 @@ const Edit = () => {
     try {
       await Upload_Image(location.state?.imageUrl);
       await Auth_UserInfo({
-        nickname: infos.username,
+        nickname: infos.nickname,
         birthdate: infos.birthday ?? '',
         gender: infos.gender ?? ''
       });
@@ -111,16 +111,16 @@ const Edit = () => {
   };
 
   const isFormValid = useCallback(() => {
-    const { username, birthday, gender } = infos;
+    const { nickname, birthday, gender } = infos;
 
     const isInfoChanged =
-      username !== initialInfos?.username ||
+      nickname !== initialInfos?.nickname ||
       birthday !== initialInfos?.birthday ||
       gender !== initialInfos?.gender ||
       isImageChanged;
 
     return (
-      username.length >= 2 &&
+      nickname.length >= 2 &&
       birthday &&
       isValidDate(birthday) &&
       (gender === '남자' || gender === '여자') &&
@@ -133,7 +133,7 @@ const Edit = () => {
       <Header title="회원 정보 수정" />
       <_.Edit_Content>
         <_.Edit_Profile>
-          <_.Edit_Profile_Img src={infos.profileImage} alt="프로필 이미지" />
+          <_.Edit_Profile_Img src={infos.profileImg} alt="프로필 이미지" />
           <_.Edit_Profile_Edit onClick={handleProfileImageEdit}>
             <ProfileEdit />
           </_.Edit_Profile_Edit>
@@ -150,7 +150,7 @@ const Edit = () => {
             <_.Edit_Info_Label>여행자 닉네임</_.Edit_Info_Label>
             <_.Edit_Info_Input
               name="username"
-              value={infos.username}
+              value={infos.nickname}
               onChange={handleInfos}
             />
           </_.Edit_Info>

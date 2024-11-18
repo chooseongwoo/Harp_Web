@@ -33,9 +33,9 @@ import All from 'pages/all';
 import Setting from 'pages/setting';
 
 // community
-import Community from 'pages/community/home';
-import Detail from 'pages/community/postDetail';
-import Write from 'pages/community/write';
+import Community from 'pages/community/Home';
+import Detail from 'pages/community/PostDetail';
+import Write from 'pages/community/Write';
 
 export default function Router() {
   return useRoutes([

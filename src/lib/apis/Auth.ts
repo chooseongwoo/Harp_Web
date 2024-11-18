@@ -5,7 +5,13 @@ export const Auth_KakaoLogin = async () => {
   return data;
 };
 
+export const Auth_AllInfo = async () => {
+  const { data } = await AuthInstance.get(`/auth/authstate`);
+  return data;
+};
+
 interface UserInfoParams {
+  profileImg?: string;
   nickname: string;
   birthdate: string;
   gender: string;
@@ -35,3 +41,7 @@ export const Auth_Survey = async (params: SuveryParams) => {
   return data;
 };
 
+export const Auth_UpdateUser = async (params: UserInfoParams) => {
+  const { data } = await AuthInstance.put(`/auth/updateuser`, params);
+  return data;
+};

@@ -1,7 +1,7 @@
 export interface user {
-  profileImage: string;
+  profileImg: string;
   email?: string;
-  username: string;
-  birthday?: string;
+  nickname: string;
+  birthdate?: string;
   gender?: string;
 }

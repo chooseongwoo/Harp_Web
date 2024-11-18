@@ -11,9 +11,8 @@ import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
-import { Auth_KakaoLogin, Auth_UserInfo } from 'lib/apis/Auth';
+import { Auth_AllInfo, Auth_UpdateUser } from 'lib/apis/Auth';
 import { user } from 'types/user';
-import { Upload_Image } from 'lib/apis/Upload';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -22,10 +21,10 @@ const Edit = () => {
   const [initialInfos, setInitialInfos] = useState<user | null>(null);
 
   const [infos, setInfos] = useState<user>({
-    profileImage: '',
+    profileImg: '',
     email: '',
-    username: '',
-    birthday: '',
+    nickname: '',
+    birthdate: '',
     gender: ''
   });
 
@@ -34,15 +33,15 @@ const Edit = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const data = await Auth_KakaoLogin();
-        const { profileImg, email, nickname, birthday, gender } = data;
+        const { data } = await Auth_AllInfo();
+        const { profileImg, email, nickname, birthdate, gender } = data;
 
         const fetchedInfos = {
-          profileImage: location.state?.imageUrl || profileImg,
+          profileImg: location.state?.imageUrl || profileImg,
           email,
-          username: nickname,
-          birthday,
-          gender
+          nickname: nickname,
+          birthdate,
+          gender: gender == 'female' ? '여자' : '남자'
         };
 
         setInfos(fetchedInfos);
@@ -52,7 +51,7 @@ const Edit = () => {
       }
     };
     getUserInfo();
-  }, [location.state?.imageUrl]);
+  }, []);
 
   const handleInfos = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,22 +85,21 @@ const Edit = () => {
   }, [location.state?.imageUrl]);
 
   const handleProfileImageEdit = () => {
-    handleImageEdit((selectedImage) => {
+    handleImageEdit(async (selectedImage) => {
       navigate('/profile/edit/crop', {
-        state: { imageSrc: selectedImage }
+        state: { imageSrc: URL.createObjectURL(selectedImage) }
       });
-      // setInfos((prev) => ({ ...prev, profileImage: selectedImage }));
       setIsImageChanged(true);
     });
   };
 
   const handleUpdateProfile = async () => {
     try {
-      await Upload_Image(location.state?.imageUrl);
-      await Auth_UserInfo({
-        nickname: infos.username,
-        birthdate: infos.birthday ?? '',
-        gender: infos.gender ?? ''
+      await Auth_UpdateUser({
+        profileImg: infos.profileImg || location.state?.imageUrl,
+        nickname: infos.nickname,
+        birthdate: infos.birthdate ?? '',
+        gender: infos.gender == '남자' ? 'male' : 'female' ?? ''
       });
       alert('프로필 수정 성공!');
       navigate(`/all`);
@@ -111,18 +109,18 @@ const Edit = () => {
   };
 
   const isFormValid = useCallback(() => {
-    const { username, birthday, gender } = infos;
+    const { nickname, birthdate, gender } = infos;
 
     const isInfoChanged =
-      username !== initialInfos?.username ||
-      birthday !== initialInfos?.birthday ||
+      nickname !== initialInfos?.nickname ||
+      birthdate !== initialInfos?.birthdate ||
       gender !== initialInfos?.gender ||
       isImageChanged;
 
     return (
-      username.length >= 2 &&
-      birthday &&
-      isValidDate(birthday) &&
+      nickname.length >= 2 &&
+      birthdate &&
+      isValidDate(birthdate) &&
       (gender === '남자' || gender === '여자') &&
       isInfoChanged
     );
@@ -133,7 +131,7 @@ const Edit = () => {
       <Header title="회원 정보 수정" />
       <_.Edit_Content>
         <_.Edit_Profile>
-          <_.Edit_Profile_Img src={infos.profileImage} alt="프로필 이미지" />
+          <_.Edit_Profile_Img src={infos.profileImg} alt="프로필 이미지" />
           <_.Edit_Profile_Edit onClick={handleProfileImageEdit}>
             <ProfileEdit />
           </_.Edit_Profile_Edit>
@@ -149,16 +147,16 @@ const Edit = () => {
           <_.Edit_Info>
             <_.Edit_Info_Label>여행자 닉네임</_.Edit_Info_Label>
             <_.Edit_Info_Input
-              name="username"
-              value={infos.username}
+              name="nickname"
+              value={infos.nickname}
               onChange={handleInfos}
             />
           </_.Edit_Info>
           <_.Edit_Info>
             <_.Edit_Info_Label>생년월일</_.Edit_Info_Label>
             <_.Edit_Info_Input
-              name="birthday"
-              value={infos.birthday}
+              name="birthdate"
+              value={infos.birthdate}
               onChange={handleInfos}
             />
           </_.Edit_Info>

@@ -11,9 +11,8 @@ import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
-import { Auth_AllInfo, Auth_UserInfo } from 'lib/apis/Auth';
+import { Auth_AllInfo, Auth_UpdateUser } from 'lib/apis/Auth';
 import { user } from 'types/user';
-import { Upload_Image } from 'lib/apis/Upload';
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ const Edit = () => {
           email,
           nickname: nickname,
           birthdate,
-          gender
+          gender: gender == 'female' ? '여자' : '남자'
         };
 
         setInfos(fetchedInfos);
@@ -52,7 +51,7 @@ const Edit = () => {
       }
     };
     getUserInfo();
-  }, [location.state?.imageUrl]);
+  }, []);
 
   const handleInfos = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,9 +85,9 @@ const Edit = () => {
   }, [location.state?.imageUrl]);
 
   const handleProfileImageEdit = () => {
-    handleImageEdit((selectedImage) => {
+    handleImageEdit(async (selectedImage) => {
       navigate('/profile/edit/crop', {
-        state: { imageSrc: selectedImage }
+        state: { imageSrc: URL.createObjectURL(selectedImage) }
       });
       setIsImageChanged(true);
     });
@@ -96,11 +95,11 @@ const Edit = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      // await Upload_Image(location.state?.imageUrl);
-      await Auth_UserInfo({
+      await Auth_UpdateUser({
+        profileImg: infos.profileImg || location.state?.imageUrl,
         nickname: infos.nickname,
         birthdate: infos.birthdate ?? '',
-        gender: infos.gender ?? ''
+        gender: infos.gender == '남자' ? 'male' : 'female' ?? ''
       });
       alert('프로필 수정 성공!');
       navigate(`/all`);
@@ -148,7 +147,7 @@ const Edit = () => {
           <_.Edit_Info>
             <_.Edit_Info_Label>여행자 닉네임</_.Edit_Info_Label>
             <_.Edit_Info_Input
-              name="username"
+              name="nickname"
               value={infos.nickname}
               onChange={handleInfos}
             />
@@ -156,7 +155,7 @@ const Edit = () => {
           <_.Edit_Info>
             <_.Edit_Info_Label>생년월일</_.Edit_Info_Label>
             <_.Edit_Info_Input
-              name="birthday"
+              name="birthdate"
               value={infos.birthdate}
               onChange={handleInfos}
             />

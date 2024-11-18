@@ -1,5 +1,5 @@
 // 라이브러리
-import { useLocation, useNavigate } from 'react-router-dom';
+import { replace, useLocation, useNavigate } from 'react-router-dom';
 
 // 파일
 import CropImage from 'components/CropImage';
@@ -21,11 +21,12 @@ const CropPage = () => {
     const response = await fetch(croppedImage);
     const blob = await response.blob();
     const formData = new FormData();
-    formData.append('file', blob, 'croppedImage.jpg');
+    formData.append('img', blob);
     const uploadResponse = await Upload_Image(formData);
 
     navigate('/profile/edit', {
-      state: { imageUrl: uploadResponse.url }
+      state: { imageUrl: uploadResponse.data.url },
+      replace: true
     });
   };
 

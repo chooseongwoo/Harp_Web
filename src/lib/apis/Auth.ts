@@ -11,6 +11,7 @@ export const Auth_AllInfo = async () => {
 };
 
 interface UserInfoParams {
+  profileImg?: string;
   nickname: string;
   birthdate: string;
   gender: string;
@@ -37,5 +38,10 @@ export const Auth_Survey = async (params: SuveryParams) => {
       Qetc: params.etc
     }
   });
+  return data;
+};
+
+export const Auth_UpdateUser = async (params: UserInfoParams) => {
+  const { data } = await AuthInstance.put(`/auth/updateuser`, params);
   return data;
 };

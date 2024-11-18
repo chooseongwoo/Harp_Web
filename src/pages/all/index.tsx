@@ -9,7 +9,7 @@ import SettingIcon from 'assets/Icon/SettingIcon';
 import RightArrow from 'assets/Icon/RightArrow';
 import { theme } from 'lib/utils/style/theme';
 import { AllPageMenu } from 'data/AllPageMenu';
-import { Auth_KakaoLogin } from 'lib/apis/Auth';
+import { Auth_AllInfo } from 'lib/apis/Auth';
 import { user } from 'types/user';
 
 const All = () => {
@@ -22,7 +22,7 @@ const All = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const { data } = await Auth_KakaoLogin();
+        const { data } = await Auth_AllInfo();
         const { profileImg, nickname } = data;
         let { gender } = data;
         gender = gender === 'MALE' ? '남자' : '여자';

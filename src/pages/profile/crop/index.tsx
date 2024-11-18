@@ -1,11 +1,12 @@
 // 라이브러리
-import { useLocation, useNavigate } from 'react-router-dom';
+import { replace, useLocation, useNavigate } from 'react-router-dom';
 
 // 파일
 import CropImage from 'components/CropImage';
 import Header from 'components/Header';
 import * as _ from './style';
 import NotFound from 'pages/notFound';
+import { Upload_Image } from 'lib/apis/Upload';
 
 const CropPage = () => {
   const location = useLocation();
@@ -16,8 +17,17 @@ const CropPage = () => {
     return <NotFound />;
   }
 
-  const handleCropComplete = (croppedImage: string) => {
-    navigate('/profile/edit', { state: { croppedImage } });
+  const handleCropComplete = async (croppedImage: string) => {
+    const response = await fetch(croppedImage);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('img', blob);
+    const uploadResponse = await Upload_Image(formData);
+
+    navigate('/profile/edit', {
+      state: { imageUrl: uploadResponse.data.url },
+      replace: true
+    });
   };
 
   return (

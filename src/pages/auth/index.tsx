@@ -1,6 +1,5 @@
 // 라이브러리
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // 파일
 import * as _ from './style';
@@ -28,7 +27,7 @@ const Auth = () => {
       <_.Auth_Button_Layout>
         <_.Auth_Button_Ballon>
           <_.Auth_Button_Ballon_Title>
-            3초만에 하는 빠른 회원가입🚀
+            3초만에 하는 빠른 회원가입 🚀
           </_.Auth_Button_Ballon_Title>
           <_.Auth_Button_Ballon_SVG>
             <RoundedTriangle />

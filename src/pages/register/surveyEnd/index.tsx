@@ -8,7 +8,7 @@ import * as _ from './style';
 import Header from 'components/Header';
 import NextButton from 'components/NextButton';
 import RocketImage from 'assets/image/Rocket.png';
-import { Auth_NewAccount, Auth_Survey } from 'lib/apis/Auth';
+import { Auth_Survey, Auth_UserInfo } from 'lib/apis/Auth';
 import {
   selectedFoodsStringState,
   selectedStylesStringState,
@@ -27,7 +27,7 @@ const SurveyEnd = () => {
 
   const handleRegister = async () => {
     try {
-      await Auth_NewAccount({
+      await Auth_UserInfo({
         nickname: username,
         birthdate: birthday,
         gender: gender
@@ -39,10 +39,11 @@ const SurveyEnd = () => {
         Q3: mbti,
         etc: tmi
       });
-      
+
       navigate('/');
     } catch (error) {
       console.log(error);
+      alert('회원가입에 실패했습니다.');
     }
   };
 

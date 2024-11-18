@@ -5,6 +5,7 @@ import Auth from 'pages/auth';
 import Home from 'pages/home';
 import NotFound from 'pages/notFound';
 import Callback from 'pages/Callback';
+
 // register
 import Terms from 'pages/register/terms';
 import UserInfo from 'pages/register/userinfo';
@@ -28,6 +29,13 @@ import AddDetail from 'pages/plan/addDetail';
 // profile
 import Edit from 'pages/profile/edit';
 import CropPage from 'pages/profile/crop';
+import All from 'pages/all';
+import Setting from 'pages/setting';
+
+// community
+import Community from 'pages/community/Home';
+import Detail from 'pages/community/PostDetail';
+import Write from 'pages/community/Write';
 
 export default function Router() {
   return useRoutes([
@@ -35,6 +43,8 @@ export default function Router() {
       path: '/',
       children: [
         { index: true, element: <Home /> },
+        { path: 'all', element: <All /> },
+        { path: 'setting', element: <Setting /> },
         { path: 'splash', element: <Splash /> },
         { path: 'auth', element: <Auth /> },
         { path: 'auth/kakao/callback', element: <Callback /> },
@@ -78,6 +88,14 @@ export default function Router() {
       children: [
         { path: 'edit', element: <Edit /> },
         { path: 'edit/crop', element: <CropPage /> }
+      ]
+    },
+    {
+      path: 'community',
+      children: [
+        { path: '', element: <Community /> },
+        { path: 'detail/:id', element: <Detail /> },
+        { path: 'write', element: <Write /> },
       ]
     },
     { path: '*', element: <NotFound /> }

@@ -1,5 +1,5 @@
 // 라이브러리
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -9,6 +9,7 @@ import Header from 'components/Header';
 import NextButton from 'components/NextButton';
 import { formatBirthday } from 'lib/utils/formatBirthday';
 import { isGenderSelectedState, userInfosState } from 'atoms/user';
+import { isValidDate } from 'lib/utils/isValidDate';
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -24,20 +25,28 @@ const UserInfo = () => {
 
   const handleBirthday = (e: ChangeEvent<HTMLInputElement>) => {
     const formattedBirthday = formatBirthday(e.currentTarget.value);
-    setUserInfos({ ...userInfos, birthday: formattedBirthday });
+    setUserInfos({
+      ...userInfos,
+      birthday: formattedBirthday
+    });
   };
 
   const handleGenderBox = (selectedGender: string) => {
     setUserInfos({ ...userInfos, gender: selectedGender });
     setIsSelected({
-      female: selectedGender === 'female',
-      male: selectedGender === 'male'
+      female: selectedGender === '여성',
+      male: selectedGender === '남성'
     });
   };
 
   const isFormValid = () => {
     const { username, birthday, gender } = userInfos;
-    return username.length >= 2 && birthday && gender;
+    return (
+      username.length >= 2 &&
+      birthday.length === 10 &&
+      isValidDate(birthday) &&
+      gender
+    );
   };
 
   return (
@@ -85,13 +94,13 @@ const UserInfo = () => {
             <_.UserInfo_Gender_Box>
               <_.UserInfo_Gender
                 isSelected={isSelected.female}
-                onClick={() => handleGenderBox('female')}
+                onClick={() => handleGenderBox('여성')}
               >
                 여성
               </_.UserInfo_Gender>
               <_.UserInfo_Gender
                 isSelected={isSelected.male}
-                onClick={() => handleGenderBox('male')}
+                onClick={() => handleGenderBox('남성')}
               >
                 남성
               </_.UserInfo_Gender>

@@ -17,7 +17,6 @@ const Callback = () => {
         localStorage.setItem('refreshToken', refreshToken);
         try {
           const response = await Auth_KakaoLogin();
-          console.log(response);
           if (response.data.newAccount === '1') navigate('/register/terms');
           else navigate('/');
         } catch (error) {

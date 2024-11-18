@@ -44,6 +44,8 @@ const Header = ({
       navigate('/auth');
     } else if (location.pathname === '/plan/chat') {
       navigate('/plan/selectdate', { state: { fromHome: false } });
+    } else if (location.pathname === '/profile/edit') {
+      navigate('/all');
     } else {
       navigate(-1);
     }

@@ -71,6 +71,17 @@ export const Auth_Button_Layout = styled.div`
 `;
 
 export const Auth_Button_Ballon = styled.div`
+  animation: float 2s ease-in-out infinite;
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
   background-color: ${theme.gray.white};
   padding: 10px 16px;
   border-radius: 30px;

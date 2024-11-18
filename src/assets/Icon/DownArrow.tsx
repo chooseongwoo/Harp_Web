@@ -1,4 +1,10 @@
-const DownArrow = () => {
+import React from 'react';
+
+interface DownArrowProps {
+  color?: string;
+}
+
+const DownArrow = ({ color = '#B9BBB9' }: DownArrowProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +15,7 @@ const DownArrow = () => {
     >
       <path
         d="M13.7319 7.5L9.96921 11.25L6.20654 7.5"
-        stroke="#B9BBB9"
+        stroke={color}
         strokeWidth="1.2"
         strokeLinecap="round"
         strokeLinejoin="round"

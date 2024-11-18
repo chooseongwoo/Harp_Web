@@ -45,3 +45,8 @@ export const Auth_UpdateUser = async (params: UserInfoParams) => {
   const { data } = await AuthInstance.put(`/auth/updateuser`, params);
   return data;
 };
+
+export const Auth_Logout = async () => {
+  const { data } = await AuthInstance.delete(`/auth/kakao/logout`);
+  return data;
+};

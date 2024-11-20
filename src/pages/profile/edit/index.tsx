@@ -99,7 +99,7 @@ const Edit = () => {
         profileImg: infos.profileImg || location.state?.imageUrl,
         nickname: infos.nickname,
         birthdate: infos.birthdate ?? '',
-        gender: infos.gender == '남자' ? 'male' : 'female' ?? ''
+        gender: infos.gender == '남자' ? 'male' : 'female'
       });
       alert('프로필 수정 성공!');
       navigate(`/all`);

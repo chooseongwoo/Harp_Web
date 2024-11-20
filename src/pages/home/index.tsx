@@ -99,7 +99,7 @@ const Home = () => {
       </_.Home_SearchBar>
       <_.Home_Navigate_Chatting
         onClick={() => {
-          navigate('/plan/selectdate');
+          navigate('/plan/selectdate', { state: { fromHome: true } });
         }}
       >
         <_.Home_Navigate_Ul>

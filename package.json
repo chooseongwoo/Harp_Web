@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stackflow/plugin-basic-ui": "^1.10.1",
+    "@stackflow/plugin-history-sync": "^1.7.0",
+    "@stackflow/plugin-renderer-basic": "^1.1.13",
+    "@stackflow/react": "^1.4.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",

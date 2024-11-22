@@ -40,11 +40,9 @@ const Header = ({
   const location = useLocation();
 
   const handleBackIcon = () => {
-    if (location.pathname === '/register/terms') {
-      navigate('/auth');
-    } else if (location.pathname === '/plan/chat') {
+    if (location.pathname === '/plan/chat') {
       navigate('/plan/selectdate', { state: { fromHome: false } });
-    } else if (location.pathname === '/profile/edit') {
+    } else if (location.pathname === '/profile/edit/') {
       navigate('/all');
     } else {
       navigate(-1);

@@ -19,8 +19,8 @@ const Callback: ActivityComponentType = () => {
         try {
           const response = await Auth_KakaoLogin();
           if (response.data.newAccount === '1') {
-            replace('Terms', {});
-          } else replace('Home', {});
+            replace('Terms', {}, { animate: false });
+          } else replace('Home', {}, { animate: false });
         } catch (error) {
           alert('토큰 발급에 실패했습니다.');
           console.error('데이터 페칭 중 에러', error);

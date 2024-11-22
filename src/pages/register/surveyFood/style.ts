@@ -32,7 +32,7 @@ export const SurveyFood_SubText = styled.div`
 `;
 
 export const SurveyFood_Contents = styled.div`
-  margin-top: 7px;
+  margin-top: 15px;
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(2, 2fr);

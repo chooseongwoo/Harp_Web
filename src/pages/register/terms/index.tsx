@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import * as _ from './style';
-import Header from 'components/Header';
 import FalseCircleCheck from 'assets/image/FalseCircleCheck';
 import TrueCircleCheck from 'assets/image/TrueCircleCheck';
 import TermsContent from 'components/TermsContent';
 import TermsData from 'data/Terms';
 import NextButton from 'components/NextButton';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
   successAllState,
@@ -16,9 +14,10 @@ import {
 } from 'atoms/user';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { ActivityComponentType } from '@stackflow/react';
+import { useFlow } from 'stackflow';
 
 const Terms: ActivityComponentType = () => {
-  const navigate = useNavigate();
+  const { push } = useFlow();
   const [successAll, setSuccessAll] = useRecoilState(successAllState);
   const [check, setCheck] = useRecoilState(checkState);
   const [nextButtonStateValue, setNextButtonState] =
@@ -50,8 +49,8 @@ const Terms: ActivityComponentType = () => {
   };
 
   return (
-    <_.Terms_Layout>
-      <AppScreen>
+    <AppScreen>
+      <_.Terms_Layout>
         <_.Terms_Container>
           <_.Terms_Title>서비스 이용을 위해</_.Terms_Title>
           <_.Terms_SubTitle>
@@ -89,11 +88,11 @@ const Terms: ActivityComponentType = () => {
           text="다음"
           state={nextButtonStateValue}
           onNextClick={() => {
-            navigate('/register/userinfo');
+            push('UserInfo', {});
           }}
         />
-      </AppScreen>
-    </_.Terms_Layout>
+      </_.Terms_Layout>
+    </AppScreen>
   );
 };
 

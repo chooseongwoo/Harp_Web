@@ -120,7 +120,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         // NotFound
         NotFound: '*'
       },
-      fallbackActivity: () => 'Callback'
+      fallbackActivity: () => 'NotFound'
     })
   ]
 });

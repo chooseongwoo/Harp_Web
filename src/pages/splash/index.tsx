@@ -12,7 +12,7 @@ const Splash: ActivityComponentType = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      replace('Auth', {});
+      replace('Auth', {}, { animate: false });
     }, 1500);
 
     return () => clearTimeout(timer);

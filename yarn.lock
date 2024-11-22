@@ -1803,6 +1803,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stackflow/core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@stackflow/core/-/core-1.1.0.tgz#0a99dbc2ef16c6afa64f110cacf1252934513aa3"
+  integrity sha512-IjrcTM9itdmolgURRciq8xVpI0C3mmTRRoBn2smcRSjeDBk/qUM/k37QlL+uGgcoV+kaKXpkeVXhhSIFsYAKjw==
+  dependencies:
+    react-fast-compare "^3.2.2"
+
 "@stackflow/plugin-basic-ui@^1.10.1":
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/@stackflow/plugin-basic-ui/-/plugin-basic-ui-1.10.1.tgz#a62542c568fe9eb55a4c16b2beafd8245c6a1065"

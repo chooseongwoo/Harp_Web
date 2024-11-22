@@ -1,6 +1,7 @@
 // 라이브러리
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -12,7 +13,7 @@ import { theme } from 'lib/utils/style/theme';
 import Robot from 'assets/image/Robot.png';
 import { PlanResult, RecommendedPlanResult } from 'types/plan';
 import { Plan_RecommendedPlanList, Plan_UserPlanList } from 'lib/apis/Plan';
-import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { useFlow } from 'stackflow';
 
 interface DateData {
   id: number;
@@ -22,6 +23,7 @@ interface DateData {
 }
 
 const Home = () => {
+  const { push } = useFlow();
   const [date, setData] = useState<DateData[]>([]);
   const [userPlans, setUserPlans] = useState<PlanResult[] | null>(null);
   const [recommendedPlans, setRecommendedPlans] = useState<
@@ -99,7 +101,7 @@ const Home = () => {
         </_.Home_SearchBar>
         <_.Home_Navigate_Chatting
           onClick={() => {
-            // navigate('/plan/selectdate', { state: { fromHome: true } });
+            push('SelectDate', { fromHome: true });
           }}
         >
           <_.Home_Navigate_Ul>

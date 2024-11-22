@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -84,7 +85,7 @@ const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
   }, []);
 
   return (
-    <>
+    <AppScreen>
       <_.SelectDate_Container>
         <Header />
         <_.SelectDate_Months>
@@ -105,7 +106,7 @@ const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
         state={!!selectedDays.start && !!selectedDays.end}
         onNextClick={onSubmit}
       />
-    </>
+    </AppScreen>
   );
 };
 

@@ -34,7 +34,10 @@ const UserInfo: ActivityComponentType = () => {
   };
 
   const handleGenderBox = (selectedGender: string) => {
-    setUserInfos({ ...userInfos, gender: selectedGender });
+    setUserInfos({
+      ...userInfos,
+      gender: selectedGender == '남성' ? 'male' : 'female'
+    });
     setIsSelected({
       female: selectedGender === '여성',
       male: selectedGender === '남성'

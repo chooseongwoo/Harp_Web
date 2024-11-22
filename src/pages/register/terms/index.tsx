@@ -59,13 +59,13 @@ const Terms: ActivityComponentType = () => {
             </_.Terms_SubTitle_Highlight>
             가 필요합니다.
           </_.Terms_SubTitle>
-          <_.Terms_SuccessAll>
+          <_.Terms_SuccessAll onClick={handleAllCheck}>
             {successAll ? (
-              <_.TrueCircleCheckIcon onClick={handleAllCheck}>
+              <_.TrueCircleCheckIcon>
                 <TrueCircleCheck />
               </_.TrueCircleCheckIcon>
             ) : (
-              <_.TrueCircleCheckIcon onClick={handleAllCheck}>
+              <_.TrueCircleCheckIcon>
                 <FalseCircleCheck />
               </_.TrueCircleCheckIcon>
             )}

@@ -96,7 +96,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         SurveyEnd: '/register/surveyend',
 
         // 일정
-        Chat: '/plan/chat/:id',
+        Chat: '/plan/chat',
         SelectDate: '/plan/selectdate',
         Info: '/plan/info/:id',
         Map: '/plan/map/:id',

@@ -19,8 +19,8 @@ import {
 } from 'atoms/user';
 import { useFlow } from 'stackflow';
 
-const SurveyEnd = () => {
-  const { replace } = useFlow();
+const SurveyEnd: ActivityComponentType = () => {
+  const { replace, pop } = useFlow();
   const { username, birthday, gender } = useRecoilValue(userInfosState);
   const styles = useRecoilValue(selectedStylesStringState);
   const foods = useRecoilValue(selectedFoodsStringState);
@@ -41,6 +41,10 @@ const SurveyEnd = () => {
         Q3: mbti,
         etc: tmi
       });
+
+      for (let i = 0; i < 6; i++) {
+        pop();
+      }
 
       replace('Home', {}, { animate: false });
     } catch (error) {

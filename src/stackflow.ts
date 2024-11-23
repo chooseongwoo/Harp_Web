@@ -114,8 +114,8 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
 
         // 커뮤니티
         Community: '/community',
-        CommunityDetail: '/community/detail/:id',
-        CommunityWrite: '/community/write',
+        Detail: '/community/detail',
+        Write: '/community/write',
 
         // NotFound
         NotFound: '*'

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 import CategoryModal from 'components/community/CategoryModal';
 import * as _ from './style';
@@ -13,9 +13,10 @@ import Delete from 'assets/Icon/Delete';
 import { useMutation } from 'react-query';
 import { Community_CreatePost } from 'lib/apis/Community';
 import { Upload_Image } from 'lib/apis/Upload';
+import { useFlow } from 'stackflow';
 
 const Write = () => {
-  const navigate = useNavigate();
+  const { pop } = useFlow();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [isCategoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] =
@@ -37,13 +38,34 @@ const Write = () => {
     {
       onSuccess: (response) => {
         alert(response.message);
-        navigate(`/community`);
+        pop();
       },
       onError: (error) => {
         console.error('글 작성 실패', error);
       }
     }
   );
+
+  const handleCreatePost = () => {
+    const validationErrors = [];
+
+    if (selectedCategory === '게시글 카테고리 선택하기') {
+      validationErrors.push('카테고리를 선택해주세요');
+    }
+    if (inputs.title.length < 2) {
+      validationErrors.push('제목은 2자 이상 입력해주세요');
+    }
+    if (inputs.des.length < 10) {
+      validationErrors.push('내용은 10자 이상 입력해주세요');
+    }
+
+    if (validationErrors.length > 0) {
+      alert(validationErrors.join('\n'));
+      return;
+    }
+
+    createPostMutation();
+  };
 
   const { mutate: uploadImageMutation } = useMutation(
     (formData: FormData) => Upload_Image(formData),
@@ -100,51 +122,53 @@ const Write = () => {
   }, [selectedImages]);
 
   return (
-    <_.Write_Layout>
-      <Header
-        title="글 쓰기"
-        buttonState="게시"
-        onClickMethod={createPostMutation}
-      />
-      <_.Write_Container>
-        <CategoryModal
-          onClose={() => setCategoryModalOpen(false)}
-          isOpen={isCategoryModalOpen}
-          onSelectCategory={handleSelectCategory}
+    <AppScreen>
+      <_.Write_Layout>
+        <Header
+          title="글 쓰기"
+          buttonState="게시"
+          onClickMethod={handleCreatePost}
         />
-        <_.Write_ModalButton onClick={handleOpenCategoryModal}>
-          {selectedCategory} <DownArrow color={theme.gray['3.5']} />
-        </_.Write_ModalButton>
-        <_.Write_TitleInput
-          placeholder="제목을 입력하세요..."
-          onChange={(e) => handleInputChange('title', e.target.value)}
-        />
-        <_.Write_Line />
-        <_.Write_DesInput
-          placeholder="- 커뮤니티 가이드라인을 준수하며, 서로를 배려하고 존중하는 글을 작성해주세요.
+        <_.Write_Container>
+          <CategoryModal
+            onClose={() => setCategoryModalOpen(false)}
+            isOpen={isCategoryModalOpen}
+            onSelectCategory={handleSelectCategory}
+          />
+          <_.Write_ModalButton onClick={handleOpenCategoryModal}>
+            {selectedCategory} <DownArrow color={theme.gray['3.5']} />
+          </_.Write_ModalButton>
+          <_.Write_TitleInput
+            placeholder="제목을 입력하세요..."
+            onChange={(e) => handleInputChange('title', e.target.value)}
+          />
+          <_.Write_Line />
+          <_.Write_DesInput
+            placeholder="- 커뮤니티 가이드라인을 준수하며, 서로를 배려하고 존중하는 글을 작성해주세요.
 - 불필요한 비방이나 공격적인 표현은 자제하고, 모두가 즐겁게 소통할 수 있는 환경을 만들어주세요."
-          onChange={(e) => handleInputChange('des', e.target.value)}
-        />
-        {!isCategoryModalOpen && (
-          <_.Write_BottomContainer>
-            <_.Write_PhotoButton onClick={handlePhotoButtonClick}>
-              <Image /> 사진
-            </_.Write_PhotoButton>
-            <_.Write_LocationButton>
-              <Location_g /> 장소
-            </_.Write_LocationButton>
-          </_.Write_BottomContainer>
-        )}
-        {selectedImages.map((image, index) => (
-          <_.Write_ImageContainer key={index} backgroundImage={image}>
-            <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)}>
-              <Delete />
-            </_.Write_DeleteIcon>
-          </_.Write_ImageContainer>
-        ))}
-        <div ref={imageContainerRef} />
-      </_.Write_Container>
-    </_.Write_Layout>
+            onChange={(e) => handleInputChange('des', e.target.value)}
+          />
+          {!isCategoryModalOpen && (
+            <_.Write_BottomContainer>
+              <_.Write_PhotoButton onClick={handlePhotoButtonClick}>
+                <Image /> 사진
+              </_.Write_PhotoButton>
+              <_.Write_LocationButton>
+                <Location_g /> 장소
+              </_.Write_LocationButton>
+            </_.Write_BottomContainer>
+          )}
+          {selectedImages.map((image, index) => (
+            <_.Write_ImageContainer key={index} backgroundImage={image}>
+              <_.Write_DeleteIcon onClick={() => handleRemoveImage(index)}>
+                <Delete />
+              </_.Write_DeleteIcon>
+            </_.Write_ImageContainer>
+          ))}
+          <div ref={imageContainerRef} />
+        </_.Write_Container>
+      </_.Write_Layout>
+    </AppScreen>
   );
 };
 

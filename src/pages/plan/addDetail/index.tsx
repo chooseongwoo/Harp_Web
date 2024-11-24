@@ -1,6 +1,7 @@
 // 라이브러리
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -16,12 +17,17 @@ import NextButton from 'components/NextButton';
 import { useMutation } from 'react-query';
 import { Plan_Update } from 'lib/apis/Plan';
 import { PlanResult } from 'types/plan';
+import { useFlow } from 'stackflow';
 
-const AddDetail = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const location = useLocation();
-  const { address, planInfos } = location.state;
+interface DetailParams {
+  id: string;
+  address: string;
+  planInfos: PlanResult | null;
+}
+
+const AddDetail: ActivityComponentType<DetailParams> = ({ params }) => {
+  const { pop } = useFlow();
+  const { id, address, planInfos } = params;
   const [isAdded, setIsAdded] = useState(false);
   const [isSelected, setIsSelected] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
@@ -36,7 +42,9 @@ const AddDetail = () => {
   const { mutate: addPlanItemMutation } = useMutation(Plan_Update, {
     onSuccess: () => {
       alert('일정 추가 성공!');
-      navigate(`/plan/info/${id}`);
+      for (let i = 0; i <= 2; i++) {
+        pop({ animate: false });
+      }
     },
     onError: (error) => {
       console.error('일정 추가 실패', error);
@@ -44,6 +52,8 @@ const AddDetail = () => {
   });
 
   const handleAddPlan = async () => {
+    if (!planInfos) return;
+
     const newPlanItem = {
       time: `${time.hour}:${time.minute}`,
       activity: inputValue,
@@ -65,9 +75,9 @@ const AddDetail = () => {
     addPlanItemMutation({ id: id!, data: updatedPlans });
   };
 
-  const startDate = new Date(planInfos.startDate);
+  const startDate = new Date(planInfos!.startDate);
   const [plans, setPlans] = useState(
-    Object.keys(planInfos?.data)
+    Object.keys(planInfos!.data)
       .filter((key) => key !== 'tips')
       .map((key, index) => {
         const date = new Date(startDate);
@@ -78,7 +88,6 @@ const AddDetail = () => {
         };
       })
   );
-  console.log(plans);
 
   const periods = ['오전', '오후'];
   const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
@@ -129,96 +138,98 @@ const AddDetail = () => {
   }, [isAdded]);
 
   return (
-    <_.AddDetail_Layout>
-      <Header title="일정추가" />
-      <_.AddDetail_Container>
-        <_.AddDetail_TitleBar>
-          <_.AddDetail_Location>
-            <Location />
-            <_.AddDetail_Address>{address}</_.AddDetail_Address>
-          </_.AddDetail_Location>
-          <_.AddDetail_PlanTitle>일정을 추가해볼까요?</_.AddDetail_PlanTitle>
-          <_.AddDetail_Caption>
-            일정 상세 정보를 입력해주세요.
-          </_.AddDetail_Caption>
-        </_.AddDetail_TitleBar>
-        <_.AddDetail_SectionLine>
-          <_.AddDetail_Box>
+    <AppScreen>
+      <_.AddDetail_Layout>
+        <Header title="일정추가" />
+        <_.AddDetail_Container>
+          <_.AddDetail_TitleBar>
+            <_.AddDetail_Location>
+              <Location />
+              <_.AddDetail_Address>{address}</_.AddDetail_Address>
+            </_.AddDetail_Location>
+            <_.AddDetail_PlanTitle>일정을 추가해볼까요?</_.AddDetail_PlanTitle>
+            <_.AddDetail_Caption>
+              일정 상세 정보를 입력해주세요.
+            </_.AddDetail_Caption>
+          </_.AddDetail_TitleBar>
+          <_.AddDetail_SectionLine>
+            <_.AddDetail_Box>
+              <_.AddDetail_Subtitle>
+                <Write />
+                <_.AddDetail_Menu>일정 제목</_.AddDetail_Menu>
+              </_.AddDetail_Subtitle>
+              <_.AddDetail_Input
+                placeholder="일정 제목을 입력하세요! ex) 밥먹기"
+                value={inputValue}
+                onChange={handleInputChange}
+              />
+            </_.AddDetail_Box>
+          </_.AddDetail_SectionLine>
+          <_.AddDetail_SectionLine>
             <_.AddDetail_Subtitle>
-              <Write />
-              <_.AddDetail_Menu>일정 제목</_.AddDetail_Menu>
+              <Calendar color="black" />
+              <_.AddDetail_Menu>날짜 선택</_.AddDetail_Menu>
             </_.AddDetail_Subtitle>
-            <_.AddDetail_Input
-              placeholder="일정 제목을 입력하세요! ex) 밥먹기"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-          </_.AddDetail_Box>
-        </_.AddDetail_SectionLine>
-        <_.AddDetail_SectionLine>
-          <_.AddDetail_Subtitle>
-            <Calendar color="black" />
-            <_.AddDetail_Menu>날짜 선택</_.AddDetail_Menu>
-          </_.AddDetail_Subtitle>
-          <_.AddDetail_PlanDates>
-            {plans.map((plan, index) => (
-              <div
-                key={plan.day}
-                ref={index === plans.length - 1 ? newPlanRef : null}
-              >
-                <PlanDate
+            <_.AddDetail_PlanDates>
+              {plans.map((plan, index) => (
+                <div
                   key={plan.day}
-                  day={index + 1}
-                  date={plan.date}
-                  isSelected={isSelected === index}
-                  onSelect={() => {
-                    handleSelectDay(index, plan.date);
-                  }}
-                />
-              </div>
-            ))}
-            {!isAdded && (
-              <_.AddDetail_AddPlan onClick={addPlan}>
-                <_.AddDetail_AddPlanSpan>일정</_.AddDetail_AddPlanSpan>
-                <_.AddDetail_AddPlanSpan>추가</_.AddDetail_AddPlanSpan>
-              </_.AddDetail_AddPlan>
-            )}
-          </_.AddDetail_PlanDates>
-        </_.AddDetail_SectionLine>
-        <_.AddDetail_SelectTime>
-          <_.AddDetail_Subtitle>
-            <TimeCircle />
-            <_.AddDetail_Menu>시간 선택</_.AddDetail_Menu>
-          </_.AddDetail_Subtitle>
-          <_.AddDetail_TimePickerList>
-            <TimePicker
-              list={periods}
-              onSelectedChange={(selectedPeriod: string) =>
-                setTime((prev) => ({ ...prev, period: selectedPeriod }))
-              }
-            />
-            <TimePicker
-              list={hours}
-              onSelectedChange={(selectedHour: string) =>
-                setTime((prev) => ({ ...prev, hour: selectedHour }))
-              }
-            />
-            <TimePicker
-              list={minutes}
-              onSelectedChange={(selectedMinute: string) =>
-                setTime((prev) => ({ ...prev, minute: selectedMinute }))
-              }
-            />
-            <_.AddDetail_Overlay />
-          </_.AddDetail_TimePickerList>
-        </_.AddDetail_SelectTime>
-      </_.AddDetail_Container>
-      <NextButton
-        text="추가"
-        state={isNextButtonEnabled}
-        onNextClick={handleAddPlan}
-      />
-    </_.AddDetail_Layout>
+                  ref={index === plans.length - 1 ? newPlanRef : null}
+                >
+                  <PlanDate
+                    key={plan.day}
+                    day={index + 1}
+                    date={plan.date}
+                    isSelected={isSelected === index}
+                    onSelect={() => {
+                      handleSelectDay(index, plan.date);
+                    }}
+                  />
+                </div>
+              ))}
+              {!isAdded && (
+                <_.AddDetail_AddPlan onClick={addPlan}>
+                  <_.AddDetail_AddPlanSpan>일정</_.AddDetail_AddPlanSpan>
+                  <_.AddDetail_AddPlanSpan>추가</_.AddDetail_AddPlanSpan>
+                </_.AddDetail_AddPlan>
+              )}
+            </_.AddDetail_PlanDates>
+          </_.AddDetail_SectionLine>
+          <_.AddDetail_SelectTime>
+            <_.AddDetail_Subtitle>
+              <TimeCircle />
+              <_.AddDetail_Menu>시간 선택</_.AddDetail_Menu>
+            </_.AddDetail_Subtitle>
+            <_.AddDetail_TimePickerList>
+              <TimePicker
+                list={periods}
+                onSelectedChange={(selectedPeriod: string) =>
+                  setTime((prev) => ({ ...prev, period: selectedPeriod }))
+                }
+              />
+              <TimePicker
+                list={hours}
+                onSelectedChange={(selectedHour: string) =>
+                  setTime((prev) => ({ ...prev, hour: selectedHour }))
+                }
+              />
+              <TimePicker
+                list={minutes}
+                onSelectedChange={(selectedMinute: string) =>
+                  setTime((prev) => ({ ...prev, minute: selectedMinute }))
+                }
+              />
+              <_.AddDetail_Overlay />
+            </_.AddDetail_TimePickerList>
+          </_.AddDetail_SelectTime>
+        </_.AddDetail_Container>
+        <NextButton
+          text="추가"
+          state={isNextButtonEnabled}
+          onNextClick={handleAddPlan}
+        />
+      </_.AddDetail_Layout>
+    </AppScreen>
   );
 };
 

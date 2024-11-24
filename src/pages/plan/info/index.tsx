@@ -194,9 +194,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
           </_.Info_Content>
           <_.Info_Add_Schedule
             onClick={() => {
-              navigate(`/plan/info/${id}/addsearch`, {
-                state: { planInfos: planInfos }
-              });
+              push('AddSearch', { id: id, planInfos: planInfos });
             }}
           >
             <Plus />

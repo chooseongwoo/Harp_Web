@@ -50,3 +50,8 @@ export const Auth_Logout = async () => {
   const { data } = await AuthInstance.delete(`/auth/kakao/logout`);
   return data;
 };
+
+export const Auth_DeleteUser = async () => {
+  const { data } = await AuthInstance.delete(`/auth/deleteuser`);
+  return data;
+};

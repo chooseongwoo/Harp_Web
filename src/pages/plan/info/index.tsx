@@ -1,6 +1,6 @@
 // 라이브러리
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
@@ -28,7 +28,7 @@ interface InfoParams {
 
 const Info: ActivityComponentType<InfoParams> = ({ params }) => {
   const id = params.id;
-  const { replace, pop } = useFlow();
+  const { pop } = useFlow();
   const navigate = useNavigate();
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   const [isModal, setIsModal] = useState(false);
@@ -134,6 +134,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
                 <ControlModal
                   setIsUpdated={setIsUpdated}
                   onClose={handleCloseModal}
+                  title={planInfos?.planName ?? ''}
                 />
               )}
             </_.Info_Nav>

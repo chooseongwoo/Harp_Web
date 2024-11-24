@@ -100,7 +100,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         SelectDate: '/plan/selectdate',
         Info: '/plan/info/:id',
         Map: '/plan/map/:id',
-        InfoCrop: '/plan/info/:id/crop',
+        InfoCrop: '/plan/info/crop',
         Memo: '/plan/info/:id/day/:dayIndex/time/:timeIndex',
         Update: '/plan/info/:id/day/:dayIndex/time/:timeIndex/update',
         AddSearch: '/plan/info/:id/addsearch',

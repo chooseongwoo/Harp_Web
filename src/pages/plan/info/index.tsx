@@ -24,11 +24,12 @@ import { useFlow } from 'stackflow';
 
 interface InfoParams {
   id: string;
+  imageUrl?: string;
 }
 
 const Info: ActivityComponentType<InfoParams> = ({ params }) => {
   const id = params.id;
-  const { pop } = useFlow();
+  const { pop, push } = useFlow();
   const navigate = useNavigate();
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   const [isModal, setIsModal] = useState(false);
@@ -62,7 +63,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
         setIsUpdated(false);
       },
       onError: (error) => {
-        console.error('일정 아이템 삭제 실패', error);
+        console.error('작업 실패', error);
       }
     }
   );
@@ -77,15 +78,28 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const imageUrl = params.imageUrl;
+    if (imageUrl && planInfos) {
+      const updatedPlanInfos = {
+        ...planInfos,
+        mainImg: imageUrl
+      };
+      setPlanInfos(updatedPlanInfos);
+      deletePlanItemMutation();
+    }
+  }, [params.imageUrl, planInfos?.mainImg]);
+
   const handleCloseModal = () => {
     setIsModal(false);
   };
 
   const handleImageSelection = () => {
     handleImageEdit((selectedImage) => {
-      const id = 1;
-      console.log('Selected Image: ', selectedImage);
-      navigate(`/plan/info/${id}/crop`, { state: { imageSrc: selectedImage } });
+      push('InfoCrop', {
+        id: id,
+        imageSrc: URL.createObjectURL(selectedImage)
+      });
     });
   };
 

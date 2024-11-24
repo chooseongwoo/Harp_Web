@@ -6,7 +6,7 @@ import * as _ from './style';
 import Share from 'assets/Icon/Share';
 import { theme } from 'lib/utils/style/theme';
 import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
-import { useNavigate } from 'react-router-dom';
+import { useFlow } from 'stackflow';
 
 interface OwnProps {
   id: string | undefined;
@@ -17,7 +17,7 @@ interface OwnProps {
 }
 
 const PlanResult = ({ id, img, title, startDate, member }: OwnProps) => {
-  const navigate = useNavigate();
+  const { push } = useFlow();
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -39,7 +39,7 @@ const PlanResult = ({ id, img, title, startDate, member }: OwnProps) => {
     <_.PlanResult_Layout>
       <_.PlanResult_Container
         onClick={() => {
-          navigate(`/plan/info/${id}`, { replace: true });
+          push('Info', { id: id ?? '' });
         }}
         imgUrl={img}
       >

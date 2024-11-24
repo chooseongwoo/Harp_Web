@@ -123,7 +123,7 @@ const Home = () => {
               <_.Home_Plan_Content
                 key={plan.planId}
                 onClick={() => {
-                  // navigate(`/plan/info/${plan.planId}`);
+                  push('Info', { id: plan.planId });
                 }}
               >
                 <_.Home_Plan_Content_Title>

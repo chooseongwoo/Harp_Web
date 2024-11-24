@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -18,9 +19,16 @@ import { Plan_Result, Plan_Update } from 'lib/apis/Plan';
 import { PlanResult } from 'types/plan';
 import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
 import { formatTravelPeriod } from 'lib/utils/formatTravelPeriod';
+import { ActivityComponentType } from '@stackflow/react';
+import { useFlow } from 'stackflow';
 
-const Info = () => {
-  const id = useParams().id;
+interface InfoParams {
+  id: string;
+}
+
+const Info: ActivityComponentType<InfoParams> = ({ params }) => {
+  const id = params.id;
+  const { replace, pop } = useFlow();
   const navigate = useNavigate();
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   const [isModal, setIsModal] = useState(false);
@@ -94,13 +102,17 @@ const Info = () => {
       : `${formattedStartDate}~${formattedEndDate} (${travelPeriod})`;
 
   return (
-    <>
+    <AppScreen>
       <Header
         title="일정"
         buttonState={isUpdated ? '완료' : '닫기'}
         onClickMethod={() => {
           if (isUpdated) deletePlanItemMutation;
-          else navigate(`/`);
+          else {
+            for (let i = 0; i <= 2; i++) {
+              pop({ animate: false });
+            }
+          }
         }}
       />
       {isLoading ? (
@@ -177,7 +189,7 @@ const Info = () => {
           {isSuccess && <AddSucessModal />}
         </_.Info_Layout>
       )}
-    </>
+    </AppScreen>
   );
 };
 

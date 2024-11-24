@@ -11,12 +11,14 @@ import NextButton from 'components/NextButton';
 import Calendar from 'components/Calendar';
 import { selectedDaysState } from 'atoms/plan';
 import { Plan_CreatAI } from 'lib/apis/Plan';
+import { useFlow } from 'stackflow';
 
 interface DateParams {
   fromHome?: boolean;
 }
 
 const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
+  const { push } = useFlow();
   const isFromHome = params?.fromHome || false;
 
   const [selectedDays, setSelectedDays] = useRecoilState(selectedDaysState);
@@ -64,7 +66,7 @@ const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
 
   const onSubmit = async () => {
     const response = await Plan_CreatAI();
-    // navigate(`/plan/chat/${response?.data?.AI_ID}`);
+    push('Chat', { id: response?.data?.AI_ID });
   };
 
   useEffect(() => {

@@ -15,7 +15,7 @@ interface CropParams {
 }
 
 const CropPage: ActivityComponentType<CropParams> = ({ params }) => {
-  const { replace } = useFlow();
+  const { replace, pop } = useFlow();
   const imageSrc = params.imageSrc;
 
   if (!imageSrc) {
@@ -28,7 +28,7 @@ const CropPage: ActivityComponentType<CropParams> = ({ params }) => {
     const formData = new FormData();
     formData.append('img', blob);
     const uploadResponse = await Upload_Image(formData);
-
+    pop();
     replace('Edit', { imageUrl: uploadResponse.data.url });
   };
 

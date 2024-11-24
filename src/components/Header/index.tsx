@@ -8,7 +8,8 @@ import ProgressBar1 from 'assets/image/ProgressBar1';
 import ProgressBar2 from 'assets/image/ProgressBar2';
 import ProgressBar3 from 'assets/image/ProgressBar3';
 import { theme } from 'lib/utils/style/theme';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useFlow } from 'stackflow';
 
 interface HeaderProps {
   title?: string;
@@ -36,17 +37,11 @@ const Header = ({
     progressBar = <ProgressBar3 />;
   }
 
-  const navigate = useNavigate();
   const location = useLocation();
+  const { pop } = useFlow();
 
   const handleBackIcon = () => {
-    if (location.pathname === '/plan/chat') {
-      navigate('/plan/selectdate', { state: { fromHome: false } });
-    } else if (location.pathname === '/profile/edit/') {
-      navigate('/all');
-    } else {
-      navigate(-1);
-    }
+    pop();
     onTapBackIcon();
   };
 

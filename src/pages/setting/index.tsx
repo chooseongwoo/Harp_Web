@@ -1,26 +1,29 @@
 // 라이브러리
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { ActivityComponentType } from '@stackflow/react';
 
 // 파일
 import * as _ from './style';
 import Header from 'components/Header';
 import { Auth_Logout } from 'lib/apis/Auth';
+import { useFlow } from 'stackflow';
 
-const Setting = () => {
-  const navigate = useNavigate();
+const Setting: ActivityComponentType = () => {
+  const { replace, pop } = useFlow();
   const { mutate: LogoutMutate } = useMutation(Auth_Logout, {
     onSuccess: (response) => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      pop();
+      replace('Auth', {}, { animate: false });
       alert(response.message);
-      navigate(`/auth`);
     }
   });
 
   return (
-    <>
+    <AppScreen>
       <Header title="설정" />
       <_.Setting_Layout>
         <_.Setting_Version>
@@ -36,7 +39,7 @@ const Setting = () => {
           로그아웃
         </_.Setting_Logout>
       </_.Setting_Layout>
-    </>
+    </AppScreen>
   );
 };
 

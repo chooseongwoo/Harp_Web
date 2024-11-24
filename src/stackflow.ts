@@ -108,7 +108,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
 
         // 프로필
         Edit: '/profile/edit',
-        EditCrop: '/profile/edit/crop',
+        CropPage: '/profile/edit/crop',
         All: '/all',
         Setting: '/setting',
 

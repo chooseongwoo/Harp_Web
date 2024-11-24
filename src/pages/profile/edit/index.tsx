@@ -1,6 +1,6 @@
-// 라이브러리
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -13,10 +13,15 @@ import { handleImageEdit } from 'lib/utils/handleImageEdit';
 import { isValidDate } from 'lib/utils/isValidDate';
 import { Auth_AllInfo, Auth_UpdateUser } from 'lib/apis/Auth';
 import { user } from 'types/user';
+import { useFlow } from 'stackflow';
+import { ActivityComponentType } from '@stackflow/react';
 
-const Edit = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+interface EditParams {
+  imageUrl: string;
+}
+
+const Edit: ActivityComponentType<EditParams> = ({ params }) => {
+  const { push, replace } = useFlow();
 
   const [initialInfos, setInitialInfos] = useState<user | null>(null);
 
@@ -27,8 +32,10 @@ const Edit = () => {
     birthdate: '',
     gender: ''
   });
+  const imageUrl = params.imageUrl;
 
   const [isImageChanged, setIsImageChanged] = useState(false);
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -37,7 +44,7 @@ const Edit = () => {
         const { profileImg, email, nickname, birthdate, gender } = data;
 
         const fetchedInfos = {
-          profileImg: location.state?.imageUrl || profileImg,
+          profileImg: imageUrl || profileImg,
           email,
           nickname: nickname,
           birthdate,
@@ -63,7 +70,7 @@ const Edit = () => {
         return newInfos;
       });
     },
-    [infos, location.state?.imageUrl]
+    [infos, imageUrl]
   );
 
   const handleEmailCopy = useCallback(() => {
@@ -78,31 +85,29 @@ const Edit = () => {
   }, [infos.email]);
 
   useEffect(() => {
-    if (location.state?.imageUrl) {
-      setInfos((prev) => ({ ...prev, profileImage: location.state.imageUrl }));
+    if (imageUrl) {
+      setInfos((prev) => ({ ...prev, profileImg: imageUrl }));
       setIsImageChanged(true);
+      setIsProfileUpdated(true);
     }
-  }, [location.state?.imageUrl]);
+  }, [imageUrl]);
 
   const handleProfileImageEdit = () => {
     handleImageEdit(async (selectedImage) => {
-      navigate('/profile/edit/crop', {
-        state: { imageSrc: URL.createObjectURL(selectedImage) }
-      });
-      setIsImageChanged(true);
+      push('CropPage', { imageSrc: URL.createObjectURL(selectedImage) });
     });
   };
 
   const handleUpdateProfile = async () => {
     try {
       await Auth_UpdateUser({
-        profileImg: infos.profileImg || location.state?.imageUrl,
+        profileImg: infos.profileImg,
         nickname: infos.nickname,
         birthdate: infos.birthdate ?? '',
         gender: infos.gender == '남자' ? 'male' : 'female'
       });
       alert('프로필 수정 성공!');
-      navigate(`/all`);
+      replace('All', {}, { animate: false });
     } catch (error) {
       console.error('프로필 수정 실패:', error);
     }
@@ -115,7 +120,8 @@ const Edit = () => {
       nickname !== initialInfos?.nickname ||
       birthdate !== initialInfos?.birthdate ||
       gender !== initialInfos?.gender ||
-      isImageChanged;
+      isImageChanged ||
+      isProfileUpdated;
 
     return (
       nickname.length >= 2 &&
@@ -124,58 +130,60 @@ const Edit = () => {
       (gender === '남자' || gender === '여자') &&
       isInfoChanged
     );
-  }, [infos, initialInfos, isImageChanged]);
+  }, [infos, initialInfos, isImageChanged, isProfileUpdated]);
 
   return (
-    <_.Edit_Layout>
-      <Header title="회원 정보 수정" />
-      <_.Edit_Content>
-        <_.Edit_Profile>
-          <_.Edit_Profile_Img src={infos.profileImg} alt="프로필 이미지" />
-          <_.Edit_Profile_Edit onClick={handleProfileImageEdit}>
-            <ProfileEdit />
-          </_.Edit_Profile_Edit>
-        </_.Edit_Profile>
-        <_.Edit_Infos>
-          <_.Edit_Info>
-            <_.Edit_Info_Label>이메일</_.Edit_Info_Label>
-            <_.Edit_Info_Email>
-              {infos.email}
-              <EmailCopy onClick={handleEmailCopy} />
-            </_.Edit_Info_Email>
-          </_.Edit_Info>
-          <_.Edit_Info>
-            <_.Edit_Info_Label>여행자 닉네임</_.Edit_Info_Label>
-            <_.Edit_Info_Input
-              name="nickname"
-              value={infos.nickname}
-              onChange={handleInfos}
-            />
-          </_.Edit_Info>
-          <_.Edit_Info>
-            <_.Edit_Info_Label>생년월일</_.Edit_Info_Label>
-            <_.Edit_Info_Input
-              name="birthdate"
-              value={infos.birthdate}
-              onChange={handleInfos}
-            />
-          </_.Edit_Info>
-          <_.Edit_Info>
-            <_.Edit_Info_Label>성별</_.Edit_Info_Label>
-            <_.Edit_Info_Input
-              name="gender"
-              value={infos.gender}
-              onChange={handleInfos}
-            />
-          </_.Edit_Info>
-        </_.Edit_Infos>
-      </_.Edit_Content>
-      <NextButton
-        text="저장하기"
-        state={!!isFormValid()}
-        onNextClick={handleUpdateProfile}
-      />
-    </_.Edit_Layout>
+    <AppScreen>
+      <_.Edit_Layout>
+        <Header title="회원 정보 수정" />
+        <_.Edit_Content>
+          <_.Edit_Profile>
+            <_.Edit_Profile_Img src={infos.profileImg} alt="프로필 이미지" />
+            <_.Edit_Profile_Edit onClick={handleProfileImageEdit}>
+              <ProfileEdit />
+            </_.Edit_Profile_Edit>
+          </_.Edit_Profile>
+          <_.Edit_Infos>
+            <_.Edit_Info>
+              <_.Edit_Info_Label>이메일</_.Edit_Info_Label>
+              <_.Edit_Info_Email>
+                {infos.email}
+                <EmailCopy onClick={handleEmailCopy} />
+              </_.Edit_Info_Email>
+            </_.Edit_Info>
+            <_.Edit_Info>
+              <_.Edit_Info_Label>여행자 닉네임</_.Edit_Info_Label>
+              <_.Edit_Info_Input
+                name="nickname"
+                value={infos.nickname}
+                onChange={handleInfos}
+              />
+            </_.Edit_Info>
+            <_.Edit_Info>
+              <_.Edit_Info_Label>생년월일</_.Edit_Info_Label>
+              <_.Edit_Info_Input
+                name="birthdate"
+                value={infos.birthdate}
+                onChange={handleInfos}
+              />
+            </_.Edit_Info>
+            <_.Edit_Info>
+              <_.Edit_Info_Label>성별</_.Edit_Info_Label>
+              <_.Edit_Info_Input
+                name="gender"
+                value={infos.gender}
+                onChange={handleInfos}
+              />
+            </_.Edit_Info>
+          </_.Edit_Infos>
+        </_.Edit_Content>
+        <NextButton
+          text="저장하기"
+          state={!!isFormValid()}
+          onNextClick={handleUpdateProfile}
+        />
+      </_.Edit_Layout>
+    </AppScreen>
   );
 };
 

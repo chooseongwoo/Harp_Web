@@ -6,8 +6,10 @@ import { AppScreen } from '@stackflow/plugin-basic-ui';
 import * as _ from './style';
 import Header from 'components/Header';
 import NextButton from 'components/NextButton';
+import { useFlow } from 'stackflow';
 
 const Login = () => {
+  const { push } = useFlow();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -46,7 +48,11 @@ const Login = () => {
           />
           <_.Login_Black_Text>
             하프가 처음이신가요?
-            <_.Login_Black_Span onClick={() => {}}>
+            <_.Login_Black_Span
+              onClick={() => {
+                push('Register', {});
+              }}
+            >
               {' '}
               회원가입
             </_.Login_Black_Span>

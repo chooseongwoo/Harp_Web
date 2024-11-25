@@ -40,6 +40,7 @@ import Setting from 'pages/setting';
 import Community from 'pages/community/home';
 import Detail from 'pages/community/postDetail';
 import Write from 'pages/community/write';
+import Login from 'pages/self/login';
 
 export const { Stack, useFlow, useStepFlow } = stackflow({
   transitionDuration: 350,
@@ -71,7 +72,8 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     Setting,
     Community,
     Detail,
-    Write
+    Write,
+    Login
   },
   plugins: [
     basicRendererPlugin(),
@@ -87,6 +89,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         Callback: '/auth/kakao/callback',
 
         // 회원가입
+        Login: '/self/login',
         Terms: '/register/terms',
         UserInfo: '/register/userinfo',
         SurveyStyle: '/register/surveystyle',

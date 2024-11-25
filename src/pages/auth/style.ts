@@ -102,4 +102,13 @@ export const Auth_Button_Ballon_SVG = styled.div`
   top: 36px;
 `;
 
-
+export const Auth_Login_Button = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 12px 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: ${theme.gray.white};
+  color: ${theme.primary[7]};
+`;

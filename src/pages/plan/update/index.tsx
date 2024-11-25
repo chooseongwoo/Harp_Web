@@ -1,6 +1,8 @@
 // 라이브러리
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -14,27 +16,55 @@ import TimePicker from 'components/TimePicker';
 import { useMutation } from 'react-query';
 import { Plan_Update } from 'lib/apis/Plan';
 import Write from 'assets/image/Write';
+import { PlanResult } from 'types/plan';
+import { schedule } from 'types/schedule';
+import { useFlow } from 'stackflow';
 
-const Update = () => {
-  const navigate = useNavigate();
-  const { id, dayIndex, timeIndex } = useParams();
-  const location = useLocation();
-  const { planInfos } = location.state;
-  const [planItem, setPlanItem] = useState(
-    planInfos?.data[`day${parseInt(dayIndex!) + 1}`]?.find(
-      (_: any, index: number) => index === parseInt(timeIndex!)
-    )
-  );
+interface UpdateParams {
+  id: string;
+  dayIndex: string;
+  timeIndex: string;
+  planInfos: PlanResult | undefined;
+}
+
+const Update: ActivityComponentType<UpdateParams> = ({ params }) => {
+  const { pop } = useFlow();
+  const { id, dayIndex, timeIndex, planInfos } = params;
+
+  const [planItem, setPlanItem] = useState<schedule | undefined>(undefined);
   const [isSelected, setIsSelected] = useState<number | null>(
-    parseInt(dayIndex!)
+    parseInt(dayIndex)
   );
-  const [inputValue, setInputValue] = useState(planItem.activity);
+  const [inputValue, setInputValue] = useState('');
 
   const [time, setTime] = useState({
     period: '',
     hour: '',
     minute: ''
   });
+
+  if (!planInfos) return null;
+
+  useEffect(() => {
+    const dayKey =
+      `day${parseInt(dayIndex) + 1}` as keyof typeof planInfos.data;
+    const dayData = planInfos.data[dayKey];
+
+    if (Array.isArray(dayData)) {
+      const sortedDayData = [...dayData].sort((a, b) => {
+        const [aHour, aMinute] = a.time.split(':').map(Number);
+        const [bHour, bMinute] = b.time.split(':').map(Number);
+
+        return aHour !== bHour ? aHour - bHour : aMinute - bMinute;
+      });
+
+      const data = sortedDayData[parseInt(timeIndex)];
+      if (data) {
+        setPlanItem(data);
+        setInputValue(data.activity);
+      }
+    }
+  }, [planInfos, dayIndex, timeIndex]);
 
   const periods = ['오전', '오후'];
   const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
@@ -43,7 +73,7 @@ const Update = () => {
   );
 
   const startDate = new Date(planInfos.startDate);
-  const plans = Object.keys(planInfos?.data)
+  const plans = Object.keys(planInfos.data)
     .filter((key) => key !== 'tips')
     .map((key, index) => {
       const date = new Date(startDate);
@@ -67,7 +97,8 @@ const Update = () => {
   const { mutate: updatedPlanItemMutation } = useMutation(Plan_Update, {
     onSuccess: () => {
       alert('수정 성공!');
-      navigate(`/plan/info/${id}`);
+      pop();
+      pop();
     },
     onError: (error) => {
       console.error('일정 아이템 수정 실패', error);
@@ -75,49 +106,45 @@ const Update = () => {
   });
 
   const handleUpdatePlan = () => {
-    const selectedDay = `day${isSelected! + 1}`;
-    const oldDay = `day${parseInt(dayIndex!) + 1}`;
+    const oldDay =
+      `day${parseInt(dayIndex) + 1}` as keyof typeof planInfos.data;
+    const selectedDay = `day${isSelected! + 1}` as keyof typeof planInfos.data;
 
     const isSameDay = selectedDay === oldDay;
 
-    const newPlanItem = {
-      ...planItem,
+    const oldDayPlans = Array.isArray(planInfos.data[oldDay])
+      ? planInfos.data[oldDay]
+      : [];
+    const selectedDayPlans = Array.isArray(planInfos.data[selectedDay])
+      ? planInfos.data[selectedDay]
+      : [];
+
+    const newPlanItem: schedule = {
+      ...planItem!,
       activity: inputValue,
       time: `${time.hour}:${time.minute}`
     };
 
-    let updatedPlans;
+    const updatedOldDayPlans = isSameDay
+      ? oldDayPlans.map((plan, index) =>
+          index === parseInt(timeIndex) ? newPlanItem : plan
+        )
+      : oldDayPlans.filter((_, index) => index !== parseInt(timeIndex));
 
-    if (isSameDay) {
-      updatedPlans = {
-        ...planInfos,
-        data: {
-          ...planInfos.data,
-          [selectedDay]:
-            planInfos.data[selectedDay]?.map((plan: any, index: number) =>
-              index === parseInt(timeIndex!) ? newPlanItem : plan
-            ) || []
-        }
-      };
-    } else {
-      if (!planInfos.data[oldDay] || !planInfos.data[selectedDay]) {
-        console.error('해당 날짜에 데이터가 없습니다.');
-        return;
+    const updatedSelectedDayPlans = isSameDay
+      ? selectedDayPlans
+      : [...selectedDayPlans, newPlanItem];
+
+    const updatedPlans = {
+      ...planInfos,
+      data: {
+        ...planInfos.data,
+        [oldDay]: updatedOldDayPlans,
+        [selectedDay]: updatedSelectedDayPlans
       }
+    };
 
-      updatedPlans = {
-        ...planInfos,
-        data: {
-          ...planInfos.data,
-          [oldDay]: planInfos.data[oldDay].filter(
-            (_: any, index: number) => index !== parseInt(timeIndex!)
-          ),
-          [selectedDay]: [...planInfos.data[selectedDay], newPlanItem]
-        }
-      };
-    }
-
-    updatedPlanItemMutation({ id: id!, data: updatedPlans });
+    updatedPlanItemMutation({ id, data: updatedPlans });
   };
 
   useEffect(() => {
@@ -136,25 +163,10 @@ const Update = () => {
         minute
       });
     }
-  }, []);
-
-  useEffect(() => {
-    if (planItem && time.period && time.hour && time.minute) {
-      const updatedHour =
-        time.period === '오전'
-          ? String(time.hour === '12' ? 0 : time.hour).padStart(2, '0')
-          : String(time.hour === '12' ? 12 : parseInt(time.hour) + 12);
-
-      const formattedTime = `${updatedHour}:${time.minute}`;
-      setPlanItem({
-        ...planItem,
-        time: formattedTime
-      });
-    }
-  }, [time]);
+  }, [planItem]);
 
   return (
-    <>
+    <AppScreen>
       <Header
         title="수정"
         buttonState="완료"
@@ -164,9 +176,7 @@ const Update = () => {
         <_.Update_Location>
           <Location />
           <_.Update_Address>
-            {planItem?.location
-              ? planItem.location
-              : '위치가 존재하지 않습니다.'}
+            {planItem?.location || '위치가 존재하지 않습니다.'}
             <_.Update_PlanChange>변경</_.Update_PlanChange>
           </_.Update_Address>
         </_.Update_Location>
@@ -227,12 +237,11 @@ const Update = () => {
               }
               selectedValue={time.minute}
             />
-
             <_.Update_Overlay />
           </_.Update_TimePickerList>
         </_.Update_SelectTime>
       </_.Update_Container>
-    </>
+    </AppScreen>
   );
 };
 

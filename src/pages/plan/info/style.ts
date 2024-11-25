@@ -6,6 +6,7 @@ export const Info_Layout = styled.div`
   width: 100vw;
   height: calc(100vh - 40px);
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 export const Info_Header = styled.div<{ $BackgroundImage: string }>`
@@ -74,7 +75,6 @@ export const Info_Schedule = styled.div`
 `;
 
 export const Info_DetailList = styled.div`
-  /* padding: 0 0 20px 17px; */
   padding-bottom: 20px;
   width: 100%;
   display: flex;

@@ -1,7 +1,8 @@
 // 라이브러리
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -10,11 +11,15 @@ import NextButton from 'components/NextButton';
 import Calendar from 'components/Calendar';
 import { selectedDaysState } from 'atoms/plan';
 import { Plan_CreatAI } from 'lib/apis/Plan';
+import { useFlow } from 'stackflow';
 
-const SelectDate = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isFromHome = location.state?.fromHome || false;
+interface DateParams {
+  fromHome?: boolean;
+}
+
+const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
+  const { push } = useFlow();
+  const isFromHome = params?.fromHome || false;
 
   const [selectedDays, setSelectedDays] = useRecoilState(selectedDaysState);
   const resetSelectedDays = useResetRecoilState(selectedDaysState);
@@ -61,7 +66,7 @@ const SelectDate = () => {
 
   const onSubmit = async () => {
     const response = await Plan_CreatAI();
-    navigate(`/plan/chat/${response?.data?.AI_ID}`);
+    push('Chat', { id: response?.data?.AI_ID });
   };
 
   useEffect(() => {
@@ -82,7 +87,7 @@ const SelectDate = () => {
   }, []);
 
   return (
-    <>
+    <AppScreen>
       <_.SelectDate_Container>
         <Header />
         <_.SelectDate_Months>
@@ -103,7 +108,7 @@ const SelectDate = () => {
         state={!!selectedDays.start && !!selectedDays.end}
         onNextClick={onSubmit}
       />
-    </>
+    </AppScreen>
   );
 };
 

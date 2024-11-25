@@ -6,8 +6,6 @@ export const UserInfo_Container = styled.div`
   height: 100vh;
   overflow: hidden;
   display: flex;
-  width: 100%;
-  height: 100%;
   flex-direction: column;
   position: fixed;
 `;

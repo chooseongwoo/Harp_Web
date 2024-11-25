@@ -102,10 +102,4 @@ export const Auth_Button_Ballon_SVG = styled.div`
   top: 36px;
 `;
 
-export const Auth_Button_Hint = styled.p`
-  color: ${theme.sub[4]};
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
+

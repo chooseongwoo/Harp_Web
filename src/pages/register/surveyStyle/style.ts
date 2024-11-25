@@ -33,7 +33,7 @@ export const SurveyStyle_SubText = styled.div`
 `;
 
 export const SurveyStyle_Contents = styled.div`
-  margin-top: 7px;
+  margin-top: 15px;
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(3, 2fr);

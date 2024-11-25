@@ -1,7 +1,8 @@
 // 라이브러리
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import * as _ from './style';
@@ -18,9 +19,17 @@ import { Plan_Result, Plan_Update } from 'lib/apis/Plan';
 import { PlanResult } from 'types/plan';
 import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
 import { formatTravelPeriod } from 'lib/utils/formatTravelPeriod';
+import { ActivityComponentType } from '@stackflow/react';
+import { useFlow } from 'stackflow';
 
-const Info = () => {
-  const id = useParams().id;
+interface InfoParams {
+  id: string;
+  imageUrl?: string;
+}
+
+const Info: ActivityComponentType<InfoParams> = ({ params }) => {
+  const id = params.id;
+  const { pop, push } = useFlow();
   const navigate = useNavigate();
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   const [isModal, setIsModal] = useState(false);
@@ -54,7 +63,7 @@ const Info = () => {
         setIsUpdated(false);
       },
       onError: (error) => {
-        console.error('일정 아이템 삭제 실패', error);
+        console.error('작업 실패', error);
       }
     }
   );
@@ -69,15 +78,28 @@ const Info = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const imageUrl = params.imageUrl;
+    if (imageUrl && planInfos) {
+      const updatedPlanInfos = {
+        ...planInfos,
+        mainImg: imageUrl
+      };
+      setPlanInfos(updatedPlanInfos);
+      deletePlanItemMutation();
+    }
+  }, [params.imageUrl, planInfos?.mainImg]);
+
   const handleCloseModal = () => {
     setIsModal(false);
   };
 
   const handleImageSelection = () => {
     handleImageEdit((selectedImage) => {
-      const id = 1;
-      console.log('Selected Image: ', selectedImage);
-      navigate(`/plan/info/${id}/crop`, { state: { imageSrc: selectedImage } });
+      push('InfoCrop', {
+        id: id,
+        imageSrc: URL.createObjectURL(selectedImage)
+      });
     });
   };
 
@@ -94,13 +116,17 @@ const Info = () => {
       : `${formattedStartDate}~${formattedEndDate} (${travelPeriod})`;
 
   return (
-    <>
+    <AppScreen>
       <Header
         title="일정"
         buttonState={isUpdated ? '완료' : '닫기'}
         onClickMethod={() => {
           if (isUpdated) deletePlanItemMutation;
-          else navigate(`/`);
+          else {
+            for (let i = 0; i <= 2; i++) {
+              pop({ animate: false });
+            }
+          }
         }}
       />
       {isLoading ? (
@@ -122,13 +148,14 @@ const Info = () => {
                 <ControlModal
                   setIsUpdated={setIsUpdated}
                   onClose={handleCloseModal}
+                  title={planInfos?.planName ?? ''}
                 />
               )}
             </_.Info_Nav>
             <_.Info_Schedule>
               <_.Info_GoToMap
                 onClick={() => {
-                  navigate(`/plan/map/${id}`);
+                  push('Map', { id: id });
                 }}
               >
                 지도로 보기
@@ -151,6 +178,7 @@ const Info = () => {
                       <_.Info_Date key={index}>
                         <_.Info_Line height={lineHeight} />
                         <DayPlan
+                          id={id}
                           isUpdated={isUpdated}
                           key={index}
                           day={day}
@@ -167,9 +195,7 @@ const Info = () => {
           </_.Info_Content>
           <_.Info_Add_Schedule
             onClick={() => {
-              navigate(`/plan/info/${id}/addsearch`, {
-                state: { planInfos: planInfos }
-              });
+              push('AddSearch', { id: id, planInfos: planInfos });
             }}
           >
             <Plus />
@@ -177,7 +203,7 @@ const Info = () => {
           {isSuccess && <AddSucessModal />}
         </_.Info_Layout>
       )}
-    </>
+    </AppScreen>
   );
 };
 

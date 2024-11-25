@@ -1,6 +1,5 @@
 // 라이브러리
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 
 // 파일
@@ -9,105 +8,140 @@ import Header from 'components/Header';
 import Location from 'assets/image/Location';
 import MiniMap from 'components/Maps/MiniMap';
 import { Plan_Update } from 'lib/apis/Plan';
-import { formatTime } from 'lib/utils/formatTime';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { ActivityComponentType } from '@stackflow/react';
+import { PlanData, PlanResult } from 'types/plan';
+import { useFlow } from 'stackflow';
 
-const Memo = () => {
-  const navigate = useNavigate();
-  const { id, dayIndex, timeIndex } = useParams();
-  const location = useLocation();
-  const { planInfos, date } = location.state;
-  const [contents, setContents] = useState({
+interface MemoParams {
+  id: string;
+  dayIndex: number;
+  timeIndex: number;
+  planInfos: PlanResult | undefined;
+  date: string;
+}
+
+interface Contents {
+  time: string;
+  activity: string;
+  location: string;
+}
+
+const Memo: ActivityComponentType<MemoParams> = ({ params }) => {
+  const { push } = useFlow();
+  const { id, dayIndex, timeIndex, planInfos, date } = params;
+  const [contents, setContents] = useState<Contents>({
     time: '',
     activity: '',
     location: ''
   });
-  const [memo, setMemo] = useState('');
+  const [memo, setMemo] = useState<string>('');
 
   useEffect(() => {
-    const data = planInfos?.data[`day${parseInt(dayIndex!) + 1}`]?.find(
-      (_: any, index: number) => index === parseInt(timeIndex!)
-    );
+    if (!planInfos) return;
 
-    if (data) {
-      setMemo(data.memo);
-      setContents({
-        time: formatTime(data.time),
-        activity: data.activity,
-        location: data.location
+    const dayKey = `day${dayIndex + 1}` as keyof typeof planInfos.data;
+    const dayData = planInfos.data[dayKey];
+
+    if (Array.isArray(dayData)) {
+      const sortedData = [...dayData].sort((a, b) => {
+        const [hourA, minuteA] = a.time.split(':').map(Number);
+        const [hourB, minuteB] = b.time.split(':').map(Number);
+        return hourA === hourB ? minuteA - minuteB : hourA - hourB;
       });
+
+      const data = sortedData[timeIndex];
+
+      if (data) {
+        setMemo(data.memo || '');
+        setContents({
+          time: data.time || '',
+          activity: data.activity || '',
+          location: data.location || ''
+        });
+      }
     }
-  }, [dayIndex, timeIndex, planInfos]);
+  }, [planInfos, dayIndex, timeIndex]);
 
   const updateMemoContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMemo(e.currentTarget.value);
+    setMemo(e.target.value);
   };
 
+  const selectedPlan = React.useMemo(() => {
+    if (!planInfos) return [];
 
-  const selectedPlan = planInfos?.data[`day${parseInt(dayIndex!) + 1}`]?.map(
-    (plan: any, index: number) => {
-      if (index === parseInt(timeIndex!)) {
-        return { ...plan, memo: memo };
-      }
-      return plan;
-    }
-  );
+    const dayKey = `day${dayIndex + 1}` as keyof PlanData;
+    const dayData = planInfos.data[dayKey];
+
+    if (!Array.isArray(dayData)) return [];
+
+    return dayData.map((plan, index) =>
+      index === timeIndex ? { ...plan, memo } : plan
+    );
+  }, [planInfos, dayIndex, timeIndex, memo]);
 
   const { mutate: updateMemoMutation } = useMutation(
-    () =>
-      Plan_Update({
-        id: id!,
+    () => {
+      if (!planInfos || !id) throw new Error('Required data missing');
+
+      return Plan_Update({
+        id,
         data: {
           ...planInfos,
           data: {
             ...planInfos.data,
-            [`day${parseInt(dayIndex!) + 1}`]: selectedPlan
+            [`day${dayIndex + 1}`]: selectedPlan
           }
         }
-      }),
+      });
+    },
     {
       onError: (error) => {
-        console.log('메모 추가 실패', error);
+        console.error('메모 수정 실패', error);
       }
     }
   );
 
-  const handleUpdateMemo = async () => {
-    await updateMemoMutation();
-  };
-
   const directUpdatePage = () => {
-    navigate('update', { state: { planInfos: planInfos } });
+    push('Update', {
+      id: id,
+      dayIndex: String(dayIndex),
+      timeIndex: String(timeIndex),
+      planInfos: planInfos
+    });
   };
 
   return (
-    <_.Memo_Layout>
-      <Header
-        buttonState="수정"
-        buttonColor="purple"
-        onTapBackIcon={handleUpdateMemo}
-        onClickMethod={directUpdatePage}
-      />
-      <_.Memo_Container>
-        <_.Memo_TitleBar>
-          <_.Memo_DateAndTime>
-            {date} {contents.time}
-          </_.Memo_DateAndTime>
-          <_.Memo_PlanTitle>{contents.activity}</_.Memo_PlanTitle>
-          <_.Memo_Location>
-            <Location />
-            <_.Memo_Address>{contents.location}</_.Memo_Address>
-          </_.Memo_Location>
-        </_.Memo_TitleBar>
-        <_.Memo_Content>
-          <MiniMap keyword={contents.location} />
-          <_.Memo_Memo
-            onChange={updateMemoContent}
-            value={memo || ''}
-            placeholder="메모를 입력하세요..."
-          />
-        </_.Memo_Content>
-      </_.Memo_Container>
-    </_.Memo_Layout>
+    <AppScreen>
+      <_.Memo_Layout>
+        <Header
+          buttonState="수정"
+          buttonColor="purple"
+          onTapBackIcon={updateMemoMutation}
+          onClickMethod={directUpdatePage}
+        />
+        <_.Memo_Container>
+          <_.Memo_TitleBar>
+            <_.Memo_DateAndTime>
+              {date} {contents.time}
+            </_.Memo_DateAndTime>
+            <_.Memo_PlanTitle>{contents.activity}</_.Memo_PlanTitle>
+            <_.Memo_Location>
+              <Location />
+              <_.Memo_Address>{contents.location}</_.Memo_Address>
+            </_.Memo_Location>
+          </_.Memo_TitleBar>
+          <_.Memo_Content>
+            <MiniMap keyword={contents.location} />
+            <_.Memo_Memo
+              onChange={updateMemoContent}
+              value={memo}
+              placeholder="메모를 입력하세요..."
+            />
+          </_.Memo_Content>
+        </_.Memo_Container>
+      </_.Memo_Layout>
+    </AppScreen>
   );
 };
 

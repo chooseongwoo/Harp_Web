@@ -11,39 +11,42 @@ import Community from 'assets/Icon/MenuBar/Select/Community';
 import Community_Not from 'assets/Icon/MenuBar/NotSelect/Community';
 import All from 'assets/Icon/MenuBar/Select/All';
 import All_Not from 'assets/Icon/MenuBar/NotSelect/All';
-import { useNavigate } from 'react-router-dom';
+import { useFlow } from 'stackflow';
 
 interface MenuBarProps {
   selectState: number;
 }
 
 const icons = [
-  { selected: Home, notSelected: Home_Not, title: '홈', location: '/' },
+  { selected: Home, notSelected: Home_Not, title: '홈', location: 'Home' },
   {
     selected: Travel,
     notSelected: Travel_Not,
     title: '여행',
-    location: '/plan/selectdate'
+    location: 'SelectDate'
   },
   {
     selected: Community,
     notSelected: Community_Not,
     title: '커뮤니티',
-    location: '/community'
+    location: 'Community'
   },
-  { selected: All, notSelected: All_Not, title: '전체', location: '/all' }
+  { selected: All, notSelected: All_Not, title: '전체', location: 'All' }
 ];
 
 const MenuBar = ({ selectState }: MenuBarProps) => {
-  const navigate = useNavigate();
-
+  const { push, replace } = useFlow();
   return (
     <_.MenuBar_Container>
       {icons.map((icon, index) => (
         <_.Menubar_Icon
           key={index}
           onClick={() => {
-            navigate(icon.location, { state: { fromHome: true } });
+            if (icon.title == '여행') {
+              push(icon.location as any, { fromHome: true });
+            } else {
+              replace(icon.location as any, {}, { animate: false });
+            }
           }}
         >
           {selectState === index + 1 ? <icon.selected /> : <icon.notSelected />}

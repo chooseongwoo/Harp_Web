@@ -1,8 +1,9 @@
 export interface schedule {
   time: string;
   activity: string;
-  location: string;
+  location?: string;
   recommendation: string;
   x: string;
   y: string;
+  memo?: string;
 }

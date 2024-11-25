@@ -1,6 +1,5 @@
 // 라이브러리
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 
 // 파일
@@ -16,12 +15,18 @@ import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
 import { useRecoilValue } from 'recoil';
 import { selectedDaysState } from 'atoms/plan';
 import PlanResult from 'components/PlanResult';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { ActivityComponentType } from '@stackflow/react';
 
 const PLAN_IMAGE =
   'https://harp-back.hash-squad.kro.kr/common/CommonPlanImg.png';
 
-const Chat = () => {
-  const id = useParams().id;
+interface ChatParams {
+  id: string;
+}
+
+const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
+  const id = params.id;
   const messageEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -102,19 +107,21 @@ const Chat = () => {
     {
       enabled: !!planId,
       onSuccess: (result) => {
-        setChatHistory((prevChat) => [
-          ...prevChat,
-          {
-            role: 'assistant',
-            Contents: {
-              subject: '',
-              category: 'result',
-              question: `${result.data.PlanData.planName} 일정입니다.`,
-              select: []
+        if (!isEnded) {
+          setChatHistory((prevChat) => [
+            ...prevChat,
+            {
+              role: 'assistant',
+              Contents: {
+                subject: '',
+                category: 'result',
+                question: `${result.data.PlanData.planName} 일정입니다.`,
+                select: []
+              }
             }
-          }
-        ]);
-        setIsEnded(true);
+          ]);
+          setIsEnded(true);
+        }
       },
       onError: (error) => {
         console.error('Plan_Result 요청 중 에러 발생: ', error);
@@ -128,7 +135,6 @@ const Chat = () => {
 
   const incrementStep = () => setStep((prevStep) => prevStep + 1);
 
-  console.log(step);
   const nextStep = useCallback(
     (userMessage: string) => {
       if (step === 3) {
@@ -200,83 +206,85 @@ const Chat = () => {
   }, [chatHistory, pendingMessage]);
 
   return (
-    <_.Chat_Layout>
-      <_.Chat_Container>
-        <Header title="AI 디토" isOnChatting={true} />
-        <_.Chat_Messages selectOptions={selectOptions}>
-          {chatHistory.map((chat, index) =>
-            chat && chat.Contents ? (
+    <AppScreen>
+      <_.Chat_Layout>
+        <_.Chat_Container>
+          <Header title="AI 디토" isOnChatting={true} />
+          <_.Chat_Messages selectOptions={selectOptions}>
+            {chatHistory.map((chat, index) =>
+              chat && chat.Contents ? (
+                <MessageBox
+                  key={index}
+                  message={chat.Contents.question}
+                  role={chat.role}
+                  isLoading={false}
+                />
+              ) : null
+            )}
+
+            {pendingMessage && (
               <MessageBox
-                key={index}
-                message={chat.Contents.question}
-                role={chat.role}
+                message={pendingMessage.Contents.question}
+                role={pendingMessage.role}
                 isLoading={false}
               />
-            ) : null
-          )}
-
-          {pendingMessage && (
-            <MessageBox
-              message={pendingMessage.Contents.question}
-              role={pendingMessage.role}
-              isLoading={false}
-            />
-          )}
-          {isWaitingForReply && (
-            <MessageBox message="" role="assistant" isLoading={true} />
-          )}
-          {planResultData && (
-            <PlanResult
-              id={planResultData.data.PlanData.planId}
-              title={planResultData.data.PlanData.planName}
-              img={planResultData.data.PlanData.mainImg}
-              startDate={planResultData.data.PlanData.startDate}
-              member="2"
-            />
-          )}
-          {isEnded && (
-            <_.Chat_EndMessage>대화가 종료되었습니다.</_.Chat_EndMessage>
-          )}
-          <div ref={messageEndRef} />
-        </_.Chat_Messages>
-        <_.Chat_Typing_Container>
-          {selectOptions.length > 0 && (
-            <_.Chat_SelectList>
-              {selectOptions.map((option, index) => (
-                <_.Chat_SelectBox
-                  onClick={() => {
-                    handleSelectOption(option);
-                  }}
-                  key={index}
-                >
-                  {option}
-                </_.Chat_SelectBox>
-              ))}
-            </_.Chat_SelectList>
-          )}
-          <_.Chat_Typing_Box>
-            <_.Chat_Textarea
-              value={message}
-              placeholder="메시지 보내기..."
-              rows={1}
-              maxLength={50}
-              ref={textareaRef}
-              onChange={resizeHeight}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handleSendMessage();
-                }
-              }}
-              disabled={isWaitingForReply || isEnded || step === 1}
-            />
-            <_.Chat_SendIcon onClick={handleSendMessage}>
-              <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
-            </_.Chat_SendIcon>
-          </_.Chat_Typing_Box>
-        </_.Chat_Typing_Container>
-      </_.Chat_Container>
-    </_.Chat_Layout>
+            )}
+            {isWaitingForReply && (
+              <MessageBox message="" role="assistant" isLoading={true} />
+            )}
+            {planResultData && (
+              <PlanResult
+                id={planResultData.data.PlanData.planId}
+                title={planResultData.data.PlanData.planName}
+                img={planResultData.data.PlanData.mainImg}
+                startDate={planResultData.data.PlanData.startDate}
+                member="2"
+              />
+            )}
+            {isEnded && (
+              <_.Chat_EndMessage>대화가 종료되었습니다.</_.Chat_EndMessage>
+            )}
+            <div ref={messageEndRef} />
+          </_.Chat_Messages>
+          <_.Chat_Typing_Container>
+            {selectOptions.length > 0 && (
+              <_.Chat_SelectList>
+                {selectOptions.map((option, index) => (
+                  <_.Chat_SelectBox
+                    onClick={() => {
+                      handleSelectOption(option);
+                    }}
+                    key={index}
+                  >
+                    {option}
+                  </_.Chat_SelectBox>
+                ))}
+              </_.Chat_SelectList>
+            )}
+            <_.Chat_Typing_Box>
+              <_.Chat_Textarea
+                value={message}
+                placeholder="메시지 보내기..."
+                rows={1}
+                maxLength={50}
+                ref={textareaRef}
+                onChange={resizeHeight}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                disabled={isWaitingForReply || isEnded || step === 1}
+              />
+              <_.Chat_SendIcon onClick={handleSendMessage}>
+                <Send stroke={message ? theme.primary[7] : theme.gray[2]} />
+              </_.Chat_SendIcon>
+            </_.Chat_Typing_Box>
+          </_.Chat_Typing_Container>
+        </_.Chat_Container>
+      </_.Chat_Layout>
+    </AppScreen>
   );
 };
 

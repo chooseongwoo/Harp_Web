@@ -9,13 +9,15 @@ import Share from 'assets/Icon/Share';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Plan_Delete } from 'lib/apis/Plan';
 import { useMutation } from 'react-query';
+import { handleShare } from 'lib/utils/handleShare';
 
 interface ControlModalProps {
   onClose: () => void;
   setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
 }
 
-const ControlModal = ({ onClose, setIsUpdated }: ControlModalProps) => {
+const ControlModal = ({ onClose, setIsUpdated, title }: ControlModalProps) => {
   const navigate = useNavigate();
   const id = useParams().id;
   const modalRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,11 @@ const ControlModal = ({ onClose, setIsUpdated }: ControlModalProps) => {
         삭제하기
         <TrashCan />
       </_.ControlModal_Menu>
-      <_.ControlModal_Menu>
+      <_.ControlModal_Menu
+        onClick={() => {
+          handleShare(title, id ?? '');
+        }}
+      >
         공유하기
         <Share />
       </_.ControlModal_Menu>

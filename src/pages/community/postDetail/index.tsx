@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import { useMutation, useQueries, useQueryClient } from 'react-query';
+import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 import * as _ from './style';
 import Header from 'components/Header';
@@ -13,6 +14,7 @@ import { theme } from 'lib/utils/style/theme';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
 import { slider } from 'config/slider';
 import ImageDetail from 'components/community/ImageDetail';
+
 import {
   Community_AddComment,
   Community_IsLike,
@@ -22,7 +24,11 @@ import {
 import { detailPost } from 'types/community';
 import X from 'assets/Icon/X';
 
-const PostDetail = () => {
+interface PostDeatilParams {
+  communityId?: number;
+}
+
+const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
   const [message, setMessage] = useState<string>('');
   const [isRepliedComment, setIsRepliedComment] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -39,20 +45,20 @@ const PostDetail = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const commentsContainerRef = useRef<HTMLDivElement>(null);
 
-  const { id } = useParams<{ id: string }>();
+  const communityId = String(params?.communityId);
 
   const queryClient = useQueryClient();
 
   const [{ isLoading, data: postData }] = useQueries([
     {
-      queryKey: ['getOnePost', id],
-      queryFn: () => Community_OnePost(id ?? ''),
+      queryKey: ['getOnePost', communityId],
+      queryFn: () => Community_OnePost(communityId ?? ''),
       staleTime: 10000,
       cacheTime: 600000
     },
     {
-      queryKey: ['getIsLiked', id],
-      queryFn: () => Community_IsLike(id ?? ''),
+      queryKey: ['getIsLiked', communityId],
+      queryFn: () => Community_IsLike(communityId ?? ''),
       onSuccess: (response: any) => {
         setIsLiked(response?.data?.status);
       },
@@ -62,7 +68,7 @@ const PostDetail = () => {
   ]);
 
   const { mutate: postWishMutation } = useMutation(
-    () => Community_PostWish(id!),
+    () => Community_PostWish(communityId!),
     {
       onError: (error) => {
         console.error('찜 실패', error);
@@ -76,11 +82,11 @@ const PostDetail = () => {
         des: message,
         isCommentForComment: isRepliedComment,
         parentComment: replyingTo?.commentsId,
-        communityId: parseInt(id || '', 10)
+        communityId: parseInt(communityId || '', 10)
       }),
     {
       onSuccess: () => {
-        queryClient.refetchQueries(['getOnePost', id]);
+        queryClient.refetchQueries(['getOnePost', communityId]);
         setMessage('');
         if (isRepliedComment) {
           setIsRepliedComment(false);
@@ -160,7 +166,7 @@ const PostDetail = () => {
     return <_.PostDetail_Message>불러오는 중...</_.PostDetail_Message>;
   }
 
-  if (!post || !id) {
+  if (!post || !communityId) {
     return (
       <_.PostDetail_Message>
         글이 삭제됐거나 이전되었습니다.
@@ -169,7 +175,7 @@ const PostDetail = () => {
   }
 
   return (
-    <>
+    <AppScreen>
       <_.PostDetail_Layout isRepliedComment={isRepliedComment}>
         <Header title="글 상세" />
         <_.PostDetail_Container>
@@ -255,7 +261,7 @@ const PostDetail = () => {
           </_.PostDetail_TypingBox>
         </_.PostDetail_TypingContainer>
       </_.PostDetail_Bottom>
-    </>
+    </AppScreen>
   );
 };
 

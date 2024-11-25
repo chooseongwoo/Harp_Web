@@ -9,6 +9,7 @@ export const Terms_Layout = styled.div`
 `;
 
 export const Terms_Container = styled.div`
+  margin-top: 40px;
   display: flex;
   width: 100%;
   height: calc(100% - 90px);

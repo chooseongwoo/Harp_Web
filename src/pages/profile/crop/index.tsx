@@ -1,5 +1,5 @@
-// 라이브러리
-import { replace, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 // 파일
 import CropImage from 'components/CropImage';
@@ -7,11 +7,16 @@ import Header from 'components/Header';
 import * as _ from './style';
 import NotFound from 'pages/notFound';
 import { Upload_Image } from 'lib/apis/Upload';
+import { useFlow } from 'stackflow';
+import { ActivityComponentType } from '@stackflow/react';
 
-const CropPage = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { imageSrc } = location.state || {};
+interface CropParams {
+  imageSrc: string;
+}
+
+const CropPage: ActivityComponentType<CropParams> = ({ params }) => {
+  const { replace, pop } = useFlow();
+  const imageSrc = params.imageSrc;
 
   if (!imageSrc) {
     return <NotFound />;
@@ -23,26 +28,25 @@ const CropPage = () => {
     const formData = new FormData();
     formData.append('img', blob);
     const uploadResponse = await Upload_Image(formData);
-
-    navigate('/profile/edit', {
-      state: { imageUrl: uploadResponse.data.url },
-      replace: true
-    });
+    pop();
+    replace('Edit', { imageUrl: uploadResponse.data.url });
   };
 
   return (
-    <_.Crop_Layout>
-      <Header title="자르기" />
-      <_.Crop_Container>
-        <CropImage
-          imageSrc={imageSrc}
-          cropShape="round"
-          aspectRatio={1 / 1}
-          nextPagePath="/profile/edit"
-          onCropComplete={handleCropComplete}
-        />
-      </_.Crop_Container>
-    </_.Crop_Layout>
+    <AppScreen>
+      <_.Crop_Layout>
+        <Header title="자르기" />
+        <_.Crop_Container>
+          <CropImage
+            imageSrc={imageSrc}
+            cropShape="round"
+            aspectRatio={1 / 1}
+            nextPagePath="/profile/edit"
+            onCropComplete={handleCropComplete}
+          />
+        </_.Crop_Container>
+      </_.Crop_Layout>
+    </AppScreen>
   );
 };
 

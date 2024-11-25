@@ -7,8 +7,10 @@ import Heart from 'assets/image/Heart';
 import Comment from 'assets/image/Comment';
 import { community } from 'types/community';
 import { getDayMinuteCounter } from 'lib/utils/getDayMinuteCounter';
+import { useFlow } from 'stackflow';
 
 const PreviewCard = ({
+  communityId,
   title,
   tag,
   wishCount,
@@ -16,8 +18,13 @@ const PreviewCard = ({
   updatedAt,
   images
 }: community) => {
+  const { push } = useFlow();
   return (
-    <_.PreviewCard_Layout>
+    <_.PreviewCard_Layout
+      onClick={() => {
+        push('Detail', { communityId: communityId });
+      }}
+    >
       <_.PreviewCard_Left>
         <_.PreviewCard_Gray>{tag}</_.PreviewCard_Gray>
         <_.PreviewCard_Title>{title}</_.PreviewCard_Title>

@@ -7,9 +7,11 @@ import * as _ from './style';
 import Header from 'components/Header';
 import NextButton from 'components/NextButton';
 import { useFlow } from 'stackflow';
+import axios from 'axios';
+import { Auth_KakaoLogin } from 'lib/apis/Auth';
 
 const Login = () => {
-  const { push } = useFlow();
+  const { push, replace } = useFlow();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,7 +25,22 @@ const Login = () => {
     }));
   };
 
-  const handleLoginSubmit = () => {};
+  const handleLoginSubmit = () => {
+    axios
+      .post(`${process.env.REACT_APP_API}/auth/signin`, {
+        email: formData.email,
+        password: formData.password,
+        name: 'name'
+      })
+      .then(async (response) => {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        const data = await Auth_KakaoLogin();
+        if (data.data.newAccount === '1') {
+          replace('Terms', {}, { animate: false });
+        } else replace('Home', {}, { animate: false });
+      });
+  };
 
   const isFormValid = formData.email && formData.password;
 

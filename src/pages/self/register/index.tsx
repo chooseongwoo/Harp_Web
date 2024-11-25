@@ -1,13 +1,16 @@
 // 라이브러리
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+import axios from 'axios';
 
 // 파일
 import * as _ from './style';
 import Header from 'components/Header';
 import NextButton from 'components/NextButton';
+import { useFlow } from 'stackflow';
 
 const Register = () => {
+  const { pop } = useFlow();
   const title = '환영합니다!\n회원정보를 입력해주세요.';
   const [formData, setFormData] = useState({
     email: '',
@@ -28,6 +31,16 @@ const Register = () => {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
+    axios
+      .post(`${process.env.REACT_APP_API}/auth/signup`, {
+        email: formData.email,
+        password: formData.password,
+        name: 'name'
+      })
+      .then((response) => {
+        alert(response.data.message);
+        pop();
+      });
   };
 
   const isFormValid =

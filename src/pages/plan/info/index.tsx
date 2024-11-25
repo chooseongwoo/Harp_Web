@@ -155,7 +155,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
             <_.Info_Schedule>
               <_.Info_GoToMap
                 onClick={() => {
-                  navigate(`/plan/map/${id}`);
+                  push('Map', { id: id });
                 }}
               >
                 지도로 보기

@@ -12,9 +12,15 @@ import { Plan_Result } from 'lib/apis/Plan';
 import { PlanResult } from 'types/plan';
 import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
 import { formatTravelPeriod } from 'lib/utils/formatTravelPeriod';
+import { ActivityComponentType } from '@stackflow/react';
+import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-const Map = () => {
-  const id = useParams().id;
+interface MapParams {
+  id: string;
+}
+
+const Map: ActivityComponentType<MapParams> = ({ params }) => {
+  const id = params.id;
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   useQuery(['planResult', id], () => Plan_Result({ id }), {
     onSuccess: (response) => {
@@ -40,11 +46,13 @@ const Map = () => {
       : `${formattedStartDate}~${formattedEndDate} (${travelPeriod})`;
 
   return (
-    <_.Map_Layout>
-      <Header title="지도" buttonState="완료" />
-      <ScreenMap planInfos={planInfos!} />
-      <BottomSheet planInfos={planInfos!} duration={duration} />
-    </_.Map_Layout>
+    <AppScreen>
+      <_.Map_Layout>
+        <Header title="지도" />
+        <ScreenMap planInfos={planInfos!} />
+        <BottomSheet planInfos={planInfos!} duration={duration} />
+      </_.Map_Layout>
+    </AppScreen>
   );
 };
 

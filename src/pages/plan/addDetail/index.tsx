@@ -61,14 +61,17 @@ const AddDetail: ActivityComponentType<DetailParams> = ({ params }) => {
       recommendation: ''
     };
 
-    const existingPlans = planInfos.data[selectedDay] || [];
+    const existingPlans =
+      planInfos.data[selectedDay as keyof typeof planInfos.data] || [];
 
     const updatedPlans: PlanResult = {
       ...planInfos,
       endDate: plans[plans.length - 1].date,
       data: {
         ...planInfos.data,
-        [selectedDay]: [...existingPlans, newPlanItem]
+        [selectedDay]: Array.isArray(existingPlans)
+          ? [...existingPlans, newPlanItem]
+          : [newPlanItem]
       }
     };
 

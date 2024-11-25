@@ -178,6 +178,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
                       <_.Info_Date key={index}>
                         <_.Info_Line height={lineHeight} />
                         <DayPlan
+                          id={id}
                           isUpdated={isUpdated}
                           key={index}
                           day={day}

@@ -1,12 +1,12 @@
 import { schedule } from './schedule';
 
-interface DynamicDays {
-  [key: string]: schedule[];
+export interface DynamicDays {
+  [key: string]: schedule[] | undefined;
 }
 
-interface PlanData {
-  [key: string]: any;
-  tips?: schedule[];
+export interface PlanData {
+  days: DynamicDays;
+  tips: schedule[];
 }
 
 export interface CreateParams {

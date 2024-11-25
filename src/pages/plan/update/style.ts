@@ -7,7 +7,7 @@ export const Update_Container = styled.div`
   flex-direction: column;
   padding: 0 20px;
   width: 100%;
-  height: 100%;
+  height: cacl(100vh - 40px);
 `;
 
 export const Update_Location = styled.div`

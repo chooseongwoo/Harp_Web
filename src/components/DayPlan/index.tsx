@@ -4,10 +4,11 @@ import { schedule } from 'types/schedule';
 import { formatTime } from 'lib/utils/formatTime';
 import * as _ from './style';
 import { formatSelectedDate } from 'lib/utils/formatSelectedDate';
-import { useNavigate, useParams } from 'react-router-dom';
 import { PlanResult } from 'types/plan';
+import { useFlow } from 'stackflow';
 
 interface DayPlanProps {
+  id?: string;
   isUpdated?: boolean;
   day: schedule[];
   dayIndex: number;
@@ -16,14 +17,14 @@ interface DayPlanProps {
 }
 
 const DayPlan = ({
+  id,
   isUpdated,
   day,
   dayIndex,
   planInfos,
   setPlanInfos
 }: DayPlanProps) => {
-  const id = useParams().id;
-  const navigate = useNavigate();
+  const { push } = useFlow();
   const rightRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [heights, setHeights] = useState<number[]>([]);
 
@@ -41,8 +42,12 @@ const DayPlan = ({
   const date = calculateDate(planInfos?.startDate, dayIndex);
 
   const handleUpdatePlan = (timeIndex: number) => {
-    navigate(`/plan/info/${id!}/day/${dayIndex}/time/${timeIndex}`, {
-      state: { planInfos: planInfos, date: date }
+    push('Memo', {
+      id: id ?? '',
+      dayIndex: dayIndex,
+      timeIndex: timeIndex,
+      planInfos: planInfos,
+      date: date
     });
   };
 

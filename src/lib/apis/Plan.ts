@@ -10,12 +10,14 @@ interface ChattingParams {
   id: string | undefined;
   subject: 'travel' | 'date';
   previousConversation: string;
+  step: number;
 }
 
 export const Plan_Chatting = async (params: ChattingParams) => {
-  const { id, subject, previousConversation } = params;
+  const { id, subject, previousConversation, step } = params;
   const { data } = await AuthInstance.post(`chat/${subject}/${id}`, {
-    previousConversation: previousConversation
+    previousConversation,
+    ...(step === 5 && { location: previousConversation })
   });
   return data;
 };

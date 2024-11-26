@@ -86,7 +86,8 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
       Plan_Chatting({
         id,
         subject: planInfo.type.includes('숙박') ? 'travel' : 'date',
-        previousConversation: userMessage
+        previousConversation: userMessage,
+        step: step
       }),
 
     {
@@ -151,6 +152,8 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
         setTimeout(() => {
           ChattingMutation('일정 짜줘');
         }, 100);
+      } else if (step == 5) {
+        ChattingMutation(userMessage);
       } else {
         ChattingMutation(userMessage);
       }

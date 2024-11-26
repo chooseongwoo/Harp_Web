@@ -99,7 +99,9 @@ const Community: ActivityComponentType = () => {
         ) : (
           <_.Community_Not>글 불러오는 중...</_.Community_Not>
         )}
-        <_.Community_Writing onClick={() => push('Write', {})}>
+        <_.Community_Writing
+          onClick={() => push('Write', {}, { animate: false })}
+        >
           <Edit />
         </_.Community_Writing>
         <MenuBar selectState={3} />

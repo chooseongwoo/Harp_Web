@@ -52,7 +52,7 @@ const All = () => {
           <_.All_Profile_Image url={infos.profileImg} />
           <_.All_Name onClick={() => push('Edit', { imageUrl: '' })}>
             {infos.nickname}
-            <RightArrow width="14" height="14" color={theme.gray.black} />
+            <RightArrow width="18" height="18" color={theme.gray.black} />
           </_.All_Name>
         </_.All_Profile>
         <_.All_CategoryList>

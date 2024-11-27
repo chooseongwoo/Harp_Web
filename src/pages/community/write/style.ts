@@ -62,7 +62,7 @@ export const Write_BottomContainer = styled.div`
   left: 0;
   display: flex;
   width: 100%;
-  padding: 13px 20px;
+  padding: 15px 28px;
   background-color: white;
   gap: 12px;
   border-top: 1px solid ${theme.gray[1]};

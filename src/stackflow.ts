@@ -41,6 +41,7 @@ import All from 'pages/all/main';
 import Setting from 'pages/setting';
 import Policy from 'pages/all/policy';
 import PastSchedule from 'pages/all/pastSchedule';
+import WishList from 'pages/all/wishList';
 
 // 커뮤니티
 import Community from 'pages/community/home';
@@ -83,6 +84,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     Setting,
     Policy,
     PastSchedule,
+    WishList,
 
     Community,
     Detail,
@@ -131,6 +133,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         Setting: '/setting',
         Policy: '/all/policy',
         PastSchedule: '/all/pastSchedule',
+        WishList: '/all/wishList',
 
         // 커뮤니티
         Community: '/community',

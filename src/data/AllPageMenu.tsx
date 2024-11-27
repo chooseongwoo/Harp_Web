@@ -20,7 +20,7 @@ export const AllPageMenu = [
       {
         icon: <Heart width="24" height="24" />,
         title: '관심 목록',
-        location: 'HeartList'
+        location: 'WishList'
       }
     ]
   },

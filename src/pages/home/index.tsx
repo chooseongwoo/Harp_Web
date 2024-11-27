@@ -35,9 +35,12 @@ const Home = () => {
     Plan_UserPlanList,
     {
       onSuccess: (response: { data: { PlanData: PlanResult[] } }) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         const sortedPlans = response.data.PlanData?.filter(
           (plan: { startDate: string }) => {
-            return new Date(plan.startDate) >= new Date();
+            return new Date(plan.startDate).getTime() >= today.getTime();
           }
         ).sort((a: { startDate: string }, b: { startDate: string }) => {
           return (

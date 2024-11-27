@@ -74,7 +74,7 @@ const Community: ActivityComponentType = () => {
             <_.Community_Notice_Content>
               하프 서비스 정식 출시 안내🎉
             </_.Community_Notice_Content>
-            <_.Community_Notice_Date>2024.11.28</_.Community_Notice_Date>
+            <_.Community_Notice_Date>2024.11.28.</_.Community_Notice_Date>
           </_.Community_Notice>
         </_.Community_NoticeList>
         {!isLoading ? (

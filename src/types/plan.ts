@@ -6,7 +6,7 @@ export interface DynamicDays {
 
 export interface PlanData {
   days: DynamicDays;
-  tips: schedule[];
+  tips: string;
 }
 
 export interface CreateParams {

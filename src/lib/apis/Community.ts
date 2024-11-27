@@ -10,6 +10,11 @@ export const Community_OnePost = async (id: string) => {
   return data;
 };
 
+export const Community_GetWish = async () => {
+  const { data } = await AuthInstance.get(`/community/wish`);
+  return data;
+};
+
 export const Community_PostWish = async (id: string) => {
   const { data } = await AuthInstance.post(`/community/wish/change/${id}`);
   return data;

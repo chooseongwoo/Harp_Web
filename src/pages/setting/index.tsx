@@ -23,14 +23,23 @@ const Setting: ActivityComponentType = () => {
   });
 
   const { mutate: DeleteMutate } = useMutation(Auth_DeleteUser, {
-    onSuccess: (response) => {
+    onSuccess: () => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      alert('계정 탈퇴 완료');
       pop();
       replace('Auth', {}, { animate: false });
-      alert(response.message);
     }
   });
+
+  const handleDeleteAccount = () => {
+    const isConfirmed = window.confirm(
+      '계정 탈퇴 시 모든 데이터가 영구 삭제됩니다. 계속하시겠습니까?'
+    );
+    if (isConfirmed) {
+      DeleteMutate();
+    }
+  };
 
   return (
     <AppScreen>
@@ -41,12 +50,12 @@ const Setting: ActivityComponentType = () => {
           <_.Setting_Version_Current>
             <_.Setting_Version_Title>현재 버전</_.Setting_Version_Title>
             <_.Setting_Version_Value>
-              v2.1.0(2024.11.27)
+              v2.1.0(2024.11.27.)
             </_.Setting_Version_Value>
           </_.Setting_Version_Current>
           <_.Setting_Version_Latest>최신버전: v2.1.0</_.Setting_Version_Latest>
         </_.Setting_Version>
-        <_.Setting_Withdrawal onClick={() => DeleteMutate()}>
+        <_.Setting_Withdrawal onClick={handleDeleteAccount}>
           서비스 탈퇴
         </_.Setting_Withdrawal>
         <_.Setting_Logout onClick={() => LogoutMutate()}>

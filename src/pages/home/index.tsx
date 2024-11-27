@@ -95,10 +95,10 @@ const Home = () => {
           ))}
         </_.Home_Calendar>
 
-        <_.Home_SearchBar>
+        {/* <_.Home_SearchBar>
           <Search />
           <_.Home_SearchBar_Input placeholder="목적지를 입력해보세요." />
-        </_.Home_SearchBar>
+        </_.Home_SearchBar> */}
         <_.Home_Navigate_Chatting
           onClick={() => {
             push('SelectDate', { fromHome: true });

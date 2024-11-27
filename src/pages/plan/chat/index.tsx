@@ -44,7 +44,6 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
   const [isEnded, setIsEnded] = useState(false);
   const { start, end } = useRecoilValue(selectedDaysState);
 
-  // 메시지 리스트 끝으로 스크롤
   const scrollToBottom = useCallback(() => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -52,7 +51,6 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
   }, []);
 
   useEffect(() => {
-    // WebView로부터 메시지 수신 처리
     const handleMessageFromNative = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data);
@@ -60,7 +58,7 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
           scrollToBottom();
         }
       } catch (error) {
-        console.error('Failed to parse message from native:', event.data);
+        console.error('Native 통신 실패', event.data);
       }
     };
 
@@ -85,7 +83,6 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
   }, [step]);
 
   useEffect(() => {
-    // 새로운 메시지 추가 시 자동 스크롤
     scrollToBottom();
   }, [chatHistory, pendingMessage, scrollToBottom]);
 

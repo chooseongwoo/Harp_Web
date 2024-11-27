@@ -55,7 +55,7 @@ const Community: ActivityComponentType = () => {
       <_.Community_Layout>
         <_.Community_Header>
           <_.Community_Header_Title>커뮤니티</_.Community_Header_Title>
-          <Search stroke={theme.gray.black} />
+          {/* <Search stroke={theme.gray.black} /> */}
         </_.Community_Header>
         <_.Community_CategoryList>
           {categories.map((category) => (

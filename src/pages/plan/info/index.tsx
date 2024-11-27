@@ -1,6 +1,5 @@
 // 라이브러리
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
@@ -30,7 +29,6 @@ interface InfoParams {
 const Info: ActivityComponentType<InfoParams> = ({ params }) => {
   const id = params.id;
   const { pop, push } = useFlow();
-  const navigate = useNavigate();
   const [planInfos, setPlanInfos] = useState<PlanResult | null>(null);
   const [isModal, setIsModal] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);

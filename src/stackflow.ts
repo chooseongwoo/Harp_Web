@@ -40,6 +40,7 @@ import CropPage from 'pages/profile/crop';
 import All from 'pages/all/main';
 import Setting from 'pages/setting';
 import Policy from 'pages/all/policy';
+import PastSchedule from 'pages/all/pastSchedule';
 
 // 커뮤니티
 import Community from 'pages/community/home';
@@ -81,6 +82,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     All,
     Setting,
     Policy,
+    PastSchedule,
 
     Community,
     Detail,
@@ -128,6 +130,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         All: '/all',
         Setting: '/setting',
         Policy: '/all/policy',
+        PastSchedule: '/all/pastSchedule',
 
         // 커뮤니티
         Community: '/community',

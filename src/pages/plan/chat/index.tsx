@@ -44,6 +44,32 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
   const [isEnded, setIsEnded] = useState(false);
   const { start, end } = useRecoilValue(selectedDaysState);
 
+  // 메시지 리스트 끝으로 스크롤
+  const scrollToBottom = useCallback(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
+  useEffect(() => {
+    // WebView로부터 메시지 수신 처리
+    const handleMessageFromNative = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'SCROLL_BOTTOM') {
+          scrollToBottom();
+        }
+      } catch (error) {
+        console.error('Failed to parse message from native:', event.data);
+      }
+    };
+
+    window.addEventListener('message', handleMessageFromNative);
+    return () => {
+      window.removeEventListener('message', handleMessageFromNative);
+    };
+  }, [scrollToBottom]);
+
   useEffect(() => {
     if (step < initialQuestions.length) {
       setIsWaitingForReply(true);
@@ -57,6 +83,11 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
       return () => clearTimeout(timer);
     }
   }, [step]);
+
+  useEffect(() => {
+    // 새로운 메시지 추가 시 자동 스크롤
+    scrollToBottom();
+  }, [chatHistory, pendingMessage, scrollToBottom]);
 
   const handleResponseSuccess = (response: any) => {
     if (response.data.Contents.category === undefined) {
@@ -152,13 +183,11 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
         setTimeout(() => {
           ChattingMutation('일정 짜줘');
         }, 100);
-      } else if (step == 5) {
-        ChattingMutation(userMessage);
       } else {
         ChattingMutation(userMessage);
       }
     },
-    [step, planInfo, message, ChattingMutation]
+    [step, planInfo, ChattingMutation]
   );
 
   const handleSendMessage = useCallback(() => {
@@ -203,10 +232,6 @@ const Chat: ActivityComponentType<ChatParams> = ({ params }) => {
     }
     setMessage(e.target.value);
   };
-
-  useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatHistory, pendingMessage]);
 
   return (
     <AppScreen>

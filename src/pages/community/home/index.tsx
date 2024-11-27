@@ -55,7 +55,7 @@ const Community: ActivityComponentType = () => {
       <_.Community_Layout>
         <_.Community_Header>
           <_.Community_Header_Title>커뮤니티</_.Community_Header_Title>
-          <Search stroke={theme.gray.black} />
+          {/* <Search stroke={theme.gray.black} /> */}
         </_.Community_Header>
         <_.Community_CategoryList>
           {categories.map((category) => (
@@ -99,7 +99,9 @@ const Community: ActivityComponentType = () => {
         ) : (
           <_.Community_Not>글 불러오는 중...</_.Community_Not>
         )}
-        <_.Community_Writing onClick={() => push('Write', {})}>
+        <_.Community_Writing
+          onClick={() => push('Write', {}, { animate: false })}
+        >
           <Edit />
         </_.Community_Writing>
         <MenuBar selectState={3} />

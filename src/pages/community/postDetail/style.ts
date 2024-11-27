@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 export const PostDetail_Layout = styled.div<{ isRepliedComment: boolean }>`
   position: fixed;
   width: 100%;
+  overflow-x: hidden;
   height: calc(
     100vh - ${(props) => (props.isRepliedComment ? '90px' : '60px')}
   );
@@ -14,9 +15,8 @@ export const PostDetail_Layout = styled.div<{ isRepliedComment: boolean }>`
 export const PostDetail_Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
-  height: calc(100% - 60px);
   overflow: auto;
+  padding: 0 20px;
 `;
 
 export const PostDetail_SapceBetween = styled.div`
@@ -77,21 +77,24 @@ export const PostDetail_LikeCount = styled.span`
 `;
 
 export const PostDetail_Line = styled.div`
-  border: 5px solid ${theme.gray[0]};
-  margin: 30px -20px 0 -20px;
+  border: 2.5px solid ${theme.gray[0]};
+  width: 100%;
+  margin-top: 30px;
 `;
 
 export const PostDetail_CommentCount = styled.div`
   font-size: 17px;
   font-weight: 600;
   color: ${theme.gray.black};
-  padding: 10px 0 15px 0;
+  padding: 32px 0 15px 0;
+  padding: 11px 20px;
 `;
 
 export const PostDetail_Comments = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 10px 20px 0;
 `;
 
 export const PostDetail_ProfileImage = styled.img`

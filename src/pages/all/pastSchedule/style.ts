@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const PastSchedule_Layout = styled.div`
   padding: 12px 20px;
   width: 100vw;
-  height: 100vh;
+  height: max-content;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

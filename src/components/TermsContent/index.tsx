@@ -28,13 +28,15 @@ const TermsContent = ({
   return (
     <_.TermsContent_Container>
       <_.TermsContent_Layout>
-        <_.TermsContent_CheckIcon
-          onClick={() => {
-            setState!(id);
-          }}
-        >
-          {isTerms ? state ? <TrueCheck /> : <FalseCheck /> : null}
-        </_.TermsContent_CheckIcon>
+        {isTerms ? (
+          <_.TermsContent_CheckIcon
+            onClick={() => {
+              setState!(id);
+            }}
+          >
+            {state ? <TrueCheck /> : <FalseCheck />}
+          </_.TermsContent_CheckIcon>
+        ) : null}
 
         <_.TermsContent_Title
           onClick={() => {

@@ -42,8 +42,8 @@ const AddDetail: ActivityComponentType<DetailParams> = ({ params }) => {
   const { mutate: addPlanItemMutation } = useMutation(Plan_Update, {
     onSuccess: () => {
       alert('일정 추가 성공!');
-      for (let i = 0; i <= 2; i++) {
-        pop({ animate: false });
+      for (let i = 0; i <= 1; i++) {
+        pop();
       }
     },
     onError: (error) => {

@@ -228,32 +228,32 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
               좋아요 {post.wishCount}
             </_.PostDetail_LikeCount>
           </_.PostDetail_Reaction>
-          <_.PostDetail_Line />
-          <_.PostDetail_CommentCount>
-            댓글 {post.CommentsCount}
-          </_.PostDetail_CommentCount>
-          <_.PostDetail_Comments>
-            {post?.comments.map((comment) => (
-              <Comment
-                key={comment.commnetsId}
-                comment={comment}
-                onReplyClick={() =>
-                  handleReplyClick(comment.author.nickname, comment.commnetsId)
-                }
-                isOpened={openedComments[comment.commnetsId] || false}
-                toggleReplyVisibility={() =>
-                  toggleReplyVisibility(comment.commnetsId)
-                }
-              />
-            ))}
-            <div ref={commentsContainerRef} />
-          </_.PostDetail_Comments>
         </_.PostDetail_Container>
         <ImageDetail
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           selectedImage={selectedImage}
         />
+        <_.PostDetail_Line />
+        <_.PostDetail_CommentCount>
+          댓글 {post.CommentsCount}
+        </_.PostDetail_CommentCount>
+        <_.PostDetail_Comments>
+          {post?.comments.map((comment) => (
+            <Comment
+              key={comment.commnetsId}
+              comment={comment}
+              onReplyClick={() =>
+                handleReplyClick(comment.author.nickname, comment.commnetsId)
+              }
+              isOpened={openedComments[comment.commnetsId] || false}
+              toggleReplyVisibility={() =>
+                toggleReplyVisibility(comment.commnetsId)
+              }
+            />
+          ))}
+          <div ref={commentsContainerRef} />
+        </_.PostDetail_Comments>
       </_.PostDetail_Layout>
       <_.PostDetail_Bottom>
         {isRepliedComment && replyingTo && (

@@ -66,7 +66,7 @@ const SelectDate: ActivityComponentType<DateParams> = ({ params }) => {
 
   const onSubmit = async () => {
     const response = await Plan_CreatAI();
-    push('Chat', { id: response?.data?.AI_ID });
+    push('Chat', { id: response?.data?.AI_ID }, { animate: false });
   };
 
   useEffect(() => {

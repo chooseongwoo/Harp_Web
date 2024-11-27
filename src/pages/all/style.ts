@@ -15,15 +15,15 @@ export const All_Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 export const All_Name = styled.p`
   color: ${theme.gray.black};
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 2px;
 `;
 
 export const All_Profile = styled.div`

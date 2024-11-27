@@ -40,9 +40,11 @@ const Setting: ActivityComponentType = () => {
           <_.Setting_Version_Info>버전 정보</_.Setting_Version_Info>
           <_.Setting_Version_Current>
             <_.Setting_Version_Title>현재 버전</_.Setting_Version_Title>
-            <_.Setting_Version_Value>24.29.0(242900)</_.Setting_Version_Value>
+            <_.Setting_Version_Value>
+              v2.1.0(2024.11.27)
+            </_.Setting_Version_Value>
           </_.Setting_Version_Current>
-          <_.Setting_Version_Latest>최신버전: 24.31.0</_.Setting_Version_Latest>
+          <_.Setting_Version_Latest>최신버전: v2.1.0</_.Setting_Version_Latest>
         </_.Setting_Version>
         <_.Setting_Withdrawal onClick={() => DeleteMutate()}>
           서비스 탈퇴

@@ -80,7 +80,7 @@ const All = () => {
             </>
           ))}
         </_.All_CategoryList>
-        <MenuBar selectState={3} />
+        <MenuBar selectState={4} />
       </_.All_Layout>
     </AppScreen>
   );

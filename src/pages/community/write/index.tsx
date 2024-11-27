@@ -153,9 +153,9 @@ const Write = () => {
               <_.Write_PhotoButton onClick={handlePhotoButtonClick}>
                 <Image /> 사진
               </_.Write_PhotoButton>
-              <_.Write_LocationButton>
+              {/* <_.Write_LocationButton>
                 <Location_g /> 장소
-              </_.Write_LocationButton>
+              </_.Write_LocationButton> */}
             </_.Write_BottomContainer>
           )}
           {selectedImages.map((image, index) => (

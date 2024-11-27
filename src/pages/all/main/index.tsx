@@ -65,7 +65,9 @@ const All = () => {
                     <_.All_Menu
                       key={menuIndex}
                       onClick={() => {
-                        push(menuItem.location as any, {});
+                        if (menuItem.title === '이벤트')
+                          alert('준비 중인 서비스입니다!');
+                        else push(menuItem.location as any, {});
                       }}
                     >
                       {menuItem.icon}

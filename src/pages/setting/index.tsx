@@ -50,7 +50,7 @@ const Setting: ActivityComponentType = () => {
           <_.Setting_Version_Current>
             <_.Setting_Version_Title>현재 버전</_.Setting_Version_Title>
             <_.Setting_Version_Value>
-              v2.1.0(2024.11.27)
+              v2.1.0(2024.11.27.)
             </_.Setting_Version_Value>
           </_.Setting_Version_Current>
           <_.Setting_Version_Latest>최신버전: v2.1.0</_.Setting_Version_Latest>

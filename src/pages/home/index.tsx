@@ -156,6 +156,9 @@ const Home = () => {
               <_.Home_RecommendPlan_Content
                 key={plan.RecommendedPlanId}
                 imgUrl={plan.mainImg}
+                onClick={() => {
+                  push('Recommend', { plan: plan });
+                }}
               >
                 <_.Home_RecommendPlan_Content_Title>
                   {plan.title}

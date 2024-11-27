@@ -25,12 +25,12 @@ const icons = [
     title: '여행',
     location: 'SelectDate'
   },
-  // {
-  //   selected: Community,
-  //   notSelected: Community_Not,
-  //   title: '커뮤니티',
-  //   location: 'Community'
-  // },
+  {
+    selected: Community,
+    notSelected: Community_Not,
+    title: '커뮤니티',
+    location: 'Community'
+  },
   { selected: All, notSelected: All_Not, title: '전체', location: 'All' }
 ];
 

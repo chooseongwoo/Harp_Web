@@ -3,13 +3,16 @@ import styled from 'styled-components';
 
 export const Write_Layout = styled.div`
   width: 100%;
-  height: calc(100vh - 40px);
+  height: 100vh;
 `;
 
 export const Write_Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 20px 70px 20px;
+  height: calc(100% - 40px);
+  position: relative;
+  overflow: auto;
 `;
 
 export const Write_ModalButton = styled.button`
@@ -67,6 +70,7 @@ export const Write_BottomContainer = styled.div`
   gap: 12px;
   border-top: 1px solid ${theme.gray[1]};
   z-index: 99;
+  height: 70px;
 `;
 
 export const Write_PhotoButton = styled.button`
@@ -99,6 +103,7 @@ export const Write_ImageContainer = styled.div<{ backgroundImage: string }>`
   border-radius: 8px;
   border: 1px solid ${theme.gray[1]};
   margin-top: 20px;
+  margin-bottom: 20px;
   background-image: url(${(props) => props.backgroundImage});
   background-size: cover;
   background-position: center;
@@ -110,4 +115,18 @@ export const Write_DeleteIcon = styled.div`
   top: 10px;
   right: 10px;
   cursor: pointer;
+`;
+
+export const Write_ImageIndex = styled.div`
+  text-align: center;
+  font-size: 12px;
+  color: ${theme.gray.white};
+  display: flex;
+  padding: 4px 8px;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
+  position: absolute;
+  border-radius: 16px;
+  background: rgba(102, 102, 102, 0.3);
 `;

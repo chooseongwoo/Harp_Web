@@ -103,12 +103,16 @@ const Memo: ActivityComponentType<MemoParams> = ({ params }) => {
   );
 
   const directUpdatePage = () => {
-    push('Update', {
-      id: id,
-      dayIndex: String(dayIndex),
-      timeIndex: String(timeIndex),
-      planInfos: planInfos
-    });
+    push(
+      'Update',
+      {
+        id: id,
+        dayIndex: String(dayIndex),
+        timeIndex: String(timeIndex),
+        planInfos: planInfos
+      },
+      { animate: false }
+    );
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 import { useMutation, useQueries, useQueryClient } from 'react-query';
 import { ActivityComponentType } from '@stackflow/react';
@@ -23,6 +23,7 @@ import {
 } from 'lib/apis/Community';
 import { detailPost } from 'types/community';
 import X from 'assets/Icon/X';
+import { Auth_AllInfo } from 'lib/apis/Auth';
 
 interface PostDeatilParams {
   communityId?: number;
@@ -41,6 +42,7 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
   const [openedComments, setOpenedComments] = useState<{
     [key: number]: boolean;
   }>({});
+  const [userNickname, setUserNickname] = useState<string>('');
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const commentsContainerRef = useRef<HTMLDivElement>(null);
@@ -66,6 +68,18 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
       cacheTime: 600000
     }
   ]);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const { data } = await Auth_AllInfo();
+        setUserNickname(data.nickname);
+      } catch (error) {
+        console.error('유저 정보를 불러오는 데 실패했습니다:', error);
+      }
+    };
+    getUserInfo();
+  }, []);
 
   const { mutate: postWishMutation } = useMutation(
     () => Community_PostWish(communityId!),
@@ -181,7 +195,11 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
         <_.PostDetail_Container>
           <_.PostDetail_SapceBetween>
             <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
-            <KebabMenu onClick={() => {}} />
+            {post['creator.nickname'] === userNickname ? (
+              <KebabMenu onClick={() => {}} />
+            ) : (
+              ''
+            )}
           </_.PostDetail_SapceBetween>
           <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
           <_.PostDetail_Info>{` ${post['creator.nickname']} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>

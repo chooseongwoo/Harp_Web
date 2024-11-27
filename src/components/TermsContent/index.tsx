@@ -10,8 +10,9 @@ interface TermsContentProps {
   id: number;
   title: string;
   detail: string;
-  state: boolean;
-  setState: (id: number) => void;
+  state?: boolean;
+  setState?: (id: number) => void;
+  isTerms?: boolean;
 }
 
 const TermsContent = ({
@@ -19,7 +20,8 @@ const TermsContent = ({
   title,
   detail,
   state,
-  setState
+  setState,
+  isTerms
 }: TermsContentProps) => {
   const [ruleState, setRuleState] = useState<boolean>(false);
 
@@ -28,15 +30,15 @@ const TermsContent = ({
       <_.TermsContent_Layout>
         <_.TermsContent_CheckIcon
           onClick={() => {
-            setState(id);
+            setState!(id);
           }}
         >
-          {state ? <TrueCheck /> : <FalseCheck />}
+          {isTerms ? state ? <TrueCheck /> : <FalseCheck /> : null}
         </_.TermsContent_CheckIcon>
 
         <_.TermsContent_Title
           onClick={() => {
-            setState(id);
+            setState!(id);
           }}
         >
           {title}

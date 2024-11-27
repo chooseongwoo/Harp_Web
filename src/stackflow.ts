@@ -37,8 +37,9 @@ import Recommend from 'pages/plan/recommend';
 // 프로필
 import Edit from 'pages/profile/edit';
 import CropPage from 'pages/profile/crop';
-import All from 'pages/all';
+import All from 'pages/all/main';
 import Setting from 'pages/setting';
+import Policy from 'pages/all/policy';
 
 // 커뮤니티
 import Community from 'pages/community/home';
@@ -79,6 +80,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     CropPage,
     All,
     Setting,
+    Policy,
 
     Community,
     Detail,
@@ -125,6 +127,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         CropPage: '/profile/edit/crop',
         All: '/all',
         Setting: '/setting',
+        Policy: '/all/policy',
 
         // 커뮤니티
         Community: '/community',

@@ -55,14 +55,19 @@ const All = () => {
             <RightArrow width="18" height="18" color={theme.gray.black} />
           </_.All_Name>
         </_.All_Profile>
-        {/* <_.All_CategoryList>
+        <_.All_CategoryList>
           {AllPageMenu.map((categoryItem, categoryIndex) => (
             <>
               <_.All_CategoryBox key={categoryIndex}>
                 <_.All_Category>{categoryItem.category}</_.All_Category>
                 <_.All_MenuList>
                   {categoryItem.menus.map((menuItem, menuIndex) => (
-                    <_.All_Menu key={menuIndex}>
+                    <_.All_Menu
+                      key={menuIndex}
+                      onClick={() => {
+                        push(menuItem.location as any, {});
+                      }}
+                    >
                       {menuItem.icon}
                       <span>{menuItem.title}</span>
                     </_.All_Menu>
@@ -72,8 +77,8 @@ const All = () => {
               {(categoryIndex === 0 || categoryIndex === 1) && <_.All_Hr />}
             </>
           ))}
-        </_.All_CategoryList> */}
-        <MenuBar selectState={4} />
+        </_.All_CategoryList>
+        <MenuBar selectState={3} />
       </_.All_Layout>
     </AppScreen>
   );

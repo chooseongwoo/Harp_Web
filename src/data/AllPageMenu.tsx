@@ -12,23 +12,34 @@ export const AllPageMenu = [
   {
     category: '내 활동',
     menus: [
-      { icon: <Calendar color="gray" width='24' height='24' />, title: '지난 일정' },
-      { icon: <Heart width='24' height='24'/>, title: '관심 목록' }
+      {
+        icon: <Calendar color="gray" width="24" height="24" />,
+        title: '지난 일정',
+        location: 'PastSchedule'
+      },
+      {
+        icon: <Heart width="24" height="24" />,
+        title: '관심 목록',
+        location: 'HeartList'
+      }
     ]
   },
   {
     category: '소식',
     menus: [
-      { icon: <Event />, title: '이벤트' },
-      { icon: <LoudSpeaker />, title: '공지사항' }
+      { icon: <Event />, title: '이벤트', location: 'Event' },
+      { icon: <LoudSpeaker />, title: '공지사항', location: 'Announcement' }
     ]
   },
   {
     category: '도움말',
     menus: [
-      { icon: <HeadPhone />, title: '고객센터' },
-      { icon: <Paper />, title: '약관 및 개인정보 처리 동의' },
-      { icon: <Lock />, title: '개인정보 처리방침' }
+      // { icon: <HeadPhone />, title: '고객센터' },
+      {
+        icon: <Paper />,
+        title: '약관 및 개인정보 처리 동의',
+        location: 'Policy'
+      }
     ]
   }
 ];

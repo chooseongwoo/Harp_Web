@@ -10,22 +10,28 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Plan_Delete } from 'lib/apis/Plan';
 import { useMutation } from 'react-query';
 import { handleShare } from 'lib/utils/handleShare';
+import { useFlow } from 'stackflow';
 
 interface ControlModalProps {
   onClose: () => void;
   setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
+  id: string;
 }
 
-const ControlModal = ({ onClose, setIsUpdated, title }: ControlModalProps) => {
-  const navigate = useNavigate();
-  const id = useParams().id;
+const ControlModal = ({
+  onClose,
+  setIsUpdated,
+  title,
+  id
+}: ControlModalProps) => {
+  const { pop } = useFlow();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { mutate: deletePlan } = useMutation(() => Plan_Delete(id!), {
     onSuccess: (response) => {
       alert(response.message);
-      navigate('/');
+      pop();
     },
     onError: (error) => {
       console.error('일정 삭제 실패', error);

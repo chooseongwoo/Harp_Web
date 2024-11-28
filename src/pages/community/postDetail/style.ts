@@ -127,7 +127,7 @@ export const PostDetail_Replying = styled.div`
 
 export const PostDetail_TypingContainer = styled.div`
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 20px 52px;
   gap: 10px;
   height: max-content;
   position: relative;
@@ -143,7 +143,7 @@ export const PostDetail_TypingBox = styled.div`
   justify-content: space-between;
   border-radius: 40px;
   border: 1px solid ${theme.gray[1]};
-  padding: 13px 24px 13px 24px;
+  padding: 13px 24px;
 `;
 
 export const PostDetail_Textarea = styled.textarea`

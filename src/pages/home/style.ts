@@ -9,6 +9,7 @@ export const Home_Container = styled.div`
   height: 100vh;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const Home_Calendar = styled.div`

@@ -53,7 +53,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
   const { mutate: deletePlanItemMutation } = useMutation(
     () =>
       Plan_Update({
-        id: id!,
+        id: id,
         data: planInfos!
       }),
     {
@@ -119,7 +119,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
         title="일정"
         buttonState={isUpdated ? '완료' : '닫기'}
         onClickMethod={() => {
-          if (isUpdated) deletePlanItemMutation;
+          if (isUpdated) deletePlanItemMutation();
           else {
             for (let i = 0; i <= 2; i++) {
               pop({ animate: false });
@@ -144,6 +144,7 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
               <KebabMenu onClick={() => setIsModal(true)} />
               {isModal && (
                 <ControlModal
+                  id={id}
                   setIsUpdated={setIsUpdated}
                   onClose={handleCloseModal}
                   title={planInfos?.planName ?? ''}

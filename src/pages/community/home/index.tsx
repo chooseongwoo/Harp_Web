@@ -1,5 +1,6 @@
+// 라이브러리
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { ActivityComponentType } from '@stackflow/react';
 
@@ -16,9 +17,11 @@ import { useFlow } from 'stackflow';
 
 const Community: ActivityComponentType = () => {
   const { push } = useFlow();
-  const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(['getAllPost'], Community_AllPost);
+  const { data, isLoading } = useQuery(['getAllPost'], Community_AllPost, {
+    staleTime: 0,
+    cacheTime: 0
+  });
 
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [filteredPosts, setFilteredPosts] = useState<community[]>([]);
@@ -46,17 +49,6 @@ const Community: ActivityComponentType = () => {
         : posts;
     setFilteredPosts(filtered);
   }, [selectedCategory, data]);
-
-  useEffect(() => {
-    const handleFocus = () => {
-      queryClient.invalidateQueries(['getAllPost']);
-    };
-
-    window.addEventListener('focus', handleFocus);
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, []);
 
   return (
     <AppScreen>

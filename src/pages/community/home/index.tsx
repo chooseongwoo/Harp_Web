@@ -19,8 +19,8 @@ const Community: ActivityComponentType = () => {
   const { push } = useFlow();
 
   const { data, isLoading } = useQuery(['getAllPost'], Community_AllPost, {
-    staleTime: 10000,
-    cacheTime: 600000
+    staleTime: 0,
+    cacheTime: 0
   });
 
   const [selectedCategory, setSelectedCategory] = useState('전체');

@@ -4,13 +4,16 @@ import { basicRendererPlugin } from '@stackflow/plugin-renderer-basic';
 import { historySyncPlugin } from '@stackflow/plugin-history-sync';
 import { basicUIPlugin } from '@stackflow/plugin-basic-ui';
 
+// 메인
 import Splash from 'pages/splash';
 import Auth from 'pages/auth';
 import Home from 'pages/home';
-import NotFound from 'pages/notFound';
 import Callback from 'pages/Callback';
+import NotFound from 'pages/notFound';
 
-// register
+// 회원가입
+import Login from 'pages/self/login';
+import Register from 'pages/self/register';
 import Terms from 'pages/register/terms';
 import UserInfo from 'pages/register/userinfo';
 import SurveyStyle from 'pages/register/surveyStyle';
@@ -19,7 +22,7 @@ import SurveyMBTI from 'pages/register/surveyMBTI';
 import SurveyTMI from 'pages/register/surveyTMI';
 import SurveyEnd from 'pages/register/surveyEnd';
 
-// plan
+// 일정
 import Chat from 'pages/plan/chat';
 import SelectDate from 'pages/plan/selectDate';
 import Info from 'pages/plan/info';
@@ -29,19 +32,22 @@ import Memo from 'pages/plan/memo';
 import Update from 'pages/plan/update';
 import AddSearch from 'pages/plan/addSearch';
 import AddDetail from 'pages/plan/addDetail';
+import Recommend from 'pages/plan/recommend';
 
-// profile
+// 프로필
 import Edit from 'pages/profile/edit';
 import CropPage from 'pages/profile/crop';
-import All from 'pages/all';
+import All from 'pages/all/main';
 import Setting from 'pages/setting';
+import Policy from 'pages/all/policy';
+import PastSchedule from 'pages/all/pastSchedule';
+import WishList from 'pages/all/wishList';
+import Announcement from 'pages/all/announcement';
 
-// community
+// 커뮤니티
 import Community from 'pages/community/home';
 import Detail from 'pages/community/postDetail';
 import Write from 'pages/community/write';
-import Login from 'pages/self/login';
-import Register from 'pages/self/register';
 
 export const { Stack, useFlow, useStepFlow } = stackflow({
   transitionDuration: 350,
@@ -51,6 +57,9 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     Home,
     Callback,
     NotFound,
+
+    Login,
+    Register,
     Terms,
     UserInfo,
     SurveyStyle,
@@ -58,6 +67,7 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     SurveyMBTI,
     SurveyTMI,
     SurveyEnd,
+
     Chat,
     SelectDate,
     Info,
@@ -67,15 +77,20 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
     Update,
     AddSearch,
     AddDetail,
+    Recommend,
+
     Edit,
     CropPage,
     All,
     Setting,
+    Policy,
+    PastSchedule,
+    WishList,
+    Announcement,
+
     Community,
     Detail,
-    Write,
-    Login,
-    Register
+    Write
   },
   plugins: [
     basicRendererPlugin(),
@@ -111,12 +126,17 @@ export const { Stack, useFlow, useStepFlow } = stackflow({
         Update: '/plan/info/:id/day/:dayIndex/time/:timeIndex/update',
         AddSearch: '/plan/info/:id/addsearch',
         AddDetail: '/plan/info/:id/add',
+        Recommend: '/plan/recommend',
 
         // 프로필
         Edit: '/profile/edit',
         CropPage: '/profile/edit/crop',
         All: '/all',
         Setting: '/setting',
+        Policy: '/all/policy',
+        PastSchedule: '/all/pastSchedule',
+        WishList: '/all/wishList',
+        Announcement: '/all/announcement',
 
         // 커뮤니티
         Community: '/community',

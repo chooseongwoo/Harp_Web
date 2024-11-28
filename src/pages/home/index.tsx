@@ -35,13 +35,18 @@ const Home = () => {
     Plan_UserPlanList,
     {
       onSuccess: (response: { data: { PlanData: PlanResult[] } }) => {
-        const sortedPlans = response.data.PlanData?.sort(
-          (a: { startDate: string }, b: { startDate: string }) => {
-            return (
-              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-            );
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const sortedPlans = response.data.PlanData?.filter(
+          (plan: { startDate: string }) => {
+            return new Date(plan.startDate).getTime() >= today.getTime();
           }
-        );
+        ).sort((a: { startDate: string }, b: { startDate: string }) => {
+          return (
+            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          );
+        });
         setUserPlans(sortedPlans);
       }
     }
@@ -154,6 +159,9 @@ const Home = () => {
               <_.Home_RecommendPlan_Content
                 key={plan.RecommendedPlanId}
                 imgUrl={plan.mainImg}
+                onClick={() => {
+                  push('Recommend', { plan: plan });
+                }}
               >
                 <_.Home_RecommendPlan_Content_Title>
                   {plan.title}

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import ChattingStartBackground from 'assets/image/ChattingStartBackground.svg';
 
 export const Home_Container = styled.div`
-  padding: 0 20px 90px;
+  padding: 0 20px;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   flex-direction: column;
-  position: fixed;
+  overflow-y: auto;
 `;
 
 export const Home_Calendar = styled.div`
@@ -140,7 +140,7 @@ export const Home_Plan_Title = styled.div`
 
 export const Home_Plan_Contents = styled.div`
   display: flex;
-  height: 100px;
+  min-height: 100px;
   flex-direction: row;
   gap: 10px;
   margin-right: -15px;
@@ -212,18 +212,14 @@ export const Home_RecommendPlan_Title = styled.div`
   font-weight: 600;
   font-size: 20px;
   color: ${theme.gray[4]};
-  margin-top: 20px;
+  padding-top: 20px;
 `;
 
 export const Home_RecommendPlan_Contents = styled.div`
   display: flex;
-  height: 200px;
+  flex-direction: column;
   gap: 20px;
   margin-top: 10px;
-  margin-right: -15px;
-  margin-left: -15px;
-  padding-left: 15px;
-  overflow-x: scroll;
 
   ::-webkit-scrollbar {
     display: none !important;
@@ -234,8 +230,7 @@ export const Home_RecommendPlan_Contents = styled.div`
 `;
 
 export const Home_RecommendPlan_Content = styled.div<{ imgUrl: string }>`
-  position: relative;
-  min-width: 200px;
+  width: 100%;
   height: 200px;
   border-radius: 20px;
   background:
@@ -244,8 +239,8 @@ export const Home_RecommendPlan_Content = styled.div<{ imgUrl: string }>`
 `;
 
 export const Home_RecommendPlan_Content_Title = styled.div`
-  position: absolute;
   bottom: 10px;
+  padding: 160px 18px;
   left: 18px;
   color: #fff;
   font-weight: 600;

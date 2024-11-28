@@ -82,10 +82,10 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
   }, []);
 
   const { mutate: postWishMutation } = useMutation(
-    () => Community_PostWish(communityId!),
+    () => Community_PostWish(communityId),
     {
-      onError: (error) => {
-        console.error('찜 실패', error);
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getAllPost']);
       }
     }
   );

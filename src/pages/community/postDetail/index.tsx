@@ -195,11 +195,11 @@ const PostDetail: ActivityComponentType<PostDeatilParams> = ({ params }) => {
         <_.PostDetail_Container>
           <_.PostDetail_SapceBetween>
             <_.PostDetail_TagBox>{post.tag}</_.PostDetail_TagBox>
-            {post['creator.nickname'] === userNickname ? (
+            {/* {post['creator.nickname'] === userNickname ? (
               <KebabMenu onClick={() => {}} />
             ) : (
               ''
-            )}
+            )} */}
           </_.PostDetail_SapceBetween>
           <_.PostDetial_Title>{post.title}</_.PostDetial_Title>
           <_.PostDetail_Info>{` ${post['creator.nickname']} · ${getDayMinuteCounter(post.createdAt)}`}</_.PostDetail_Info>

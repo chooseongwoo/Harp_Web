@@ -68,5 +68,4 @@ export const Terms_Deatil = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-left: 23px;
 `;

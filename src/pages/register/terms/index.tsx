@@ -80,6 +80,7 @@ const Terms: ActivityComponentType = () => {
                 detail={item.desc}
                 state={check[item.id]}
                 setState={handleSingleCheck}
+                isTerms={true}
               />
             ))}
           </_.Terms_Deatil>

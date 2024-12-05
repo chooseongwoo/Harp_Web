@@ -4,7 +4,6 @@ import FalseCheck from 'assets/image/FalseCheck';
 import TrueCheck from 'assets/image/TrueCheck';
 import RightArrow from 'assets/Icon/RightArrow';
 import DownArrow from 'assets/Icon/DownArrow';
-import { theme } from 'lib/utils/style/theme';
 
 interface TermsContentProps {
   id: number;

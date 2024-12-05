@@ -39,6 +39,14 @@ const Login = () => {
         if (data.data.newAccount === '1') {
           replace('Terms', {}, { animate: false });
         } else replace('Home', {}, { animate: false });
+      })
+      .catch((err) => {
+        if (err.response?.status === 401) {
+          console.log(err.response?.data?.message);
+          alert(err.response?.data?.message);
+        } else {
+          alert('로그인 중 오류가 발생했습니다.');
+        }
       });
   };
 

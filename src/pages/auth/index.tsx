@@ -37,12 +37,12 @@ const Auth = () => {
               <RoundedTriangle />
             </_.Auth_Button_Ballon_SVG>
           </_.Auth_Button_Ballon>
-          <AuthButton
+          {/* <AuthButton
             onClick={handleKakaoLogin}
             background="#FEE500"
             icon={<KakaoTalk />}
             content="카카오 로그인"
-          />
+          /> */}
           {/* <AuthButton
             onClick={handleKakaoLogin}
             background="#FFF"

@@ -17,6 +17,12 @@ export const PostDetail_Container = styled.div`
   flex-direction: column;
   overflow: auto;
   padding: 0 20px;
+  
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
 `;
 
 export const PostDetail_SapceBetween = styled.div`
@@ -38,6 +44,11 @@ export const PostDetial_Title = styled.div`
   font-weight: 600;
   color: ${theme.gray.black};
   margin-top: 8px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 28px;
+    margin-top: 16px;
+  }
 `;
 
 export const PostDetail_Info = styled.div`
@@ -50,18 +61,32 @@ export const PostDetail_Description = styled.div`
   margin-top: 10px;
   font-size: 17px;
   color: ${theme.gray.black};
+
+  @media screen and (min-width: 768px) {
+    font-size: 19px;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
 `;
 
 export const PostDetail_Image = styled.div<{ backgroundImage: string }>`
   max-width: 500px;
   margin-top: 15px;
   position: relative;
-  width: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
   padding-bottom: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${(props) => props.backgroundImage});
+
+  @media screen and (min-width: 768px) {
+    width: 70%;
+    max-width: 700px;
+    margin: 24px auto;
+  }
 `;
 
 export const PostDetail_Reaction = styled.div`
@@ -113,6 +138,14 @@ export const PostDetail_Bottom = styled.div`
   position: fixed;
   bottom: 0;
   background-color: ${theme.gray.white};
+
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 1px solid ${theme.gray[1]};
+    border-right: 1px solid ${theme.gray[1]};
+  }
 `;
 
 export const PostDetail_Replying = styled.div`
@@ -144,6 +177,11 @@ export const PostDetail_TypingBox = styled.div`
   border-radius: 40px;
   border: 1px solid ${theme.gray[1]};
   padding: 13px 24px;
+
+  @media screen and (min-width: 768px) {
+    width: 90%;
+    padding: 16px 28px;
+  }
 `;
 
 export const PostDetail_Textarea = styled.textarea`

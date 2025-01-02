@@ -137,12 +137,12 @@ const Edit: ActivityComponentType<EditParams> = ({ params }) => {
       <_.Edit_Layout>
         <Header title="회원 정보 수정" />
         <_.Edit_Content>
-          <_.Edit_Profile>
+          {/* <_.Edit_Profile>
             <_.Edit_Profile_Img src={infos.profileImg} alt="프로필 이미지" />
             <_.Edit_Profile_Edit onClick={handleProfileImageEdit}>
               <ProfileEdit />
             </_.Edit_Profile_Edit>
-          </_.Edit_Profile>
+          </_.Edit_Profile> */}
           <_.Edit_Infos>
             <_.Edit_Info>
               <_.Edit_Info_Label>이메일</_.Edit_Info_Label>

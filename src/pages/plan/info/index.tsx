@@ -134,9 +134,9 @@ const Info: ActivityComponentType<InfoParams> = ({ params }) => {
           <_.Info_Header $BackgroundImage={planInfos?.mainImg ?? ''}>
             <_.Info_Title>{planInfos?.planName}</_.Info_Title>
             <_.Info_DDay>{calculateDDay(startDate ?? undefined)}</_.Info_DDay>
-            <_.Info_Camera onClick={handleImageSelection}>
+            {/* <_.Info_Camera onClick={handleImageSelection}>
               <Camera />
-            </_.Info_Camera>
+            </_.Info_Camera> */}
           </_.Info_Header>
           <_.Info_Content>
             <_.Info_Nav>

@@ -49,7 +49,7 @@ const All = () => {
           <SettingIcon onClick={() => push('Setting', {})} />
         </_.All_Header>
         <_.All_Profile>
-          <_.All_Profile_Image url={infos.profileImg} />
+          {/* <_.All_Profile_Image url={infos.profileImg} /> */}
           <_.All_Name onClick={() => push('Edit', { imageUrl: '' })}>
             {infos.nickname}
             <RightArrow width="18" height="18" color={theme.gray.black} />

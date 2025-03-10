@@ -37,25 +37,25 @@ const Auth = () => {
               <RoundedTriangle />
             </_.Auth_Button_Ballon_SVG>
           </_.Auth_Button_Ballon>
-          {/* <AuthButton
+          <AuthButton
             onClick={handleKakaoLogin}
             background="#FEE500"
             icon={<KakaoTalk />}
             content="카카오 로그인"
-          /> */}
+          />
           {/* <AuthButton
             onClick={handleKakaoLogin}
             background="#FFF"
             icon={<Google />}
             content="구글 로그인"
           /> */}
-          <_.Auth_Login_Button
+          {/* <_.Auth_Login_Button
             onClick={() => {
               push('Login', {});
             }}
           >
             로그인
-          </_.Auth_Login_Button>
+          </_.Auth_Login_Button> */}
         </_.Auth_Button_Layout>
       </_.Auth_Container>
     </AppScreen>
